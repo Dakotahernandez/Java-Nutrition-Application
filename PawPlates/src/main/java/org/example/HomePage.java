@@ -5,14 +5,6 @@ import java.awt.*;
 
 
 public class HomePage {
-    public static void setUp() {
-        JFrame frame = new JFrame("PawPlates");
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-public class HomePage {
     /*
     * GOAL: This is the home page that will show up POST-login that connects the other pages (tracking cals/workouts,
     * setting goals, & signing up for classes).
@@ -23,17 +15,17 @@ public class HomePage {
     // set up the main screen
     public static void setUp() {
         JFrame frame = new JFrame("PawPlates");
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // open the window to a full screen 
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // open the window to a full screen
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         JPanel contentPane = new JPanel(new BorderLayout());
         frame.setContentPane(contentPane);
 
-        // create a panel to hold both menu bars
+        // Create a panel to hold both menu bars
         JPanel menuBarPanel = new JPanel(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // add userMenuBar to the left
+        // Add userMenuBar to the left
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
@@ -52,12 +44,7 @@ public class HomePage {
         // Add the menu bar panel to the frame
         contentPane.add(menuBarPanel, BorderLayout.NORTH);
 
-        // Add other content to the frame's center if needed
-
-        // add the menu bar panel to the frame
-        contentPane.add(menuBarPanel, BorderLayout.NORTH);
-
-
+        // add other content to the frame's center if needed
         JPanel mainPanel = new JPanel();
         mainPanel.add(new JLabel("HOME PAGE IN PROGRESS"));
         contentPane.add(mainPanel, BorderLayout.CENTER);
