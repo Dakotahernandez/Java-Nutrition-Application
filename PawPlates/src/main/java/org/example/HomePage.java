@@ -8,9 +8,12 @@ public class HomePage {
     /*
     * GOAL: This is the home page that will show up POST-login that connects the other pages (tracking cals/workouts,
     * setting goals, & signing up for classes).
-    * COMPLETED: menu bars for other pages & logout
+    * COMPLETED: created a HomePage object, menu bars for other pages & logout
     * IN-PROGRESS: making the buttons do something, adding the other windows, formatting the page, ...
      */
+
+    //HomePage Constructor:
+    public HomePage(){ setUp(); }
 
     // set up the main screen
     public static void setUp() {
@@ -83,7 +86,8 @@ public class HomePage {
 
         return menuBar;
     }
+
     public static void main(String[] args){
-        setUp();
+        new HomePage();
     }
 }
