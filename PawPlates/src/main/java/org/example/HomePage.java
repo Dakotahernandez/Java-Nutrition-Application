@@ -49,10 +49,15 @@ public class HomePage {
         gbc.anchor = GridBagConstraints.EAST;
         menuBarPanel.add(logoutMenuBar(), gbc);
 
+        // Add the menu bar panel to the frame
+        contentPane.add(menuBarPanel, BorderLayout.NORTH);
+
+        // Add other content to the frame's center if needed
+
         // add the menu bar panel to the frame
         contentPane.add(menuBarPanel, BorderLayout.NORTH);
 
-        // add other content to the frame's center if needed
+
         JPanel mainPanel = new JPanel();
         mainPanel.add(new JLabel("HOME PAGE IN PROGRESS"));
         contentPane.add(mainPanel, BorderLayout.CENTER);
