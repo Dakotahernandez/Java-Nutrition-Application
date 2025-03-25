@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.io.File;
 
 public class LoginPage {
+
     public LoginPage() {
         JFrame frame = new JFrame();
 
@@ -62,7 +63,4 @@ public class LoginPage {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        new LoginPage();
-    }
 }

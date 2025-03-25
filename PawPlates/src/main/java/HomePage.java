@@ -1,5 +1,3 @@
-package org.example;
-
 import javax.swing.*;
 import java.awt.*;
 
@@ -87,7 +85,7 @@ public class HomePage {
         return menuBar;
     }
 
-    public static void main(String[] args){
-        new HomePage();
-    }
+//    public static void main(String[] args){
+//        new HomePage();
+//    }
 }

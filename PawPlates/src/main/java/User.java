@@ -1,5 +1,3 @@
-package org.example;
-
 /*
  * PURPOSE: provide a basic structure for ALL users (all users need a login)
  */
