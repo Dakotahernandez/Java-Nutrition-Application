@@ -39,6 +39,8 @@ public class LoginPage {
                         String[] data = scanner.nextLine().split(",");
                         if (username.equals(data[0]) && password.equals(data[1])) {
                             message.setText("Login Successful");
+                            frame.dispose();
+                            new HomePage();
                             break;
                         }
                         if (!scanner.hasNextLine()) {
