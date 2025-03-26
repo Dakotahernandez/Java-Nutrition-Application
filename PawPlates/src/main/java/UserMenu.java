@@ -10,8 +10,6 @@ import java.awt.event.ActionListener;
  */
 
 public class UserMenu {
-    //private static final HomePage homePage = new HomePage();
-    //private static final CalorieMacroPage calMacPage = new CalorieMacroPage();
 
     public UserMenu() { }
 

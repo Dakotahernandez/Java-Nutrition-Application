@@ -3,13 +3,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/*
+ * GOAL: This is the home page that will show up POST-login that connects the other pages (tracking cals/workouts,
+ * setting goals, & signing up for classes).
+ * COMPLETED: created a HomePage object, menu bars for other pages & logout (separate classes)
+ * IN-PROGRESS: making the buttons do something, adding the other windows, formatting the page, ...
+ */
 
 public class HomePage extends JFrame{
     /*
-    * GOAL: This is the home page that will show up POST-login that connects the other pages (tracking cals/workouts,
-    * setting goals, & signing up for classes).
-    * COMPLETED: created a HomePage object, menu bars for other pages & logout (separate classes)
-    * IN-PROGRESS: making the buttons do something, adding the other windows, formatting the page, ...
+     * GOAL: This is the home page that will show up POST-login that connects the other pages (tracking cals/workouts,
+     * setting goals, & signing up for classes).
+     * COMPLETED: created a HomePage object, menu bars for other pages & logout (separate classes)
+     * IN-PROGRESS: making the buttons do something, adding the other windows, formatting the page, ...
      */
 
     //HomePage Constructor:
