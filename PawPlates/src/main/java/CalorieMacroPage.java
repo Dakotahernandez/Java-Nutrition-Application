@@ -11,7 +11,7 @@ import java.awt.*;
  *There is a commented out snippet of code i was using for quick testing witjout
  * changing the main or worrying about messing with other files
  */
-public class CalorieMacroPage {
+public class CalorieMacroPage extends JFrame{
 
     // Set daily calorie limit since there no db so far
     private static final int DAILY_LIMIT = 2000;
@@ -22,13 +22,16 @@ public class CalorieMacroPage {
     private static JProgressBar calorieProgressBar;
     private static JLabel progressLabel;
 
-    
+
     /*
     //for testing the code
     public static void main(String[] args) {
         setUp();
     }
      */
+
+    public CalorieMacroPage() { setUp(); }
+
     public static void setUp() {
         JFrame frame = new JFrame("Calorie/Macro Tracker");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
@@ -44,20 +47,22 @@ public class CalorieMacroPage {
         GridBagConstraints gbc = new GridBagConstraints();
 
         // Add menu bar to the left
+        UserMenu userMenu = new UserMenu();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1.0;
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.WEST;
-        menuBarPanel.add(userMenuBar(), gbc);
+        menuBarPanel.add(userMenu.addUserMenu(), gbc);
 
         // Add logout menu bar to the right
+        LogoutMenu logoutMenu = new LogoutMenu();
         gbc.gridx = 1;
         gbc.gridy = 0;
         gbc.weightx = 0.0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        menuBarPanel.add(logoutMenuBar(), gbc);
+        menuBarPanel.add(logoutMenu.addLogoutMenu(), gbc);
 
         // Create a panel for the progress bar
         JPanel progressBarPanel = new JPanel();
@@ -205,37 +210,4 @@ public class CalorieMacroPage {
         }
     }
 
-    // User menu bar
-    public static JMenuBar userMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Menu");
-        JMenuItem trackWorkout = new JMenuItem("Track Workout");
-        JMenuItem trackCals = new JMenuItem("Track Calories");
-        JMenuItem setGoal = new JMenuItem("Set a Goal");
-        JMenuItem registration = new JMenuItem("Register for a Class");
-
-        menu.add(trackWorkout);
-        menu.add(trackCals);
-        menu.add(setGoal);
-        menu.add(registration);
-
-        menuBar.add(menu);
-        return menuBar;
-    }
-
-    // Logout menu bar
-    public static JMenuBar logoutMenuBar() {
-        JMenuBar menuBar = new JMenuBar();
-        JMenu menu = new JMenu("Logout");
-        JMenuItem signOut = new JMenuItem("Sign Out");
-        JMenuItem settings = new JMenuItem("Settings");
-        JMenuItem help = new JMenuItem("Help");
-
-        menu.add(signOut);
-        menu.add(settings);
-        menu.add(help);
-        menuBar.add(menu);
-
-        return menuBar;
-    }
 }
