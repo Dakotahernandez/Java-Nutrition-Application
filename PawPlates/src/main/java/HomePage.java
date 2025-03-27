@@ -1,7 +1,11 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /*
  * GOAL: This is the home page that will show up POST-login that connects the other pages (tracking cals/workouts,
@@ -25,7 +29,7 @@ public class HomePage extends JFrame{
     public static void setUp() {
         JFrame frame = new JFrame("PawPlates");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // open the window to a full screen
-        frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel contentPane = new JPanel(new BorderLayout());
         frame.setContentPane(contentPane);
@@ -56,9 +60,27 @@ public class HomePage extends JFrame{
         contentPane.add(menuBarPanel, BorderLayout.NORTH);
 
         // add other content to the frame's center if needed
-        JPanel mainPanel = new JPanel();
-        mainPanel.add(new JLabel("HOME PAGE IN PROGRESS"));
+        JPanel mainPanel = new JPanel(new GridBagLayout());
+        GridBagConstraints c = new GridBagConstraints();
+
+        JLabel helloUser = new JLabel("Hello, {USER}");
+        helloUser.setFont(new Font("Arial", Font.PLAIN, 30));
+        c.gridx = 0;
+        c.gridy = 0;
+        mainPanel.add(helloUser, c);
         contentPane.add(mainPanel, BorderLayout.CENTER);
+
+        try {
+            BufferedImage menuImage = ImageIO.read(new File("src/main/resources/PawPrints.png"));
+            JLabel menuImageLabel = new JLabel(new ImageIcon(menuImage));
+            c.gridx = 0;
+            c.gridy = 1;
+            mainPanel.add(menuImageLabel, c);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
 
         frame.setVisible(true);
     }
