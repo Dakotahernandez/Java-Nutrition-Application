@@ -1,3 +1,4 @@
+package org.example;
 import javax.swing.*;
 import java.awt.*;
 /**
@@ -28,7 +29,7 @@ public class CalorieMacroPage extends JFrame{
     public static void main(String[] args) {
         setUp();
     }
-     */
+    */
 
     public CalorieMacroPage() { setUp(); }
 
@@ -73,7 +74,7 @@ public class CalorieMacroPage extends JFrame{
         calorieProgressBar = new JProgressBar(0, DAILY_LIMIT);
         calorieProgressBar.setValue(totalCalsSoFar);
         calorieProgressBar.setStringPainted(true); // shows % complete
-        calorieProgressBar.setPreferredSize(new Dimension(400, 30));
+        calorieProgressBar.setPreferredSize(new Dimension(400, 50));
 
         // Label below the progress bar
         progressLabel = new JLabel(getProgressText());
