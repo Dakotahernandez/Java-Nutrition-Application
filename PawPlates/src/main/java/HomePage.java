@@ -65,7 +65,7 @@ public class HomePage extends JFrame{
 
         JLabel helloUser = new JLabel("Hello, {USER}");
         helloUser.setFont(new Font("Arial", Font.PLAIN, 30));
-        c.gridx = 0;
+        c.gridx = 1;
         c.gridy = 0;
         mainPanel.add(helloUser, c);
         contentPane.add(mainPanel, BorderLayout.CENTER);
@@ -73,7 +73,7 @@ public class HomePage extends JFrame{
         try {
             BufferedImage menuImage = ImageIO.read(new File("src/main/resources/PawPrints.png"));
             JLabel menuImageLabel = new JLabel(new ImageIcon(menuImage));
-            c.gridx = 0;
+            c.gridx = 1;
             c.gridy = 1;
             mainPanel.add(menuImageLabel, c);
         }
@@ -81,6 +81,20 @@ public class HomePage extends JFrame{
             e.printStackTrace();
         }
 
+        JButton logWorkoutButton = new JButton("Log Something...");
+        c.gridx = 0;
+        c.gridy = 2;
+        mainPanel.add(logWorkoutButton, c);
+
+        JButton logCalories = new JButton("Your Goals");
+        c.gridx = 1;
+        c.gridy = 2;
+        mainPanel.add(logCalories, c);
+
+        JButton logSleep = new JButton("Your Reminders");
+        c.gridx = 2;
+        c.gridy = 2;
+        mainPanel.add(logSleep, c);
 
         frame.setVisible(true);
     }
