@@ -19,6 +19,7 @@ public class UserMenu {
         JMenuItem home = new JMenuItem("Home");
         JMenuItem trackWorkout = new JMenuItem("Track Workout");
         JMenuItem trackCals = new JMenuItem("Track Calories");
+        JMenuItem trackSleep = new JMenuItem("Track Sleep");
         JMenuItem setGoal = new JMenuItem("Set a Goal");
         JMenuItem registration = new JMenuItem("Register for a Class");
 
@@ -36,9 +37,16 @@ public class UserMenu {
                 new CalorieMacroPage();
             }
         });
+        trackSleep.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new SleepPage();
+            }
+        });
 
         menu.add(home);
         menu.add(trackWorkout);
+        menu.add(trackSleep);
         menu.add(trackCals);
         menu.add(setGoal);
         menu.add(registration);
