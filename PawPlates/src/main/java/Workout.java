@@ -27,4 +27,10 @@ public class Workout {
         this.focus = focus;
         this.duration = duration;
     }
+
+    //Create a Workout
+    Workout createWorkout(Date date, String focus, Time duration){
+        Workout w = new Workout(date, focus, duration);
+        return w;
+    }
 }

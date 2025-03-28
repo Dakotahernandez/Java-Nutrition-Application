@@ -64,6 +64,8 @@ public class CalorieMacroPage extends JFrame{
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
         menuBarPanel.add(logoutMenu.addLogoutMenu(), gbc);
+        // Add the menu bar panel to the frame
+        contentPane.add(menuBarPanel, BorderLayout.NORTH);
 
         // Create a panel for the progress bar
         JPanel progressBarPanel = new JPanel();
