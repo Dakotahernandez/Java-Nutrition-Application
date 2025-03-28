@@ -81,7 +81,7 @@ public class HomePage extends JFrame{
             e.printStackTrace();
         }
 
-        JButton logWorkoutButton = new JButton("Log Something...");
+        JButton logWorkoutButton = new JButton("Track Something...");
         c.gridx = 0;
         c.gridy = 2;
         mainPanel.add(logWorkoutButton, c);
