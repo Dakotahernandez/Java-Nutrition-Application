@@ -12,9 +12,10 @@ public class LoginPage {
 
     public LoginPage() {
         JFrame frame = new JFrame();
+        UserDatabase database = new UserDatabase();
 
         frame.setTitle("Login");
-        frame.setSize(400, 300);
+        frame.setSize(450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
@@ -65,49 +66,29 @@ public class LoginPage {
 
         JButton login = new JButton("Login");
         login.setFont(new Font("Arial", Font.BOLD, 14));
-        login.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = passwordField.getText();
-
-                try {
-                    Scanner scanner = new Scanner(new File("src/main/java/database.csv"));
-                    scanner.nextLine();
-                    while (scanner.hasNextLine()) {
-                        String[] data = scanner.nextLine().split(",");
-                        if (username.equals(data[0]) && password.equals(data[1])) {
-                            message.setText("Login Successful");
-                            frame.dispose();
-                            new HomePage();
-                            break;
-                        }
-                        if (!scanner.hasNextLine()) {
-                            message.setText("Login Failed. Try Again.");
-                        }
-                    }
-                }
-                catch (Exception ex) {
-                    ex.printStackTrace();
-                }
+        login.addActionListener(e -> {
+            if (database.loginUser(usernameField.getText(), passwordField.getText())) {
+                frame.dispose();
+                new HomePage();
+            }
+            else {
+                message.setForeground(Color.RED);
+                message.setText("Invalid username or password. Try again.");
             }
         });
 
         JButton createAccount = new JButton("Create an Account");
         createAccount.setFont(new Font("Arial", Font.BOLD, 14));
-        createAccount.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String username = usernameField.getText();
-                String password = passwordField.getText();
-
-                try (FileWriter fileWriter = new FileWriter("src/main/java/database.csv", true)) {
-                    fileWriter.write(username + "," + password + "\n");
-                    message.setText("New Account Created");
-                }
-                catch(IOException ex) {
-                    ex.printStackTrace();
-                }
+        createAccount.addActionListener(e -> {
+            if (database.registerUser(usernameField.getText(), passwordField.getText())) {
+                message.setForeground(Color.BLACK);
+                message.setText("New account created with username and password.");
+                usernameField.setText("");
+                passwordField.setText("");
+            }
+            else {
+                message.setForeground(Color.RED);
+                message.setText("Username or password cannot be empty. Try again.");
             }
         });
 
