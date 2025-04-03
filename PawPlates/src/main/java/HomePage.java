@@ -26,7 +26,7 @@ public class HomePage extends JFrame{
     public HomePage(){ setUp(); }
 
     // set up the main screen
-    public static void setUp() {
+    public void setUp() {
         JFrame frame = new JFrame("PawPlates");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // open the window to a full screen
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -84,6 +84,7 @@ public class HomePage extends JFrame{
         JButton logWorkoutButton = new JButton("Track Something...");
         c.gridx = 0;
         c.gridy = 2;
+        logWorkoutButton.addActionListener(e -> trackSomethingDialogue());
         mainPanel.add(logWorkoutButton, c);
 
         JButton logCalories = new JButton("Your Goals");
@@ -97,6 +98,44 @@ public class HomePage extends JFrame{
         mainPanel.add(logSleep, c);
 
         frame.setVisible(true);
+    }
+
+    public void trackSomethingDialogue() {
+        JDialog trackingDialogue = new JDialog(this, "Tracking Menu", true);
+        trackingDialogue.setSize(250, 200);
+        trackingDialogue.setLayout(new GridLayout(4, 1, 10, 10));
+
+        JButton workout = new JButton("Workout");
+        workout.addActionListener(e -> {
+            new CreateExercise();
+            trackingDialogue.dispose();
+        });
+
+        JButton sleep = new JButton("Sleep");
+        sleep.addActionListener(e -> {
+            new SleepPage();
+            trackingDialogue.dispose();
+        });
+
+        JButton calories = new JButton("Calories");
+        calories.addActionListener(e -> {
+            new CalorieMacroPage();
+            trackingDialogue.dispose();
+        });
+
+        JButton cancel = new JButton("Cancel");
+        cancel.addActionListener(e -> {
+            trackingDialogue.dispose();
+        });
+
+        trackingDialogue.add(workout);
+        trackingDialogue.add(sleep);
+        trackingDialogue.add(calories);
+        trackingDialogue.add(cancel);
+
+        trackingDialogue.setLocationRelativeTo(this);
+        trackingDialogue.setVisible(true);
+
     }
 
 
