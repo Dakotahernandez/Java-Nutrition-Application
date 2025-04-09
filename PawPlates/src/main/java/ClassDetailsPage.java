@@ -1,6 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-
+// Not Ready for use
 public class ClassDetailsPage extends JFrame{
 
     //will update to take a Class object as a parameter
