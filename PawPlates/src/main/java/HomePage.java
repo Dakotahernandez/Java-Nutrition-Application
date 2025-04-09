@@ -71,7 +71,7 @@ public class HomePage extends JFrame{
         contentPane.add(mainPanel, BorderLayout.CENTER);
 
         try {
-            BufferedImage menuImage = ImageIO.read(new File("src/main/resources/PawPrints.png"));
+            BufferedImage menuImage = ImageIO.read(new File("src/main/resources/PawPlates.png"));
             JLabel menuImageLabel = new JLabel(new ImageIcon(menuImage));
             c.gridx = 1;
             c.gridy = 1;
