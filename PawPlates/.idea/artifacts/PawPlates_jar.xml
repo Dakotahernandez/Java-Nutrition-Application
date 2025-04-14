@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="PawPlates:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/PawPlates_jar</output-path>
+    <root id="archive" name="PawPlates.jar">
+      <element id="library" level="project" name="sqlite-jdbc-3.49.1.0" />
+      <element id="module-output" name="PawPlates" />
+    </root>
+  </artifact>
+</component>

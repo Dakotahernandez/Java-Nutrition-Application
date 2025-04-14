@@ -67,28 +67,30 @@ public class LoginPage {
         JButton login = new JButton("Login");
         login.setFont(new Font("Arial", Font.BOLD, 14));
         login.addActionListener(e -> {
-            if (database.loginUser(usernameField.getText(), passwordField.getText())) {
+            try {
+                database.loginUser(new User(usernameField.getText(), passwordField.getText()));
                 frame.dispose();
                 new HomePage();
             }
-            else {
+            catch (IllegalArgumentException ex) {
                 message.setForeground(Color.RED);
-                message.setText("Invalid username or password. Try again.");
+                message.setText(ex.getMessage());
             }
         });
 
         JButton createAccount = new JButton("Create an Account");
         createAccount.setFont(new Font("Arial", Font.BOLD, 14));
         createAccount.addActionListener(e -> {
-            if (database.registerUser(usernameField.getText(), passwordField.getText())) {
+            try {
+                database.registerUser(new User(usernameField.getText(), passwordField.getText()));
                 message.setForeground(Color.BLACK);
                 message.setText("New account created with username and password.");
                 usernameField.setText("");
                 passwordField.setText("");
             }
-            else {
+            catch (IllegalArgumentException ex) {
                 message.setForeground(Color.RED);
-                message.setText("Username or password cannot be empty. Try again.");
+                message.setText(ex.getMessage());
             }
         });
 

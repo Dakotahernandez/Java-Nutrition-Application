@@ -8,41 +8,62 @@ public class UserDatabase {
         initializeDatabase();
     }
 
-    public boolean registerUser(String username, String password) {
-        if (username.isEmpty() || password.isEmpty()) {
-            return false;
+    public void registerUser(User user) throws IllegalArgumentException {
+        if (user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
+            throw new IllegalArgumentException("Username or password cannot be empty.");
         }
+
+        if (usernameExists(user.getUsername())) {
+            throw new IllegalArgumentException("A user with this username already exists.");
+        }
+
         try {
             String sql = "INSERT INTO users (username, password) VALUES (?, ?)";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
             ps.executeUpdate();
         }
         catch (SQLException e) {
             e.printStackTrace();
         }
-        return true;
     }
 
-    public boolean loginUser(String username, String password) {
-        boolean loginStatus = false;
+    public void loginUser(User user) throws IllegalArgumentException {
         try {
             String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, username);
-            ps.setString(2, password);
+            ps.setString(1, user.getUsername());
+            ps.setString(2, user.getPassword());
 
             ResultSet result = ps.executeQuery();
 
-            if (result.next()) {
-                loginStatus = true;
+            if (!result.next()) {
+                throw new IllegalArgumentException("Invalid username or password. Try again.");
             }
         }
         catch(SQLException e) {
             e.printStackTrace();
         }
-        return loginStatus;
+    }
+
+    public boolean usernameExists(String username) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                return true;
+            }
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     private void initializeDatabase() {

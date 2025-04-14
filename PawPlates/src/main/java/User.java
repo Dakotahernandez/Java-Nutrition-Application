@@ -1,19 +1,21 @@
 /*
  * PURPOSE: provide a basic structure for ALL users (all users need a login)
  */
-public abstract class User {
+public class User {
     String username;
     String password;
+    String email;
 
-    final void login(String username, String password){
+    public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
-    final void setUsername(String username){
-        this.username = username;
+    public String getUsername() {
+        return username;
     }
-    final void setPassword(String password){
-        this.password = password;
+
+    public String getPassword() {
+        return password;
     }
 }
