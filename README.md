@@ -2,7 +2,7 @@
 
 ## Faith Ota, Dakota Hernandez, Mac Johnson, Sofia Amador, Eli Hall, & Joshua Carroll
 
-## Project Site:
+### Project Site:
 https://macj2005.github.io/PawPlatesProjectSite/
 
 ### Health & Fitness App
