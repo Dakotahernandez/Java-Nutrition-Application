@@ -2,6 +2,9 @@
 
 ## Faith Ota, Dakota Hernandez, Mac Johnson, Sofia Amador, Eli Hall, & Joshua Carroll
 
+## Project Site:
+https://macj2005.github.io/PawPlatesProjectSite/
+
 ### Health & Fitness App
 You have been contracted to create an application that empowers a user to monitor and track their progress along their health journey. The application should offer a suite of tools that allows a user to record, analyze, and set goals for different aspects of their life.
 
