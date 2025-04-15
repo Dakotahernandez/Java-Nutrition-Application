@@ -22,12 +22,14 @@ public class HomePage extends JFrame{
      * IN-PROGRESS: making the buttons do something, adding the other windows, formatting the page, ...
      */
 
+    JFrame frame;
+
     //HomePage Constructor:
     public HomePage(){ setUp(); }
 
     // set up the main screen
     public void setUp() {
-        JFrame frame = new JFrame("PawPlates");
+        frame = new JFrame("PawPlates");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // open the window to a full screen
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -63,7 +65,7 @@ public class HomePage extends JFrame{
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        JLabel helloUser = new JLabel("Hello, {USER}");
+        JLabel helloUser = new JLabel("Hello, user");
         helloUser.setFont(new Font("Arial", Font.PLAIN, 30));
         c.gridx = 1;
         c.gridy = 0;
@@ -108,18 +110,21 @@ public class HomePage extends JFrame{
         JButton workout = new JButton("Workout");
         workout.addActionListener(e -> {
             new CreateExercise();
+            frame.dispose();
             trackingDialogue.dispose();
         });
 
         JButton sleep = new JButton("Sleep");
         sleep.addActionListener(e -> {
             new SleepPage();
+            frame.dispose();
             trackingDialogue.dispose();
         });
 
         JButton calories = new JButton("Calories");
         calories.addActionListener(e -> {
             new CalorieMacroPage();
+            frame.dispose();
             trackingDialogue.dispose();
         });
 
