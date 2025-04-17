@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
+import javax.swing.UIManager;
 import java.awt.*;
 
 class TemplateFrame extends JFrame {
@@ -11,8 +13,14 @@ class TemplateFrame extends JFrame {
     // Not supposed to be visible after construction
     // Has no title since it is a template
     public TemplateFrame(){
+        // Maximize window and set default close operation
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        // Set default caret color for all text-based components
+        UIManager.put("TextField.caretForeground", new ColorUIResource(Theme.FG_LIGHT));
+        UIManager.put("TextArea.caretForeground", new ColorUIResource(Theme.FG_LIGHT));
+        UIManager.put("PasswordField.caretForeground", new ColorUIResource(Theme.FG_LIGHT));
 
         // Create the content pane with BorderLayout and assign theme background
         contentPane = new JPanel(new BorderLayout());
@@ -69,6 +77,8 @@ class TemplateFrame extends JFrame {
         // Style the text field using theme colors
         textField.setBackground(Theme.BG_DARKER);
         textField.setForeground(Theme.FG_LIGHT);
+        // Ensure the caret is visible
+        textField.setCaretColor(Theme.FG_LIGHT);
         contentPanel.add(textField, c);
     }
 
