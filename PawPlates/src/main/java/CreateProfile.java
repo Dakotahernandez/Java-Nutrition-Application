@@ -173,4 +173,8 @@ public class CreateProfile {
         menuBar.add(menu);
         return menuBar;
     }
+
+    public static void main(String[] args) {
+        setUp();
+    }
 }

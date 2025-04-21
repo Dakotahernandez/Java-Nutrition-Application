@@ -1,8 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +21,6 @@ public class HomePage extends JFrame{
      */
 
     public JFrame frame;
-    private User user;
 
     //HomePage Constructor:
     public HomePage(){ setUp(); }
@@ -66,7 +63,7 @@ public class HomePage extends JFrame{
         JPanel mainPanel = new JPanel(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
 
-        JLabel helloUser = new JLabel("Hello, user");
+        JLabel helloUser = new JLabel("Hello, " + LoginPage.CURRENT_USER.getUsername());
         helloUser.setFont(new Font("Arial", Font.PLAIN, 30));
         c.gridx = 1;
         c.gridy = 0;
@@ -144,12 +141,4 @@ public class HomePage extends JFrame{
 
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-
-//    public static void main(String[] args){
-//        new HomePage();
-//    }
 }
