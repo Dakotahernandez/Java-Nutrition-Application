@@ -22,7 +22,8 @@ public class HomePage extends JFrame{
      * IN-PROGRESS: making the buttons do something, adding the other windows, formatting the page, ...
      */
 
-    JFrame frame;
+    public JFrame frame;
+    private User user;
 
     //HomePage Constructor:
     public HomePage(){ setUp(); }
@@ -141,6 +142,10 @@ public class HomePage extends JFrame{
         trackingDialogue.setLocationRelativeTo(this);
         trackingDialogue.setVisible(true);
 
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 

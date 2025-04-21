@@ -9,6 +9,7 @@ import java.util.Scanner;
 import java.io.File;
 
 public class LoginPage {
+    private User user;
 
     public LoginPage() {
         JFrame frame = new JFrame();
@@ -46,8 +47,9 @@ public class LoginPage {
         c.fill = GridBagConstraints.NONE;
         panel.add(password, c);
 
-        JTextField passwordField = new JTextField(15);
+        JPasswordField passwordField = new JPasswordField(15);
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
+        passwordField.setEchoChar('•');
         c.gridx = 1;
         c.gridy = 1;
         c.anchor = GridBagConstraints.WEST;
@@ -68,9 +70,11 @@ public class LoginPage {
         login.setFont(new Font("Arial", Font.BOLD, 14));
         login.addActionListener(e -> {
             try {
-                database.loginUser(new User(usernameField.getText(), passwordField.getText()));
+                user = new User(usernameField.getText(), passwordField.getText());
+                database.loginUser(user);
                 frame.dispose();
                 new HomePage();
+
             }
             catch (IllegalArgumentException ex) {
                 message.setForeground(Color.RED);
@@ -82,7 +86,8 @@ public class LoginPage {
         createAccount.setFont(new Font("Arial", Font.BOLD, 14));
         createAccount.addActionListener(e -> {
             try {
-                database.registerUser(new User(usernameField.getText(), passwordField.getText()));
+                user = new User(usernameField.getText(), passwordField.getText());
+                database.registerUser(user);
                 message.setForeground(Color.BLACK);
                 message.setText("New account created with username and password.");
                 usernameField.setText("");
