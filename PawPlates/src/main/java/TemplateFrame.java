@@ -4,16 +4,23 @@ import javax.swing.UIManager;
 import java.awt.*;
 
 class TemplateFrame extends JFrame {
-    protected JPanel contentPane;
-    protected JPanel menuBarPanel;
-    protected JPanel contentPanel;
-    protected JPanel topPanel;
+    protected JPanel centerPanel; //gridBagLayout
+    protected JPanel northPanel;  //BorderLayout
     protected GridBagConstraints c;
 
-    // Not supposed to be visible after construction
-    // Has no title since it is a template
+    // not used panels currently. If need more flexibility, use these panels. Keep the ui easy to understand
+    // Our frames will have 5 panels used in borderLayout. If used, label what layout it has
+//    protected JPanel southPanel;
+//    protected JPanel westPanel;
+//    protected JPanel eastPanel;
+
     public TemplateFrame(){
         // Maximize window and set default close operation
+        centerPanel = new JPanel(new GridBagLayout());
+        northPanel = new JPanel(new BorderLayout());
+        centerPanel.setBackground(Theme.BG_DARK);
+        northPanel.setBackground(Theme.BG_DARK);
+
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
@@ -22,68 +29,67 @@ class TemplateFrame extends JFrame {
         UIManager.put("TextArea.caretForeground", new ColorUIResource(Theme.FG_LIGHT));
         UIManager.put("PasswordField.caretForeground", new ColorUIResource(Theme.FG_LIGHT));
 
-        // Create the content pane with BorderLayout and assign theme background
-        contentPane = new JPanel(new BorderLayout());
-        contentPane.setBackground(Theme.BG_DARK);
-        setContentPane(contentPane);
+        setBackground(Theme.BG_DARK);
+        setLayout(new BorderLayout());
+        c = new GridBagConstraints();
+    }
 
+
+    public void addMenuBarPanel(){
         // Menu Bar panel setup using GridBagLayout
-        menuBarPanel = new JPanel(new GridBagLayout());
+        JPanel menuBarPanel = new JPanel(new GridBagLayout());
         menuBarPanel.setBackground(Theme.BG_DARK);
-        GridBagConstraints gbc = new GridBagConstraints();
 
         // Creating the user menu (assumed to be themed already)
         UserMenu userMenu = new UserMenu();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.anchor = GridBagConstraints.WEST;
-        menuBarPanel.add(userMenu.addUserMenu(), gbc);
+        c.insets = new Insets (0,0,0,0);
+        c.gridx = 0;
+        c.gridy = 0;
+        c.weightx = 1.0;
+        c.fill = GridBagConstraints.HORIZONTAL;
+        c.anchor = GridBagConstraints.WEST;
+        menuBarPanel.add(userMenu.addUserMenu(), c);
 
         // Add the logout menu to the right (assumed to be themed already)
         LogoutMenu logoutMenu = new LogoutMenu();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0.0;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.EAST;
-        menuBarPanel.add(logoutMenu.addLogoutMenu(), gbc);
+        c.gridx = 1;
+        c.gridy = 0;
+        c.weightx = 0.0;
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.EAST;
+        menuBarPanel.add(logoutMenu.addLogoutMenu(), c);
 
         // Combine the menu panel into the topPanel using BorderLayout
-        topPanel = new JPanel(new BorderLayout());
-        topPanel.setBackground(Theme.BG_DARK);
-        topPanel.add(menuBarPanel, BorderLayout.NORTH);
-        contentPane.add(topPanel, BorderLayout.NORTH);
-
-        // Create the center content panel for additional components
-        contentPanel = new JPanel(new GridBagLayout());
-        contentPanel.setBackground(Theme.BG_DARK);
-        c = new GridBagConstraints();
-        c.insets = new Insets(5, 5, 5, 5);
-        c.fill = GridBagConstraints.HORIZONTAL;
-        contentPane.add(contentPanel, BorderLayout.CENTER);
+        northPanel.setBackground(Theme.BG_DARK);
+        northPanel.add(menuBarPanel, BorderLayout.NORTH);
+        add(northPanel, BorderLayout.NORTH);
     }
 
-    // Add function to add a text field with a prompt in the content panel
-    public void addTextField(String prompt, JTextField textField, int n){
-        c.gridx = 0;
+    // Add function to add a text field with a prompt in the centerPanel
+    public void addTextField(String prompt, JTextField textField, int x, int y){
+        c.insets = new Insets(5, 5, 5, 5);
+        c.fill = GridBagConstraints.HORIZONTAL;
+
+        c.gridx = x;
         c.anchor = GridBagConstraints.WEST;
-        c.gridy = n;
+        c.gridy = y;
         JLabel label = new JLabel(prompt);
         label.setForeground(Theme.FG_LIGHT);
-        contentPanel.add(label, c);
+        centerPanel.add(label, c);
         c.gridx = 1;
         // Style the text field using theme colors
         textField.setBackground(Theme.BG_DARKER);
         textField.setForeground(Theme.FG_LIGHT);
         // Ensure the caret is visible
         textField.setCaretColor(Theme.FG_LIGHT);
-        contentPanel.add(textField, c);
+        centerPanel.add(textField, c);
     }
 
     // Add function to add a button in the content panel
     public void addButton(JButton button, int n){
+        c.insets = new Insets(5, 5, 5, 5);
+        c.fill = GridBagConstraints.HORIZONTAL;
+
         c.anchor = GridBagConstraints.CENTER;
         c.gridx = 0;
         c.gridy = n;
@@ -91,7 +97,7 @@ class TemplateFrame extends JFrame {
         // Style the button using theme colors
         button.setBackground(Theme.BUTTON_BG);
         button.setForeground(Theme.BUTTON_FG);
-        contentPanel.add(button, c);
+        centerPanel.add(button, c);
     }
 
     // Add a progress bar to the topPanel. The progress bar and its label are styled using the Theme.
@@ -117,8 +123,7 @@ class TemplateFrame extends JFrame {
         progressBarPanel.add(progressLabel);
 
         // Remove any existing topPanel components and add the progress bar panel to the topPanel
-        contentPane.remove(topPanel);
-        topPanel.add(progressBarPanel, BorderLayout.SOUTH);
-        add(topPanel, BorderLayout.NORTH);
+        northPanel.add(progressBarPanel, BorderLayout.SOUTH);
+        add(northPanel, BorderLayout.NORTH);
     }
 }

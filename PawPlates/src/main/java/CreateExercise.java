@@ -5,14 +5,16 @@ import java.awt.*;
 public class CreateExercise extends TemplateFrame {
 
     public CreateExercise() {
+        addMenuBarPanel();
+
         JTextField exerciseName = new JTextField(15);
-        addTextField("Exercise Name:", exerciseName, 0);
+        addTextField("Exercise Name:", exerciseName, 0,0);
 
         JTextField focus = new JTextField(15);
-        addTextField("Focus:", focus, 1);
+        addTextField("Focus:", focus, 0,1);
 
         JTextField description = new JTextField(15);
-        addTextField("Description:", description, 2);
+        addTextField("Description:", description, 0,2);
 
         JButton submitButton = new JButton("Add Entry");
         addButton(submitButton, 5);
@@ -42,7 +44,8 @@ public class CreateExercise extends TemplateFrame {
             description.setText("");
         });
 
-        contentPane.add(contentPanel, BorderLayout.CENTER);
+        add(centerPanel, BorderLayout.CENTER);
+
         setVisible(true);
     }
 

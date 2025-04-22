@@ -24,8 +24,11 @@ public class CalorieMacroPage extends TemplateFrame {
     private JTable dinnerTable;
 
     public CalorieMacroPage() {
-        super(); // sets up the menu and content pane via TemplateFrame
+//        super(); // sets up the menu and content pane via TemplateFrame  ---- super gets called implicitly
+        addMenuBarPanel();
         setTitle("Calorie/Macro Tracker");
+
+        addMenuBarPanel();
 
         // -------- Progress Bar Setup --------
         calorieProgressBar = new JProgressBar(0, DAILY_LIMIT);
@@ -97,8 +100,8 @@ public class CalorieMacroPage extends TemplateFrame {
         buttonPanel.add(delete);
 
         // Add the tabbed pane and button panel to the content pane.
-        contentPane.add(tabbedPane, BorderLayout.CENTER);
-        contentPane.add(buttonPanel, BorderLayout.SOUTH);
+        add(tabbedPane, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
 
         setSize(1000, 500);
         setVisible(true);

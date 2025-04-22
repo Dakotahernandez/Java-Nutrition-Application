@@ -8,6 +8,9 @@ public class RecordWeight extends TemplateFrame{
     private static JProgressBar weightProgress;
     private static JLabel progressLabel;
 
+    // need to add menu bar panel, set the progressBar at the northPanel.south
+    // menu bar is set at northPanel.north when its function is used
+
     public RecordWeight() {
         weightProgress = new JProgressBar(0, GOAL_WEIGHT);
         progressLabel = new JLabel(getProgressText());
@@ -18,7 +21,7 @@ public class RecordWeight extends TemplateFrame{
         progressPanel.add(weightProgress, BorderLayout.CENTER);
 
         JTextField newWeight = new JTextField(15);
-        addTextField("Current Weight:", newWeight, 0);
+        addTextField("Current Weight:", newWeight, 0,0);
 
         JButton confirm = new JButton("Confirm");
         addButton(confirm, 5);
@@ -43,8 +46,9 @@ public class RecordWeight extends TemplateFrame{
             progressLabel.setText(getProgressText());
         });
 
-        contentPane.add(contentPanel, BorderLayout.CENTER);
-        contentPane.add(progressPanel, BorderLayout.NORTH);
+        add(centerPanel, BorderLayout.CENTER);
+        add(progressPanel, BorderLayout.NORTH);
+
         setVisible(true);
     }
 
