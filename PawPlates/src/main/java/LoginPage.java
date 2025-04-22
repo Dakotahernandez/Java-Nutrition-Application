@@ -1,8 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -111,7 +109,6 @@ public class LoginPage extends JFrame {
 
         JPasswordField passwordField = new JPasswordField(15);
         passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
-        passwordField.setEchoChar('•');
         c.gridx = 1;
         c.gridy = 3;
         c.anchor = GridBagConstraints.WEST;
@@ -227,7 +224,7 @@ class CreateAccountPage extends JFrame {
         panel.add(usernameField, c);
 
         // email label and field
-        JLabel email = new JLabel("Email:");
+        JLabel email = new JLabel("Email (Optional):");
         email.setFont(new Font("Arial", Font.PLAIN, 14));
         email.setOpaque(true);
         email.setBackground(labelWhite);
