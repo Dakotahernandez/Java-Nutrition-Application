@@ -101,7 +101,7 @@ class TemplateFrame extends JFrame {
     }
 
     // Add a progress bar to the topPanel. The progress bar and its label are styled using the Theme.
-    public void addProgressBar(JProgressBar progressBar, int setValue, JLabel progressLabel, String progressText){
+    public JLabel addProgressBar(JProgressBar progressBar, int setValue, String progressText){
         JPanel progressBarPanel = new JPanel();
         progressBarPanel.setLayout(new BoxLayout(progressBarPanel, BoxLayout.Y_AXIS));
         progressBarPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -112,7 +112,7 @@ class TemplateFrame extends JFrame {
         progressBar.setPreferredSize(new Dimension(400, 50));
 
         // Create and style the progress label
-        progressLabel = new JLabel(progressText);
+        JLabel progressLabel = new JLabel(progressText);
         progressLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         progressLabel.setForeground(Theme.FG_LIGHT);
         progressLabel.setBackground(Theme.BG_DARK);
@@ -125,5 +125,6 @@ class TemplateFrame extends JFrame {
         // Remove any existing topPanel components and add the progress bar panel to the topPanel
         northPanel.add(progressBarPanel, BorderLayout.SOUTH);
         add(northPanel, BorderLayout.NORTH);
+        return progressLabel;
     }
 }

@@ -34,13 +34,11 @@ public class CalorieMacroPage extends TemplateFrame {
         calorieProgressBar = new JProgressBar(0, DAILY_LIMIT);
         calorieProgressBar.setForeground(Theme.ACCENT_GREEN);
         calorieProgressBar.setBackground(Theme.MID_GRAY);
-        progressLabel = new JLabel(getProgressText());
-        progressLabel.setFont(Theme.HEADER_FONT);
-        progressLabel.setForeground(Theme.FG_LIGHT);
 
         // Use TemplateFrame's addProgressBar method to insert progress bar into the top panel
-        addProgressBar(calorieProgressBar, 0, progressLabel, getProgressText());
-
+        progressLabel = addProgressBar(calorieProgressBar, 0, getProgressText());
+        progressLabel.setFont(Theme.HEADER_FONT);
+        progressLabel.setForeground(Theme.FG_LIGHT);
         // -------- Initialize Models and Tables --------
         breakfastModel = new FoodTableModel(new ArrayList<>());
         lunchModel = new FoodTableModel(new ArrayList<>());
