@@ -60,7 +60,7 @@ public class HomePage extends JFrame {
         c.gridx = 1;
         c.gridy = 0;
         mainPanel.add(helloUser, c);
-
+        //fixing commit message
         // 🔧 [2025-04-23] Functional date button with hidden DatePicker (popup works)
         DatePickerSettings dateSettings = new DatePickerSettings();
         dateSettings.setAllowEmptyDates(false);
