@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
+/*
+this is a part of three files for reseting password. There are 3 pages: enter username, answer at least ones security question,
+and making a new password. these files do not have menu title bar yet. I also have hard coded data to use the pages for now.
+*/
 public class ResetPasswordPage1 extends JFrame {
     private JTextField usernameField;
     private static HashMap<String, String[]> userDatabase;
