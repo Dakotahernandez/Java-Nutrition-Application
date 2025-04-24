@@ -1,19 +1,31 @@
 /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           MenuBars.java
+ * Author:         Faith ota
+ * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Utility class for adding the main user and logout menus to a container
+ *   panel using GridBagLayout, and placing the combined menu bar at the top.
  *
  * Dependencies:
- *
+ *   - javax.swing.JPanel
+ *   - javax.swing.border.EmptyBorder
+ *   - java.awt.GridBagConstraints
+ *   - java.awt.GridBagLayout
+ *   - java.awt.BorderLayout
  *
  * Usage:
+ *   // Within a frame setup:
+ *   GridBagConstraints gbc = new GridBagConstraints();
+ *   JPanel content = new JPanel(new BorderLayout());
+ *   MenuBars.addMenuBars(content, gbc);
+ *
+ * TODO:
  *
  * =============================================================================
  */
+
 import javax.swing.*;
 import java.awt.*;
 

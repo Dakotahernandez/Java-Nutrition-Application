@@ -1,19 +1,29 @@
 /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           AnimatedProgressBar.java
+ * Author:         Dakota Hernandez
+ * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   A JProgressBar subclass that smoothly animates its value from the current
+ *   position to a specified target value using a Swing Timer.
  *
  * Dependencies:
- *
+ *   - javax.swing.JProgressBar
+ *   - javax.swing.Timer
+ *   - java.awt.event.ActionListener
  *
  * Usage:
+ *   // Create a bar ranging from 0 to 100
+ *   AnimatedProgressBar bar = new AnimatedProgressBar(0, 100);
+ *   // Animate it to 75%
+ *   bar.animateTo(75);
+ *
+ * TODO:
  *
  * =============================================================================
  */
+
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

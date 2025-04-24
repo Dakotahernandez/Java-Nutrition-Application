@@ -1,19 +1,28 @@
 /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           Theme.java
+ * Author:         Dakota Hernandez
+ * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Centralizes the application's color palette and font settings for
+ *   consistent theming across all UI components.
  *
  * Dependencies:
- *
+ *   - java.awt.Color
+ *   - java.awt.Font
  *
  * Usage:
+ *   // Reference Theme.BG_DARK for background color
+ *   panel.setBackground(Theme.BG_DARK);
+ *   // Use Theme.NORMAL_FONT for standard text
+ *   label.setFont(Theme.NORMAL_FONT);
+ *
+ * TODO:
  *
  * =============================================================================
  */
+
 import java.awt.Color;
 import java.awt.Font;
 

@@ -1,17 +1,29 @@
 /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           CalorieMacroPage.java
+ * Author:         Dakota Hernandez
+ * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   A Java Swing frame for tracking daily calories and macros by meal. Presents
+ *   tabbed tables for breakfast, lunch, and dinner, allows adding/editing/deleting
+ *   entries, and displays an animated progress bar.
  *
  * Dependencies:
- *
+ *   - javax.swing.*           (Swing components)
+ *   - java.awt.*              (AWT layout and events)
+ *   - java.time.LocalDate     (date handling)
+ *   - java.time.format.DateTimeFormatter (date formatting)
+ *   - TemplateFrame           (application template frame)
+ *   - AnimatedProgressBar     (smooth progress bar animation)
  *
  * Usage:
+ *   // Create for today's date and show
+ *   CalorieMacroPage page = new CalorieMacroPage(LocalDate.now());
+ *   page.setVisible(true);
  *
+ * TODO:
+ *   - Connect to the database
  * =============================================================================
  */
 import javax.swing.*;

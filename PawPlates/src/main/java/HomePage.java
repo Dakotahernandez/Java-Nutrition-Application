@@ -1,19 +1,34 @@
 /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           HomePage.java
+ * Authors:        Mac Johnson Dakota Hernandez Faith ota
+ * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Main application home screen frame with user greeting, themed date picker,
+ *   logo display, and navigation buttons for tracking workouts, sleep, and calories.
  *
  * Dependencies:
- *
+ *   - com.github.lgooddatepicker.components.DatePicker
+ *   - com.github.lgooddatepicker.components.DatePickerSettings
+ *   - javax.imageio.ImageIO
+ *   - javax.swing.*
+ *   - java.awt.*
+ *   - java.awt.image.BufferedImage
+ *   - java.io.File
+ *   - java.io.IOException
+ *   - java.time.LocalDate
+ *   - java.time.format.DateTimeFormatter
  *
  * Usage:
+ *   // Instantiate and display the home page
+ *   new HomePage();
+ *
+ * TODO:
  *
  * =============================================================================
  */
+
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import javax.imageio.ImageIO;

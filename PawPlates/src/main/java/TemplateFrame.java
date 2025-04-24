@@ -1,19 +1,41 @@
 /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           TemplateFrame.java
+ * Author:         Dakota Hernandez Joshua Carrol
+ * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   A base JFrame subclass that provides a dark-themed template frame with
+ *   a menu bar, text field and button helpers, and optional animated
+ *   progress bar integration.
  *
  * Dependencies:
- *
+ *   - javax.swing.JFrame
+ *   - javax.swing.JPanel
+ *   - javax.swing.JButton
+ *   - javax.swing.JProgressBar
+ *   - javax.swing.UIManager
+ *   - javax.swing.plaf.ColorUIResource
+ *   - java.awt.BorderLayout
+ *   - java.awt.GridBagLayout
+ *   - java.awt.GridBagConstraints
+ *   - java.awt.Insets
+ *   - java.awt.Component
  *
  * Usage:
+ *   // Extend this frame for all pages:
+ *   public class MyPage extends TemplateFrame {
+ *       public MyPage() {
+ *           addMenuBarPanel();
+ *           // build UI on centerPanel...
+ *       }
+ *   }
+ *
+ * TODO:
  *
  * =============================================================================
  */
+
 import javax.swing.*;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.UIManager;

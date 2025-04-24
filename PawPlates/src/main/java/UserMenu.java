@@ -1,19 +1,31 @@
 /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           UserMenu.java
+ * Author:         Faith ota Dakota Hernandez
+ * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Creates the application menu bar with navigation items for home, tracking
+ *   workouts, sleep, calories, and other actions; disposes the current frame
+ *   and opens the selected page, passing along the chosen date.
  *
  * Dependencies:
- *
+ *   - javax.swing.JMenuBar
+ *   - javax.swing.JMenu
+ *   - javax.swing.JMenuItem
+ *   - javax.swing.SwingUtilities
+ *   - java.time.LocalDate
  *
  * Usage:
+ *   // In a JFrame subclass:
+ *   setJMenuBar(UserMenu.addUserMenu());
  *
+ * TODO:
+ *   - open SetGoalPage(SessionContext.getDate());
+ *   - open RegistrationPage(SessionContext.getDate());
  * =============================================================================
  */
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.time.LocalDate;
