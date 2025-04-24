@@ -11,7 +11,7 @@ public class CalorieMacroPage extends TemplateFrame {
 
     private static final int DAILY_LIMIT = 2000;
     private static int totalCalsSoFar = 0;
-    private static JProgressBar calorieProgressBar;
+    private static AnimatedProgressBar calorieProgressBar;
     private static JLabel progressLabel;
 
     // Models and tables for each meal
@@ -24,88 +24,73 @@ public class CalorieMacroPage extends TemplateFrame {
     private JTable dinnerTable;
 
     public CalorieMacroPage() {
-//        super(); // sets up the menu and content pane via TemplateFrame  ---- super gets called implicitly
+        // Setup frame
         addMenuBarPanel();
         setTitle("Calorie/Macro Tracker");
 
-        addMenuBarPanel();
-
         // -------- Progress Bar Setup --------
-        calorieProgressBar = new JProgressBar(0, DAILY_LIMIT);
+        calorieProgressBar = new AnimatedProgressBar(0, DAILY_LIMIT);
         calorieProgressBar.setForeground(Theme.ACCENT_GREEN);
         calorieProgressBar.setBackground(Theme.BG_LIGHTER);
 
-        // Use TemplateFrame's addProgressBar method to insert progress bar into the top panel
+        // Insert and animate via TemplateFrame
         progressLabel = addProgressBar(calorieProgressBar, 0, getProgressText());
         progressLabel.setFont(Theme.HEADER_FONT);
         progressLabel.setForeground(Theme.FG_LIGHT);
+
         // -------- Initialize Models and Tables --------
         breakfastModel = new FoodTableModel(new ArrayList<>());
-        lunchModel = new FoodTableModel(new ArrayList<>());
-        dinnerModel = new FoodTableModel(new ArrayList<>());
+        lunchModel     = new FoodTableModel(new ArrayList<>());
+        dinnerModel    = new FoodTableModel(new ArrayList<>());
 
         breakfastTable = createStyledTable(breakfastModel);
-        lunchTable = createStyledTable(lunchModel);
-        dinnerTable = createStyledTable(dinnerModel);
+        lunchTable     = createStyledTable(lunchModel);
+        dinnerTable    = createStyledTable(dinnerModel);
 
-        // -------- Create Tabbed Pane for Meal Panels --------
+        // -------- Create Tabbed Pane for Meals --------
         JTabbedPane tabbedPane = new JTabbedPane();
         tabbedPane.addTab("Breakfast", createMealPanel(breakfastModel, breakfastTable));
-        tabbedPane.addTab("Lunch", createMealPanel(lunchModel, lunchTable));
-        tabbedPane.addTab("Dinner", createMealPanel(dinnerModel, dinnerTable));
+        tabbedPane.addTab("Lunch",     createMealPanel(lunchModel, lunchTable));
+        tabbedPane.addTab("Dinner",    createMealPanel(dinnerModel, dinnerTable));
 
         // -------- Buttons Setup --------
-        JButton add = createStyledButton("Add");
-        JButton edit = createStyledButton("Edit");
-        JButton delete = createStyledButton("Delete");
+        JButton addBtn    = createStyledButton("Add");
+        JButton editBtn   = createStyledButton("Edit");
+        JButton deleteBtn = createStyledButton("Delete");
 
-        // Action listeners: work with the currently selected tab's table.
-        add.addActionListener(e -> openDialog(null, -1, tabbedPane));
-        edit.addActionListener(e -> {
-            JTable currentTable = getCurrentTable(tabbedPane);
-            if (currentTable != null) {
-                int row = currentTable.getSelectedRow();
-                if (row != -1) {
-                    FoodTableModel model = getModelForTable(currentTable);
-                    FoodEntry entry = model.getRecordAt(currentTable.convertRowIndexToModel(row));
-                    openDialog(entry, row, tabbedPane);
-                }
+        addBtn.addActionListener(e -> openDialog(null, -1, tabbedPane));
+        editBtn.addActionListener(e -> {
+            JTable tbl = getCurrentTable(tabbedPane);
+            int row = tbl != null ? tbl.getSelectedRow() : -1;
+            if (row != -1) {
+                FoodTableModel model = getModelForTable(tbl);
+                FoodEntry entry = model.getRecordAt(tbl.convertRowIndexToModel(row));
+                openDialog(entry, row, tabbedPane);
             }
         });
-        delete.addActionListener(e -> {
-            JTable currentTable = getCurrentTable(tabbedPane);
-            if (currentTable != null) {
-                int row = currentTable.getSelectedRow();
-                if (row != -1) {
-                    int confirmed = JOptionPane.showConfirmDialog(
-                            this,
-                            "Delete selected row?",
-                            "Confirm",
-                            JOptionPane.YES_NO_OPTION
-                    );
-                    if (confirmed == JOptionPane.YES_OPTION) {
-                        getModelForTable(currentTable).removeRecord(currentTable.convertRowIndexToModel(row));
-                        updateCalorieProgress();
-                    }
-                }
+        deleteBtn.addActionListener(e -> {
+            JTable tbl = getCurrentTable(tabbedPane);
+            int row = tbl != null ? tbl.getSelectedRow() : -1;
+            if (row != -1 && JOptionPane.showConfirmDialog(this, "Delete selected row?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                getModelForTable(tbl).removeRecord(tbl.convertRowIndexToModel(row));
+                updateCalorieProgress();
             }
         });
 
         JPanel buttonPanel = new JPanel();
         buttonPanel.setBackground(Theme.BG_DARK);
-        buttonPanel.add(add);
-        buttonPanel.add(edit);
-        buttonPanel.add(delete);
+        buttonPanel.add(addBtn);
+        buttonPanel.add(editBtn);
+        buttonPanel.add(deleteBtn);
 
-        // Add the tabbed pane and button panel to the content pane.
-        add(tabbedPane, BorderLayout.CENTER);
+        // Add components to frame
+        add(tabbedPane,  BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
         setSize(1000, 500);
         setVisible(true);
     }
 
-    // Helper method: creates a button styled with the theme.
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(Theme.NORMAL_FONT);
@@ -114,7 +99,6 @@ public class CalorieMacroPage extends TemplateFrame {
         return button;
     }
 
-    // Returns the progress text based on total calories.
     private String getProgressText() {
         if (totalCalsSoFar <= DAILY_LIMIT) {
             return String.format("Calories so far: %d / %d", totalCalsSoFar, DAILY_LIMIT);
@@ -123,7 +107,6 @@ public class CalorieMacroPage extends TemplateFrame {
         }
     }
 
-    // Creates a panel for a meal with a filter panel and a scroll pane for the table.
     private JPanel createMealPanel(FoodTableModel model, JTable table) {
         JPanel filterPanel = new JPanel(new GridLayout(1, 7, 5, 5));
         filterPanel.setBackground(Theme.BG_DARK);
@@ -139,21 +122,18 @@ public class CalorieMacroPage extends TemplateFrame {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Theme.BG_DARK);
         panel.add(filterPanel, BorderLayout.NORTH);
-        panel.add(scrollPane, BorderLayout.CENTER);
+        panel.add(scrollPane,  BorderLayout.CENTER);
         return panel;
     }
 
-    // Helper method: creates a styled text field for filters.
     private JTextField createStyledFilterField() {
         JTextField field = new JTextField();
         field.setFont(Theme.NORMAL_FONT);
-        // If you prefer, you can use a Theme constant instead of new Color(60,60,60)
         field.setBackground(new Color(60, 60, 60));
         field.setForeground(Theme.FG_LIGHT);
         return field;
     }
 
-    // Returns a styled JTable for the given model.
     private JTable createStyledTable(FoodTableModel model) {
         JTable table = new JTable(model);
         table.setRowHeight(25);
@@ -171,84 +151,62 @@ public class CalorieMacroPage extends TemplateFrame {
         return table;
     }
 
-    // Utility method to obtain the currently active table from the tabbed pane.
-    private JTable getCurrentTable(JTabbedPane tabbedPane) {
-        Component selected = tabbedPane.getSelectedComponent();
-        if (selected instanceof JPanel) {
-            JPanel panel = (JPanel) selected;
-            for (Component comp : panel.getComponents()) {
+    private JTable getCurrentTable(JTabbedPane tabs) {
+        Component sel = tabs.getSelectedComponent();
+        if (sel instanceof JPanel) {
+            for (Component comp : ((JPanel) sel).getComponents()) {
                 if (comp instanceof JScrollPane) {
-                    JScrollPane scrollPane = (JScrollPane) comp;
-                    return (JTable) scrollPane.getViewport().getView();
+                    return (JTable) ((JScrollPane) comp).getViewport().getView();
                 }
             }
         }
         return null;
     }
 
-    // Returns the model corresponding to the given table.
     private FoodTableModel getModelForTable(JTable table) {
-        if (table == breakfastTable) {
-            return breakfastModel;
-        } else if (table == lunchTable) {
-            return lunchModel;
-        } else {
-            return dinnerModel;
-        }
+        if (table == breakfastTable) return breakfastModel;
+        if (table == lunchTable)     return lunchModel;
+        return dinnerModel;
     }
 
-    // Opens the FoodEntryDialog. Uses the current model depending on the selected tab.
-    private void openDialog(FoodEntry entry, int row, JTabbedPane tabbedPane) {
-        FoodEntryDialog dialog = new FoodEntryDialog(this, entry);
-        dialog.setVisible(true);
-        if (dialog.isSaved()) {
-            FoodEntry newEntry = dialog.getRecord();
-            FoodTableModel targetModel = getModelForMeal(newEntry.getMealType());
+    private void openDialog(FoodEntry entry, int row, JTabbedPane tabs) {
+        FoodEntryDialog dlg = new FoodEntryDialog(this, entry);
+        dlg.setVisible(true);
+        if (dlg.isSaved()) {
+            FoodEntry rec = dlg.getRecord();
+            FoodTableModel target = getModelForMeal(rec.getMealType());
             if (entry == null) {
-                targetModel.addRecord(newEntry);
+                target.addRecord(rec);
             } else {
-                // If the meal type has changed, remove from the old model and add to the new one.
-                if (!entry.getMealType().equals(newEntry.getMealType())) {
+                if (!entry.getMealType().equals(rec.getMealType())) {
                     getModelForMeal(entry.getMealType()).removeRecord(row);
-                    targetModel.addRecord(newEntry);
+                    target.addRecord(rec);
                 } else {
-                    targetModel.updateRecord(row, newEntry);
+                    target.updateRecord(row, rec);
                 }
             }
             updateCalorieProgress();
         }
     }
 
-    // Returns the proper model for a given meal type.
     private FoodTableModel getModelForMeal(String mealType) {
-        if ("Breakfast".equals(mealType)) {
-            return breakfastModel;
-        } else if ("Lunch".equals(mealType)) {
-            return lunchModel;
-        } else {
-            return dinnerModel;
-        }
+        if ("Breakfast".equals(mealType)) return breakfastModel;
+        if ("Lunch".equals(mealType))     return lunchModel;
+        return dinnerModel;
     }
 
-    // Sums calories from all models and updates the progress bar.
     private void updateCalorieProgress() {
         int sum = 0;
-        for (FoodEntry entry : breakfastModel.getData()) {
-            sum += entry.getCalories();
-        }
-        for (FoodEntry entry : lunchModel.getData()) {
-            sum += entry.getCalories();
-        }
-        for (FoodEntry entry : dinnerModel.getData()) {
-            sum += entry.getCalories();
-        }
+        for (FoodEntry e : breakfastModel.getData()) sum += e.getCalories();
+        for (FoodEntry e : lunchModel.getData())     sum += e.getCalories();
+        for (FoodEntry e : dinnerModel.getData())    sum += e.getCalories();
         totalCalsSoFar = sum;
-        calorieProgressBar.setValue(Math.min(sum, DAILY_LIMIT));
+        calorieProgressBar.animateTo(Math.min(sum, DAILY_LIMIT));
         progressLabel.setText(getProgressText());
     }
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> new CalorieMacroPage());
+        SwingUtilities.invokeLater(CalorieMacroPage::new);
     }
 
     // -------------------- Supporting Inner Classes ------------------------
@@ -261,50 +219,49 @@ public class CalorieMacroPage extends TemplateFrame {
         private String fats;
         private String fiber;
         private String notes;
-        private String mealType; // Specifies meal type
+        private String mealType;
 
         public FoodEntry(String foodName, int calories, String protein,
                          String carbs, String fats, String fiber, String notes, String mealType) {
             this.foodName = foodName;
             this.calories = calories;
-            this.protein = protein;
-            this.carbs = carbs;
-            this.fats = fats;
-            this.fiber = fiber;
-            this.notes = notes;
+            this.protein  = protein;
+            this.carbs    = carbs;
+            this.fats     = fats;
+            this.fiber    = fiber;
+            this.notes    = notes;
             this.mealType = mealType;
         }
 
-        // Getters
         public String getFoodName() { return foodName; }
-        public int getCalories() { return calories; }
-        public String getProtein() { return protein; }
-        public String getCarbs() { return carbs; }
-        public String getFats() { return fats; }
-        public String getFiber() { return fiber; }
-        public String getNotes() { return notes; }
+        public int    getCalories() { return calories; }
+        public String getProtein()  { return protein; }
+        public String getCarbs()    { return carbs; }
+        public String getFats()     { return fats; }
+        public String getFiber()    { return fiber; }
+        public String getNotes()    { return notes; }
         public String getMealType() { return mealType; }
 
-        // Setters
         public void setFoodName(String foodName) { this.foodName = foodName; }
-        public void setCalories(int calories) { this.calories = calories; }
-        public void setProtein(String protein) { this.protein = protein; }
-        public void setCarbs(String carbs) { this.carbs = carbs; }
-        public void setFats(String fats) { this.fats = fats; }
-        public void setFiber(String fiber) { this.fiber = fiber; }
-        public void setNotes(String notes) { this.notes = notes; }
+        public void setCalories(int calories)    { this.calories = calories; }
+        public void setProtein(String protein)   { this.protein  = protein; }
+        public void setCarbs(String carbs)       { this.carbs    = carbs; }
+        public void setFats(String fats)         { this.fats     = fats; }
+        public void setFiber(String fiber)       { this.fiber    = fiber; }
+        public void setNotes(String notes)       { this.notes    = notes; }
         public void setMealType(String mealType) { this.mealType = mealType; }
     }
 
     public static class FoodTableModel extends AbstractTableModel {
-        private final String[] columns = {"Food", "Calories", "Protein", "Carbs", "Fats", "Fiber", "Notes", "Meal"};
+        private final String[] columns = {
+                "Food", "Calories", "Protein", "Carbs", "Fats", "Fiber", "Notes", "Meal"
+        };
         private List<FoodEntry> data;
 
         public FoodTableModel(List<FoodEntry> data) {
             this.data = data;
         }
 
-        // Expose the internal list for calorie summing.
         public List<FoodEntry> getData() {
             return data;
         }
@@ -367,16 +324,17 @@ public class CalorieMacroPage extends TemplateFrame {
 
         public FoodEntryDialog(Frame parent, FoodEntry record) {
             super(parent, "Food Entry Form", true);
-            // 7 fields + meal type = 8 rows; plus one row for buttons gives 9 rows
             setLayout(new GridLayout(9, 2, 5, 5));
 
             Color dialogBg = Theme.BG_DARK;
-            Color fieldBg = new Color(60, 60, 60);
-            Color fgLight = Theme.FG_LIGHT;
+            Color fieldBg  = new Color(60, 60, 60);
+            Color fgLight  = Theme.FG_LIGHT;
 
             getContentPane().setBackground(dialogBg);
 
-            String[] labels = {"Food Name", "Calories", "Protein", "Carbs", "Fats", "Fiber", "Notes"};
+            String[] labels = {
+                    "Food Name", "Calories", "Protein", "Carbs", "Fats", "Fiber", "Notes"
+            };
             for (int i = 0; i < labels.length; i++) {
                 JLabel lbl = new JLabel(labels[i]);
                 lbl.setForeground(fgLight);
@@ -387,7 +345,6 @@ public class CalorieMacroPage extends TemplateFrame {
                 add(fields[i]);
             }
 
-            // Add meal type selection
             JLabel mealLabel = new JLabel("Meal Type");
             mealLabel.setForeground(fgLight);
             mealLabel.setFont(Theme.NORMAL_FONT);
@@ -410,32 +367,27 @@ public class CalorieMacroPage extends TemplateFrame {
                 mealComboBox.setSelectedItem(record.getMealType());
             }
 
-            JButton save = createDialogStyledButton("Save");
-            JButton cancel = createDialogStyledButton("Cancel");
+            JButton saveBtn   = createDialogStyledButton("Save");
+            JButton cancelBtn = createDialogStyledButton("Cancel");
 
-            save.addActionListener(e -> {
+            saveBtn.addActionListener(e -> {
                 if (fields[0].getText().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(
-                            this,
-                            "Food Name cannot be blank.",
-                            "Validation Error",
-                            JOptionPane.ERROR_MESSAGE
-                    );
+                    JOptionPane.showMessageDialog(this, "Food Name cannot be blank.",
+                            "Validation Error", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 saved = true;
                 setVisible(false);
             });
-            cancel.addActionListener(e -> setVisible(false));
+            cancelBtn.addActionListener(e -> setVisible(false));
 
-            add(save);
-            add(cancel);
+            add(saveBtn);
+            add(cancelBtn);
 
             pack();
             setLocationRelativeTo(parent);
         }
 
-        // Helper method for FoodEntryDialog: creates a styled text field.
         private JTextField createStyledField() {
             JTextField field = new JTextField();
             field.setFont(Theme.NORMAL_FONT);
@@ -444,7 +396,6 @@ public class CalorieMacroPage extends TemplateFrame {
             return field;
         }
 
-        // Helper method for FoodEntryDialog: creates a styled button.
         private JButton createDialogStyledButton(String text) {
             JButton button = new JButton(text);
             button.setFont(Theme.NORMAL_FONT);
@@ -458,13 +409,13 @@ public class CalorieMacroPage extends TemplateFrame {
         }
 
         public FoodEntry getRecord() {
-            String food = fields[0].getText().trim();
-            int calories = parseIntSafe(fields[1].getText());
-            String protein = defaultToZero(fields[2].getText());
-            String carbs = defaultToZero(fields[3].getText());
-            String fats = defaultToZero(fields[4].getText());
-            String fiber = defaultToZero(fields[5].getText());
-            String notes = fields[6].getText().trim();
+            String food     = fields[0].getText().trim();
+            int    calories = parseIntSafe(fields[1].getText());
+            String protein  = defaultToZero(fields[2].getText());
+            String carbs    = defaultToZero(fields[3].getText());
+            String fats     = defaultToZero(fields[4].getText());
+            String fiber    = defaultToZero(fields[5].getText());
+            String notes    = fields[6].getText().trim();
             String mealType = (String) mealComboBox.getSelectedItem();
             return new FoodEntry(food, calories, protein, carbs, fats, fiber, notes, mealType);
         }
