@@ -105,6 +105,10 @@ public class HomePage extends JFrame {
             }
         });
 
+
+
+
+
         JPanel datePanel = new JPanel();
         datePanel.setBackground(Theme.BG_DARK);
         JLabel dateLabel = new JLabel("Date: ");

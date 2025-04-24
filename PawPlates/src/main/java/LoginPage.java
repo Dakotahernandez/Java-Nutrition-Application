@@ -70,7 +70,7 @@ public class LoginPage extends JFrame {
         JLabel welcome = new JLabel("Welcome to Paw Plates!");
         welcome.setFont(new Font("Arial", Font.BOLD, 20));
         welcome.setOpaque(true);
-        welcome.setBackground(labelWhite);
+        //welcome.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 1;
         c.anchor = GridBagConstraints.CENTER;
@@ -81,7 +81,7 @@ public class LoginPage extends JFrame {
         JLabel username = new JLabel("Username:");
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setOpaque(true);
-        username.setBackground(labelWhite);
+        //username.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -100,7 +100,7 @@ public class LoginPage extends JFrame {
         JLabel password = new JLabel("Password:");
         password.setFont(new Font("Arial", Font.PLAIN, 14));
         password.setOpaque(true);
-        password.setBackground(labelWhite);
+        //password.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 3;
         c.anchor = GridBagConstraints.EAST;
