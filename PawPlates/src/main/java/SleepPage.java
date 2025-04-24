@@ -41,6 +41,9 @@ public class SleepPage extends TemplateFrame{
             hoursSleptField.setText("");
         });
         add(centerPanel, BorderLayout.CENTER);
+
+        pack();
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setVisible(true);
     }
 
