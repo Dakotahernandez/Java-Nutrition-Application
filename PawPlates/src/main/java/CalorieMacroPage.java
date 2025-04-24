@@ -4,6 +4,8 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,10 @@ public class CalorieMacroPage extends TemplateFrame {
     private static AnimatedProgressBar calorieProgressBar;
     private static JLabel progressLabel;
 
+    private final LocalDate date;
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("MMMM d, yyyy");
+
     // Models and tables for each meal
     private FoodTableModel breakfastModel;
     private FoodTableModel lunchModel;
@@ -23,17 +29,19 @@ public class CalorieMacroPage extends TemplateFrame {
     private JTable lunchTable;
     private JTable dinnerTable;
 
-    public CalorieMacroPage() {
-        // Setup frame
+    /**
+     * Primary constructor: accepts a date, sets title, and builds UI.
+     */
+    public CalorieMacroPage(LocalDate date) {
+        this.date = date;
+
         addMenuBarPanel();
-        setTitle("Calorie/Macro Tracker");
+        setTitle("Calorie/Macro Tracker – " + date.format(FORMATTER));
 
         // -------- Progress Bar Setup --------
         calorieProgressBar = new AnimatedProgressBar(0, DAILY_LIMIT);
         calorieProgressBar.setForeground(Theme.ACCENT_GREEN);
         calorieProgressBar.setBackground(Theme.BG_LIGHTER);
-
-        // Insert and animate via TemplateFrame
         progressLabel = addProgressBar(calorieProgressBar, 0, getProgressText());
         progressLabel.setFont(Theme.HEADER_FONT);
         progressLabel.setForeground(Theme.FG_LIGHT);
@@ -71,7 +79,12 @@ public class CalorieMacroPage extends TemplateFrame {
         deleteBtn.addActionListener(e -> {
             JTable tbl = getCurrentTable(tabbedPane);
             int row = tbl != null ? tbl.getSelectedRow() : -1;
-            if (row != -1 && JOptionPane.showConfirmDialog(this, "Delete selected row?", "Confirm", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            if (row != -1 && JOptionPane.showConfirmDialog(
+                    this,
+                    "Delete selected row?",
+                    "Confirm",
+                    JOptionPane.YES_NO_OPTION
+            ) == JOptionPane.YES_OPTION) {
                 getModelForTable(tbl).removeRecord(tbl.convertRowIndexToModel(row));
                 updateCalorieProgress();
             }
@@ -83,13 +96,26 @@ public class CalorieMacroPage extends TemplateFrame {
         buttonPanel.add(editBtn);
         buttonPanel.add(deleteBtn);
 
-        // Add components to frame
+        // Assemble into frame
         add(tabbedPane,  BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
         setSize(1000, 500);
         setVisible(true);
     }
+
+    /**
+     * No-arg constructor: defaults to the date in SessionContext.
+     */
+    public CalorieMacroPage() {
+        this(SessionContext.getDate());
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(CalorieMacroPage::new);
+    }
+
+    // === Helper methods ===
 
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
@@ -103,7 +129,11 @@ public class CalorieMacroPage extends TemplateFrame {
         if (totalCalsSoFar <= DAILY_LIMIT) {
             return String.format("Calories so far: %d / %d", totalCalsSoFar, DAILY_LIMIT);
         } else {
-            return String.format("Calories so far: %d (Over by %d)", totalCalsSoFar, totalCalsSoFar - DAILY_LIMIT);
+            return String.format(
+                    "Calories so far: %d (Over by %d)",
+                    totalCalsSoFar,
+                    totalCalsSoFar - DAILY_LIMIT
+            );
         }
     }
 
@@ -205,10 +235,6 @@ public class CalorieMacroPage extends TemplateFrame {
         progressLabel.setText(getProgressText());
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(CalorieMacroPage::new);
-    }
-
     // -------------------- Supporting Inner Classes ------------------------
 
     public static class FoodEntry {
@@ -221,8 +247,16 @@ public class CalorieMacroPage extends TemplateFrame {
         private String notes;
         private String mealType;
 
-        public FoodEntry(String foodName, int calories, String protein,
-                         String carbs, String fats, String fiber, String notes, String mealType) {
+        public FoodEntry(
+                String foodName,
+                int calories,
+                String protein,
+                String carbs,
+                String fats,
+                String fiber,
+                String notes,
+                String mealType
+        ) {
             this.foodName = foodName;
             this.calories = calories;
             this.protein  = protein;
@@ -235,20 +269,20 @@ public class CalorieMacroPage extends TemplateFrame {
 
         public String getFoodName() { return foodName; }
         public int    getCalories() { return calories; }
-        public String getProtein()  { return protein; }
-        public String getCarbs()    { return carbs; }
-        public String getFats()     { return fats; }
-        public String getFiber()    { return fiber; }
-        public String getNotes()    { return notes; }
+        public String getProtein()  { return protein;  }
+        public String getCarbs()    { return carbs;    }
+        public String getFats()     { return fats;     }
+        public String getFiber()    { return fiber;    }
+        public String getNotes()    { return notes;    }
         public String getMealType() { return mealType; }
 
         public void setFoodName(String foodName) { this.foodName = foodName; }
         public void setCalories(int calories)    { this.calories = calories; }
-        public void setProtein(String protein)   { this.protein  = protein; }
-        public void setCarbs(String carbs)       { this.carbs    = carbs; }
-        public void setFats(String fats)         { this.fats     = fats; }
-        public void setFiber(String fiber)       { this.fiber    = fiber; }
-        public void setNotes(String notes)       { this.notes    = notes; }
+        public void setProtein(String protein)   { this.protein  = protein;  }
+        public void setCarbs(String carbs)       { this.carbs    = carbs;    }
+        public void setFats(String fats)         { this.fats     = fats;     }
+        public void setFiber(String fiber)       { this.fiber    = fiber;    }
+        public void setNotes(String notes)       { this.notes    = notes;    }
         public void setMealType(String mealType) { this.mealType = mealType; }
     }
 
@@ -341,7 +375,10 @@ public class CalorieMacroPage extends TemplateFrame {
                 lbl.setFont(Theme.NORMAL_FONT);
                 add(lbl);
 
-                fields[i] = createStyledField();
+                fields[i] = new JTextField();
+                fields[i].setFont(Theme.NORMAL_FONT);
+                fields[i].setBackground(fieldBg);
+                fields[i].setForeground(fgLight);
                 add(fields[i]);
             }
 
@@ -367,13 +404,23 @@ public class CalorieMacroPage extends TemplateFrame {
                 mealComboBox.setSelectedItem(record.getMealType());
             }
 
-            JButton saveBtn   = createDialogStyledButton("Save");
-            JButton cancelBtn = createDialogStyledButton("Cancel");
+            JButton saveBtn   = new JButton("Save");
+            JButton cancelBtn = new JButton("Cancel");
+            saveBtn.setFont(Theme.NORMAL_FONT);
+            saveBtn.setBackground(Theme.BUTTON_BG);
+            saveBtn.setForeground(Theme.BUTTON_FG);
+            cancelBtn.setFont(Theme.NORMAL_FONT);
+            cancelBtn.setBackground(Theme.BUTTON_BG);
+            cancelBtn.setForeground(Theme.BUTTON_FG);
 
             saveBtn.addActionListener(e -> {
                 if (fields[0].getText().trim().isEmpty()) {
-                    JOptionPane.showMessageDialog(this, "Food Name cannot be blank.",
-                            "Validation Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Food Name cannot be blank.",
+                            "Validation Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
                     return;
                 }
                 saved = true;
@@ -386,22 +433,6 @@ public class CalorieMacroPage extends TemplateFrame {
 
             pack();
             setLocationRelativeTo(parent);
-        }
-
-        private JTextField createStyledField() {
-            JTextField field = new JTextField();
-            field.setFont(Theme.NORMAL_FONT);
-            field.setBackground(new Color(60, 60, 60));
-            field.setForeground(Theme.FG_LIGHT);
-            return field;
-        }
-
-        private JButton createDialogStyledButton(String text) {
-            JButton button = new JButton(text);
-            button.setFont(Theme.NORMAL_FONT);
-            button.setBackground(Theme.BUTTON_BG);
-            button.setForeground(Theme.BUTTON_FG);
-            return button;
         }
 
         public boolean isSaved() {
@@ -423,7 +454,7 @@ public class CalorieMacroPage extends TemplateFrame {
         private int parseIntSafe(String text) {
             try {
                 return Integer.parseInt(text.trim());
-            } catch (Exception e) {
+            } catch (NumberFormatException e) {
                 return 0;
             }
         }

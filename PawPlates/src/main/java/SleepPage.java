@@ -1,19 +1,32 @@
 import javax.swing.*;
 import java.awt.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
-public class SleepPage extends TemplateFrame{
+public class SleepPage extends TemplateFrame {
     private static final int WEEKLY_GOAL = 60;
     private static int totalSleep = 0;
 
-    public SleepPage() {
-        setTitle("Sleep Tracker");
-        JProgressBar sleepProgress = new JProgressBar(0, WEEKLY_GOAL);
+    private final LocalDate date;
+    private static final DateTimeFormatter FORMATTER =
+            DateTimeFormatter.ofPattern("MMMM d, yyyy");
+
+    /**
+     * Constructor that accepts a date and builds the UI.
+     */
+    public SleepPage(LocalDate date) {
+        this.date = date;
         addMenuBarPanel();
-        JLabel progressLabel = addProgressBar(sleepProgress, totalSleep, getProgressText());
+        setTitle("Sleep Tracker – " + date.format(FORMATTER));
+
+        JProgressBar sleepProgress = new JProgressBar(0, WEEKLY_GOAL);
+        JLabel progressLabel =
+                addProgressBar(sleepProgress, totalSleep, getProgressText());
+
         JTextField hoursSleptField = new JTextField(20);
-        addTextField("Hours Slept Today", hoursSleptField,0,0);
+        addTextField("Hours Slept Today", hoursSleptField, 0, 0);
+
         JButton enter = new JButton("Record Sleep");
-        addButton(enter, 1);
         enter.addActionListener(e -> {
             String hoursSlept = hoursSleptField.getText();
             int hours;
@@ -40,6 +53,9 @@ public class SleepPage extends TemplateFrame{
             progressLabel.setText(getProgressText());
             hoursSleptField.setText("");
         });
+        addButton(enter, 1);
+
+        // Add the center panel (inherited from TemplateFrame)
         add(centerPanel, BorderLayout.CENTER);
 
         pack();
@@ -47,11 +63,19 @@ public class SleepPage extends TemplateFrame{
         setVisible(true);
     }
 
-    private static String getProgressText() {
-        return String.format("Weekly Sleep Progress: %d / %d hours", totalSleep, WEEKLY_GOAL);
+    /**
+     * No-arg constructor uses the date from SessionContext.
+     */
+    public SleepPage() {
+        this(SessionContext.getDate());
     }
 
-    public static void main(String[] args){
-        new SleepPage();
+    private String getProgressText() {
+        return String.format("Weekly Sleep Progress: %d / %d hours",
+                totalSleep, WEEKLY_GOAL);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(SleepPage::new);
     }
 }
