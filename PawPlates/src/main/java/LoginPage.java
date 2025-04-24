@@ -200,7 +200,7 @@ class CreateAccountPage extends JFrame {
         JLabel title = new JLabel("Create a New Account", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 20));
         title.setOpaque(true);
-        title.setBackground(labelWhite);
+        //title.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
@@ -210,7 +210,7 @@ class CreateAccountPage extends JFrame {
         JLabel username = new JLabel("Username:");
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setOpaque(true);
-        username.setBackground(labelWhite);
+        //username.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
@@ -227,7 +227,7 @@ class CreateAccountPage extends JFrame {
         JLabel email = new JLabel("Email (Optional):");
         email.setFont(new Font("Arial", Font.PLAIN, 14));
         email.setOpaque(true);
-        email.setBackground(labelWhite);
+        //email.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -243,7 +243,7 @@ class CreateAccountPage extends JFrame {
         JLabel password = new JLabel("Password:");
         password.setFont(new Font("Arial", Font.PLAIN, 14));
         password.setOpaque(true);
-        password.setBackground(labelWhite);
+        //password.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 3;
         c.gridwidth = 1;
@@ -259,7 +259,7 @@ class CreateAccountPage extends JFrame {
         JLabel confirmPassword = new JLabel("Confirm Password:");
         confirmPassword.setFont(new Font("Arial", Font.PLAIN, 14));
         confirmPassword.setOpaque(true);
-        confirmPassword.setBackground(labelWhite);
+        //confirmPassword.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 4;
         c.gridwidth = 1;
@@ -275,7 +275,7 @@ class CreateAccountPage extends JFrame {
         JLabel message = new JLabel("");
         message.setFont(new Font("Arial", Font.PLAIN, 14));
         message.setOpaque(true);
-        message.setBackground(labelWhite);
+        //message.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 5;
         c.gridwidth = 2;
