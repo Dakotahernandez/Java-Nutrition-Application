@@ -12,151 +12,165 @@ import java.time.format.DateTimeFormatter;
 
 public class HomePage extends JFrame {
 
-    public JFrame frame;
+    private JFrame frame;
 
-    //HomePage Constructor:
-    public HomePage() { setUp(); }
+    public HomePage() {
+        setUp();
+    }
 
-    // set up the main screen
     public void setUp() {
         frame = new JFrame("PawPlates");
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // open the window to a full screen
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel contentPane = new JPanel(new BorderLayout());
+        contentPane.setBackground(Theme.BG_DARK);
         frame.setContentPane(contentPane);
 
-        // Create a panel to hold both menu bars
+        // Top menu bars
         JPanel menuBarPanel = new JPanel(new GridBagLayout());
+        menuBarPanel.setBackground(Theme.BG_DARK);
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // Add userMenuBar to the left
+        // User menu on left
         UserMenu userMenu = new UserMenu();
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.weightx = 1.0;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 0; gbc.gridy = 0;
+        gbc.weightx = 1.0; gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.anchor = GridBagConstraints.WEST;
         menuBarPanel.add(userMenu.addUserMenu(), gbc);
 
-        // add logoutMenuBar to the right
+        // Logout menu on right
         LogoutMenu logoutMenu = new LogoutMenu();
-        gbc.gridx = 1;
-        gbc.gridy = 0;
-        gbc.weightx = 0.0;
-        gbc.fill = GridBagConstraints.NONE;
-        gbc.anchor = GridBagConstraints.EAST;
+        gbc.gridx = 1; gbc.weightx = 0.0;
+        gbc.fill = GridBagConstraints.NONE; gbc.anchor = GridBagConstraints.EAST;
         menuBarPanel.add(logoutMenu.addLogoutMenu(), gbc);
 
-        // Add the menu bar panel to the frame
         contentPane.add(menuBarPanel, BorderLayout.NORTH);
 
-        // add other content to the frame's center if needed
+        // Main panel
         JPanel mainPanel = new JPanel(new GridBagLayout());
+        mainPanel.setBackground(Theme.BG_DARK);
         GridBagConstraints c = new GridBagConstraints();
 
+        // Greeting
         JLabel helloUser = new JLabel("Hello, " + LoginPage.CURRENT_USER.getUsername());
-        helloUser.setFont(new Font("Arial", Font.PLAIN, 30));
-        c.gridx = 1;
-        c.gridy = 0;
+        helloUser.setFont(Theme.HEADER_FONT);
+        helloUser.setForeground(Theme.FG_LIGHT);
+        c.gridx = 1; c.gridy = 0;
         mainPanel.add(helloUser, c);
-        //fixing commit message
-        // 🔧 [2025-04-23] Functional date button with hidden DatePicker (popup works)
+
+        // DatePicker settings with dark theme
         DatePickerSettings dateSettings = new DatePickerSettings();
         dateSettings.setAllowEmptyDates(false);
         dateSettings.setFormatForDatesCommonEra(DateTimeFormatter.ofPattern("MMMM d, yyyy"));
+        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundOverallCalendarPanel, Theme.BG_DARK);
+        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundMonthAndYearMenuLabels, Theme.BG_DARK);
+        dateSettings.setColor(DatePickerSettings.DateArea.TextMonthAndYearMenuLabels, Theme.FG_LIGHT);
+        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundMonthAndYearNavigationButtons, Theme.BG_DARK);
+        dateSettings.setColor(DatePickerSettings.DateArea.TextMonthAndYearNavigationButtons, Theme.FG_LIGHT);
+        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundTopLeftLabelAboveWeekNumbers, Theme.BG_DARK);
+        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundCalendarPanelLabelsOnHover, Theme.MID_GRAY);
+        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextWeekdays, Theme.FG_LIGHT);
+        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextWeekNumbers, Theme.FG_LIGHT);
+        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextNormalDates, Theme.FG_LIGHT);
+        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundNormalDates, Theme.BG_DARKER);
+        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundVetoedDates, Theme.BG_DARK);
+        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Theme.ACCENT_GREEN);
+        dateSettings.setColor(DatePickerSettings.DateArea.DatePickerTextValidDate, Theme.FG_LIGHT);
+        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundTodayLabel, Theme.BG_DARK);
+        dateSettings.setColor(DatePickerSettings.DateArea.TextTodayLabel, Theme.FG_LIGHT);
+        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundClearLabel, Theme.BG_DARK);
+        dateSettings.setColor(DatePickerSettings.DateArea.TextClearLabel, Theme.FG_LIGHT);
+
+        // DatePicker component
         DatePicker datePicker = new DatePicker(dateSettings);
         datePicker.setDate(LocalDate.now());
-
-        // Allow popup functionality, hide visually
         datePicker.setOpaque(false);
-        datePicker.setBackground(new Color(0, 0, 0, 0));
+        datePicker.setBackground(new Color(0,0,0,0));
         datePicker.setBorder(null);
-        datePicker.setPreferredSize(new Dimension(1, 1)); // tiny size but still visible to layout manager
+        datePicker.setPreferredSize(new Dimension(1,1));
 
+        // Calendar button
         JButton calendarButton = new JButton(datePicker.getDate().format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
+        calendarButton.setFont(Theme.NORMAL_FONT);
+        calendarButton.setBackground(Theme.BUTTON_BG);
+        calendarButton.setForeground(Theme.BUTTON_FG);
+        calendarButton.setBorder(BorderFactory.createLineBorder(Theme.MID_GRAY));
         calendarButton.addActionListener(e -> datePicker.openPopup());
 
         datePicker.addDateChangeListener(e -> {
-            LocalDate selectedDate = e.getNewDate();
-            if (selectedDate != null) {
-                calendarButton.setText(selectedDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
+            LocalDate newDate = e.getNewDate();
+            if (newDate != null) {
+                calendarButton.setText(newDate.format(DateTimeFormatter.ofPattern("MMMM d, yyyy")));
             }
         });
 
         JPanel datePanel = new JPanel();
-        datePanel.add(new JLabel("Today: "));
+        datePanel.setBackground(Theme.BG_DARK);
+        JLabel dateLabel = new JLabel("Date: ");
+        dateLabel.setForeground(Theme.FG_LIGHT);
+        dateLabel.setFont(Theme.NORMAL_FONT);
+        datePanel.add(dateLabel);
         datePanel.add(calendarButton);
-        datePanel.add(datePicker);  // must be present in layout for popup to work
+        datePanel.add(datePicker);
 
-        c.gridx = 1;
-        c.gridy = 1;
+        c.gridx = 1; c.gridy = 1;
         mainPanel.add(datePanel, c);
 
-        // ✅ Push image down to avoid overlap
+        // Logo image
         try {
-            BufferedImage menuImage = ImageIO.read(new File("src/main/resources/PawPlates.png"));
-            JLabel menuImageLabel = new JLabel(new ImageIcon(menuImage));
-            c.gridx = 1;
-            c.gridy = 2;
-            mainPanel.add(menuImageLabel, c);
-        } catch (IOException e) {
-            e.printStackTrace();
+            BufferedImage img = ImageIO.read(new File("src/main/resources/PawPlates.png"));
+            JLabel imgLabel = new JLabel(new ImageIcon(img));
+            c.gridx = 1; c.gridy = 2;
+            mainPanel.add(imgLabel, c);
+        } catch (IOException ex) {
+            ex.printStackTrace();
         }
 
+        // Bottom buttons
         c.gridy = 3;
-        JButton logWorkoutButton = new JButton("Track Something...");
+        JButton track = new JButton("Track Something...");
+        track.setBackground(Theme.BUTTON_BG); track.setForeground(Theme.BUTTON_FG);
+        track.setFont(Theme.NORMAL_FONT);
         c.gridx = 0;
-        logWorkoutButton.addActionListener(e -> trackSomethingDialogue());
-        mainPanel.add(logWorkoutButton, c);
+        track.addActionListener(e -> trackSomethingDialogue());
+        mainPanel.add(track, c);
 
-        JButton logCalories = new JButton("Your Goals");
+        JButton goals = new JButton("Your Goals");
+        goals.setBackground(Theme.BUTTON_BG); goals.setForeground(Theme.BUTTON_FG);
+        goals.setFont(Theme.NORMAL_FONT);
         c.gridx = 1;
-        mainPanel.add(logCalories, c);
+        mainPanel.add(goals, c);
 
-        JButton logSleep = new JButton("Your Reminders");
+        JButton rem = new JButton("Your Reminders");
+        rem.setBackground(Theme.BUTTON_BG); rem.setForeground(Theme.BUTTON_FG);
+        rem.setFont(Theme.NORMAL_FONT);
         c.gridx = 2;
-        mainPanel.add(logSleep, c);
+        mainPanel.add(rem, c);
 
         contentPane.add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
 
-    public void trackSomethingDialogue() {
-        JDialog trackingDialogue = new JDialog(this, "Tracking Menu", true);
-        trackingDialogue.setSize(250, 200);
-        trackingDialogue.setLayout(new GridLayout(4, 1, 10, 10));
-
-        JButton workout = new JButton("Workout");
-        workout.addActionListener(e -> {
-            new CreateExercise();
-            frame.dispose();
-            trackingDialogue.dispose();
-        });
-
-        JButton sleep = new JButton("Sleep");
-        sleep.addActionListener(e -> {
-            new SleepPage();
-            frame.dispose();
-            trackingDialogue.dispose();
-        });
-
-        JButton calories = new JButton("Calories");
-        calories.addActionListener(e -> {
-            new CalorieMacroPage();
-            frame.dispose();
-            trackingDialogue.dispose();
-        });
-
-        JButton cancel = new JButton("Cancel");
-        cancel.addActionListener(e -> trackingDialogue.dispose());
-
-        trackingDialogue.add(workout);
-        trackingDialogue.add(sleep);
-        trackingDialogue.add(calories);
-        trackingDialogue.add(cancel);
-
-        trackingDialogue.setLocationRelativeTo(this);
-        trackingDialogue.setVisible(true);
+    private void trackSomethingDialogue() {
+        JDialog dialog = new JDialog(this, "Tracking Menu", true);
+        dialog.setSize(250, 200);
+        dialog.setLayout(new GridLayout(4, 1, 10, 10));
+        dialog.getContentPane().setBackground(Theme.BG_DARKER);
+        String[] labels = {"Workout","Sleep","Calories","Cancel"};
+        for (String text : labels) {
+            JButton btn = new JButton(text);
+            btn.setBackground(Theme.BUTTON_BG); btn.setForeground(Theme.BUTTON_FG);
+            btn.setFont(Theme.NORMAL_FONT);
+            btn.addActionListener(e -> {
+                if (text.equals("Workout")) new CreateExercise();
+                else if (text.equals("Sleep")) new SleepPage();
+                else if (text.equals("Calories")) new CalorieMacroPage();
+                dialog.dispose(); frame.dispose();
+            });
+            dialog.add(btn);
+        }
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 }

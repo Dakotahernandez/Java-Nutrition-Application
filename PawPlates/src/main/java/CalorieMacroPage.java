@@ -33,7 +33,7 @@ public class CalorieMacroPage extends TemplateFrame {
         // -------- Progress Bar Setup --------
         calorieProgressBar = new JProgressBar(0, DAILY_LIMIT);
         calorieProgressBar.setForeground(Theme.ACCENT_GREEN);
-        calorieProgressBar.setBackground(Theme.MID_GRAY);
+        calorieProgressBar.setBackground(Theme.BG_LIGHTER);
 
         // Use TemplateFrame's addProgressBar method to insert progress bar into the top panel
         progressLabel = addProgressBar(calorieProgressBar, 0, getProgressText());
@@ -134,7 +134,7 @@ public class CalorieMacroPage extends TemplateFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBackground(Theme.BG_DARKER);
         scrollPane.getViewport().setBackground(Theme.BG_DARKER);
-        scrollPane.setBorder(BorderFactory.createLineBorder(Theme.MID_GRAY, 1));
+        scrollPane.setBorder(BorderFactory.createLineBorder(Theme.BG_LIGHTER, 1));
 
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Theme.BG_DARK);
@@ -160,7 +160,7 @@ public class CalorieMacroPage extends TemplateFrame {
         table.setFont(Theme.NORMAL_FONT);
         table.setBackground(Theme.BG_DARKER);
         table.setForeground(Theme.FG_LIGHT);
-        table.setSelectionBackground(Theme.MID_GRAY);
+        table.setSelectionBackground(Theme.BG_LIGHTER);
         table.setSelectionForeground(Theme.FG_LIGHT);
         table.setGridColor(new Color(80, 80, 80));
 

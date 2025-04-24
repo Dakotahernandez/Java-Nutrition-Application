@@ -6,25 +6,27 @@ import java.awt.Font;
  * Modify these constants to update the color scheme and fonts project-wide.
  */
 public final class Theme {
-    // Prevent instantiation.
     private Theme() {}
 
-    // Background Colors.
-    public static final Color BG_DARK = new Color(40, 40, 40);       // Primary dark background.
-    public static final Color BG_DARKER = new Color(30, 30, 30);     // For tables, dialogs, etc.
+    // Background Colors
+    public static final Color BG_DARK = new Color(40, 40, 40);
+    public static final Color BG_DARKER = new Color(30, 30, 30);
+    public static final Color BG_LIGHTER = new Color(60, 60, 60); // Used for highlights
 
-    // Foreground Colors.
-    public static final Color FG_LIGHT = new Color(220, 220, 220);   // Light gray text.
+    // Foreground Colors
+    public static final Color FG_LIGHT = new Color(220, 220, 220);
+    public static final Color FG_MUTED = new Color(180, 180, 180);
 
-    // Accent Colors.
-    public static final Color ACCENT_GREEN = new Color(0, 200, 83);  // Used for progress bars, etc.
-    public static final Color MID_GRAY = new Color(70, 70, 70);       // Middle gray for borders and other elements.
+    // Accent + Borders
+    public static final Color ACCENT_GREEN = new Color(30, 150, 60);
+    public static final Color MID_GRAY = new Color(70, 70, 70);
+    public static final Color BUTTON_BORDER = new Color(100, 100, 100);
 
-    // Button Style.
-    public static final Color BUTTON_BG = MID_GRAY;    // Grey background for buttons.
-    public static final Color BUTTON_FG = Color.BLACK;   // Updated: Black text for buttons.
+    // Button Styles
+    public static final Color BUTTON_BG = MID_GRAY;
+    public static final Color BUTTON_FG = FG_LIGHT;
 
-    // Fonts.
+    // Fonts
     public static final Font NORMAL_FONT = new Font("SansSerif", Font.PLAIN, 14);
     public static final Font HEADER_FONT = new Font("SansSerif", Font.BOLD, 16);
 }
