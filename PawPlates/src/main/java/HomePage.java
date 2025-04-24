@@ -1,3 +1,19 @@
+/**
+ * =============================================================================
+ * File:
+ * Author:
+ * Created:
+ * -----------------------------------------------------------------------------
+ * Description:
+ *
+ *
+ * Dependencies:
+ *
+ *
+ * Usage:
+ *
+ * =============================================================================
+ */
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import javax.imageio.ImageIO;
