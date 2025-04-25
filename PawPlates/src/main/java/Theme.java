@@ -43,7 +43,7 @@ public final class Theme {
     public static final Color FG_MUTED = new Color(180, 180, 180);
 
     // Accent + Borders
-    public static final Color ACCENT_GREEN = new Color(30, 150, 60);
+    public static final Color ACCENT_GREEN = new Color(75, 199, 170);
     public static final Color MID_GRAY = new Color(70, 70, 70);
     public static final Color BUTTON_BORDER = new Color(100, 100, 100);
 

@@ -6,7 +6,7 @@
  * -----------------------------------------------------------------------------
  * Description:
  *   Main application home screen frame with user greeting, themed date picker,
- *   logo display, and navigation buttons for tracking workouts, sleep, and calories.
+ *   logo display, and navigation buttons for tracking workouts, sleep, and calories and weight
  *
  * Dependencies:
  *   - com.github.lgooddatepicker.components.DatePicker
@@ -186,11 +186,11 @@ public class HomePage extends JFrame {
 
     private void trackSomethingDialogue() {
         JDialog dialog = new JDialog(this, "Tracking Menu", true);
-        dialog.setSize(250, 200);
-        dialog.setLayout(new GridLayout(4, 1, 10, 10));
+        dialog.setSize(250, 250);
+        dialog.setLayout(new GridLayout(5, 1, 10, 10));
         dialog.getContentPane().setBackground(Theme.BG_DARKER);
 
-        String[] options = {"Workout", "Sleep", "Calories", "Cancel"};
+        String[] options = {"Workout", "Sleep", "Calories", "Weight", "Cancel"};
         for (String text : options) {
             JButton btn = new JButton(text);
             btn.setFont(Theme.NORMAL_FONT);
@@ -209,6 +209,9 @@ public class HomePage extends JFrame {
                     case "Calories":
                         new CalorieMacroPage(SessionContext.getDate());
                         break;
+                    case "Weight":
+                        new RecordWeight(SessionContext.getDate());
+                        break;
                     default:
                         // Cancel
                         break;
@@ -220,5 +223,5 @@ public class HomePage extends JFrame {
         dialog.setLocationRelativeTo(this);
         dialog.setVisible(true);
     }
-
 }
+
