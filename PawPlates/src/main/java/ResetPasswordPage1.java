@@ -34,7 +34,13 @@ public class ResetPasswordPage1 extends JFrame {
         userDatabase.put("user1", new String[]{"Question 1?", "test1", "Question 2?", "test2"});
         userDatabase.put("user2", new String[]{"Question 1?", "abc", "Question 2?", "abc"});
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public ResetPasswordPage1() {
         setTitle("Reset Password");
         setExtendedState(JFrame.MAXIMIZED_BOTH); // full screen

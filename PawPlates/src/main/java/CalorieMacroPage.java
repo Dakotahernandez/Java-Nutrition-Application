@@ -58,7 +58,11 @@ public class CalorieMacroPage extends TemplateFrame {
     private JTable dinnerTable;
 
     /**
-     * Primary constructor: accepts a date, sets title, and builds UI.
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
      */
     public CalorieMacroPage(LocalDate date) {
         this.date = date;
@@ -135,16 +139,26 @@ public class CalorieMacroPage extends TemplateFrame {
     /**
      * No-arg constructor: defaults to the date in SessionContext.
      */
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public CalorieMacroPage() {
         this(SessionContext.getDate());
     }
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(CalorieMacroPage::new);
-    }
 
     // === Helper methods ===
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(Theme.NORMAL_FONT);
@@ -152,7 +166,13 @@ public class CalorieMacroPage extends TemplateFrame {
         button.setForeground(Theme.BUTTON_FG);
         return button;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private String getProgressText() {
         if (totalCalsSoFar <= DAILY_LIMIT) {
             return String.format("Calories so far: %d / %d", totalCalsSoFar, DAILY_LIMIT);
@@ -164,7 +184,13 @@ public class CalorieMacroPage extends TemplateFrame {
             );
         }
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private JPanel createMealPanel(FoodTableModel model, JTable table) {
         JPanel filterPanel = new JPanel(new GridLayout(1, 7, 5, 5));
         filterPanel.setBackground(Theme.BG_DARK);
@@ -183,7 +209,13 @@ public class CalorieMacroPage extends TemplateFrame {
         panel.add(scrollPane,  BorderLayout.CENTER);
         return panel;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private JTextField createStyledFilterField() {
         JTextField field = new JTextField();
         field.setFont(Theme.NORMAL_FONT);
@@ -191,7 +223,13 @@ public class CalorieMacroPage extends TemplateFrame {
         field.setForeground(Theme.FG_LIGHT);
         return field;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private JTable createStyledTable(FoodTableModel model) {
         JTable table = new JTable(model);
         table.setRowHeight(25);
@@ -208,7 +246,13 @@ public class CalorieMacroPage extends TemplateFrame {
         header.setFont(new Font("SansSerif", Font.BOLD, 14));
         return table;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private JTable getCurrentTable(JTabbedPane tabs) {
         Component sel = tabs.getSelectedComponent();
         if (sel instanceof JPanel) {
@@ -220,13 +264,25 @@ public class CalorieMacroPage extends TemplateFrame {
         }
         return null;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private FoodTableModel getModelForTable(JTable table) {
         if (table == breakfastTable) return breakfastModel;
         if (table == lunchTable)     return lunchModel;
         return dinnerModel;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private void openDialog(FoodEntry entry, int row, JTabbedPane tabs) {
         FoodEntryDialog dlg = new FoodEntryDialog(this, entry);
         dlg.setVisible(true);
@@ -246,13 +302,25 @@ public class CalorieMacroPage extends TemplateFrame {
             updateCalorieProgress();
         }
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private FoodTableModel getModelForMeal(String mealType) {
         if ("Breakfast".equals(mealType)) return breakfastModel;
         if ("Lunch".equals(mealType))     return lunchModel;
         return dinnerModel;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private void updateCalorieProgress() {
         int sum = 0;
         for (FoodEntry e : breakfastModel.getData()) sum += e.getCalories();
@@ -274,7 +342,13 @@ public class CalorieMacroPage extends TemplateFrame {
         private String fiber;
         private String notes;
         private String mealType;
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public FoodEntry(
                 String foodName,
                 int calories,
@@ -294,23 +368,133 @@ public class CalorieMacroPage extends TemplateFrame {
             this.notes    = notes;
             this.mealType = mealType;
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public String getFoodName() { return foodName; }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public int    getCalories() { return calories; }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public String getProtein()  { return protein;  }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public String getCarbs()    { return carbs;    }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public String getFats()     { return fats;     }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public String getFiber()    { return fiber;    }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public String getNotes()    { return notes;    }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public String getMealType() { return mealType; }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void setFoodName(String foodName) { this.foodName = foodName; }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void setCalories(int calories)    { this.calories = calories; }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void setProtein(String protein)   { this.protein  = protein;  }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void setCarbs(String carbs)       { this.carbs    = carbs;    }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void setFats(String fats)         { this.fats     = fats;     }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void setFiber(String fiber)       { this.fiber    = fiber;    }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void setNotes(String notes)       { this.notes    = notes;    }
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void setMealType(String mealType) { this.mealType = mealType; }
     }
 
@@ -319,49 +503,109 @@ public class CalorieMacroPage extends TemplateFrame {
                 "Food", "Calories", "Protein", "Carbs", "Fats", "Fiber", "Notes", "Meal"
         };
         private List<FoodEntry> data;
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public FoodTableModel(List<FoodEntry> data) {
             this.data = data;
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public List<FoodEntry> getData() {
             return data;
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public FoodEntry getRecordAt(int row) {
             return data.get(row);
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void addRecord(FoodEntry record) {
             data.add(record);
             fireTableDataChanged();
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void removeRecord(int row) {
             data.remove(row);
             fireTableDataChanged();
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public void updateRecord(int row, FoodEntry record) {
             data.set(row, record);
             fireTableDataChanged();
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         @Override
         public int getRowCount() {
             return data.size();
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         @Override
         public int getColumnCount() {
             return columns.length;
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         @Override
         public String getColumnName(int column) {
             return columns[column];
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             FoodEntry e = data.get(rowIndex);
@@ -383,7 +627,13 @@ public class CalorieMacroPage extends TemplateFrame {
         private final JTextField[] fields = new JTextField[7];
         private JComboBox<String> mealComboBox;
         private boolean saved = false;
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public FoodEntryDialog(Frame parent, FoodEntry record) {
             super(parent, "Food Entry Form", true);
             setLayout(new GridLayout(9, 2, 5, 5));
@@ -462,11 +712,23 @@ public class CalorieMacroPage extends TemplateFrame {
             pack();
             setLocationRelativeTo(parent);
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public boolean isSaved() {
             return saved;
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         public FoodEntry getRecord() {
             String food     = fields[0].getText().trim();
             int    calories = parseIntSafe(fields[1].getText());
@@ -478,7 +740,13 @@ public class CalorieMacroPage extends TemplateFrame {
             String mealType = (String) mealComboBox.getSelectedItem();
             return new FoodEntry(food, calories, protein, carbs, fats, fiber, notes, mealType);
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         private int parseIntSafe(String text) {
             try {
                 return Integer.parseInt(text.trim());
@@ -486,12 +754,24 @@ public class CalorieMacroPage extends TemplateFrame {
                 return 0;
             }
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         private String defaultToZero(String text) {
             return (text == null || text.trim().isEmpty()) ? "0" : text.trim();
         }
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     @FunctionalInterface
     public interface MyDocumentListener extends DocumentListener {
         void update(DocumentEvent e);

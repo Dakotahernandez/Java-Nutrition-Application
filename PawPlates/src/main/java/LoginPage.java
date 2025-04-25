@@ -27,7 +27,6 @@ public class LoginPage extends JFrame {
 
     public static class Background extends JPanel {
         private BufferedImage background;
-
         public Background(String path) {
             try {
                 background = ImageIO.read(new File(path));
@@ -39,7 +38,13 @@ public class LoginPage extends JFrame {
 
             setOpaque(false);
         }
-
+        /**
+         * Description
+         *
+         * @param
+         * @return
+         * @throws
+         */
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
@@ -52,7 +57,13 @@ public class LoginPage extends JFrame {
         }
     }
 
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public LoginPage() {
         JFrame frame = new JFrame();
         database = new UserDatabase();
@@ -191,7 +202,13 @@ public class LoginPage extends JFrame {
         frame.setVisible(true);
     }
 }
-
+/**
+ * Description
+ *
+ * @param
+ * @return
+ * @throws
+ */
 class CreateAccountPage extends JFrame {
     private final LoginPage loginPage;
 

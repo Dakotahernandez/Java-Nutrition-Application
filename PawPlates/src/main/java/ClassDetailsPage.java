@@ -20,6 +20,13 @@ import java.awt.*;
 public class ClassDetailsPage extends JFrame{
 
     //will update to take a Class object as a parameter
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public ClassDetailsPage(String className, String instructor, String description, String schedule, int capacity, int availableSpots){
         setTitle("Class Details");
         setSize(300,150);

@@ -28,16 +28,65 @@ public class Workout {
     private Time duration;
 
     //Setter Methods:
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void setDate(Date date) { this.date = date; }
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void setDuration(Time duration) { this.duration = duration; }
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void setFocus(String focus) { this.focus = focus; }
 
     //Getter Methods:
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public Date getDate() { return date; }
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public String getFocus() { return focus; }
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public Time getDuration() { return duration; }
 
     //Parameterized Constructor
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     Workout(Date date, String focus, Time duration){
         this.date = date;
         this.focus = focus;
@@ -45,6 +94,13 @@ public class Workout {
     }
 
     //Create a Workout
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     Workout createWorkout(Date date, String focus, Time duration){
         Workout w = new Workout(date, focus, duration);
         return w;

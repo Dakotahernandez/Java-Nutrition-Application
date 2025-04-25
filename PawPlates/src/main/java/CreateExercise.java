@@ -19,7 +19,13 @@ import java.awt.*;
 
 // This is the interface for creating an exercise
 public class CreateExercise extends TemplateFrame {
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public CreateExercise() {
         addMenuBarPanel();
 

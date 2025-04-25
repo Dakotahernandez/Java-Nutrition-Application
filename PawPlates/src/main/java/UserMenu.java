@@ -37,6 +37,13 @@ public class UserMenu {
      * Creates the application menu bar. All actions dispose the current window
      * and open the requested page, passing along the selected date.
      */
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public static JMenuBar addUserMenu() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Menu");

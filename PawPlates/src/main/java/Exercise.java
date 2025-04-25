@@ -24,43 +24,97 @@ public class Exercise {
     private String name;
     private String focus;
     private String description;
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public Exercise() {
         name ="";
         focus = "";
         description = "";
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public Exercise(String name, String focus, String description) {
         this.name = name;
         this.focus = focus;
         this.description = description;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public String getName() {
         return name;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void setName(String name) {
         this.name = name;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public String getFocus() {
         return focus;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void setFocus(String focus) {
         this.focus = focus;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public String getDescription() {
         return description;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void setDescription(String description) {
         this.description = description;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,13 +122,26 @@ public class Exercise {
         Exercise exercise = (Exercise) o;
         return Objects.equals(name, exercise.name) && Objects.equals(focus, exercise.focus) && Objects.equals(description, exercise.description);
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, focus, description);
     }
 
     //returns 1 if written, 0 if it already exists, -1 if exception
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public int writeCSV() {
         if(!exists()) {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/exercise.csv", true))) {
@@ -87,7 +154,13 @@ public class Exercise {
         }
         return 0;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public List<Exercise> readCSV(){
         List<Exercise> exercises = new ArrayList<>();
         try(BufferedReader reader = new BufferedReader(new FileReader("src/main/java/exercise.csv"))){
@@ -107,6 +180,13 @@ public class Exercise {
     }
 
     //checks if this exercise already exists
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public boolean exists(){
         List<Exercise> exercises = readCSV();
         return exercises.stream().anyMatch(e -> e.equals(this));

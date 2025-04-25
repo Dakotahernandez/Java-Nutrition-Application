@@ -19,11 +19,23 @@ import java.sql.*;
 
 public class UserDatabase {
     private Connection connection;
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public UserDatabase() {
         initializeDatabase();
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void registerUser(User user) throws IllegalArgumentException {
         if (user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
             throw new IllegalArgumentException("Username or password cannot be empty.");
@@ -44,7 +56,13 @@ public class UserDatabase {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void loginUser(User user) throws IllegalArgumentException {
         try {
             String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
@@ -62,7 +80,13 @@ public class UserDatabase {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public boolean usernameExists(String username) {
         String sql = "SELECT * FROM users WHERE username = ?";
         try {
@@ -81,7 +105,13 @@ public class UserDatabase {
 
         return false;
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private void initializeDatabase() {
         try {
             connection = DriverManager.getConnection("jdbc:sqlite:users.db");

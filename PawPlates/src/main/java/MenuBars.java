@@ -30,6 +30,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class MenuBars {
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public static JPanel addMenuBars(JPanel contentPane, GridBagConstraints gbc){
         //Create a panel for the menu bars
         JPanel menuBarPanel = new JPanel(new GridBagLayout());

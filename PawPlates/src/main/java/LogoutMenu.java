@@ -20,7 +20,13 @@ import java.awt.event.ActionListener;
 
 public class LogoutMenu {
     public LogoutMenu() { }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public static JMenuBar addLogoutMenu(){
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Logout");

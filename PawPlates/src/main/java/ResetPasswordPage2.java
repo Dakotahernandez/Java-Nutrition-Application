@@ -21,7 +21,13 @@ import java.awt.*;
 
 public class ResetPasswordPage2 extends JFrame {
     private JTextField answer1Field, answer2Field;
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public ResetPasswordPage2(String username, String[] qa) {
         setTitle("Security Questions");
         setExtendedState(JFrame.MAXIMIZED_BOTH);

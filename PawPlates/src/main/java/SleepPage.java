@@ -30,6 +30,13 @@ public class SleepPage extends TemplateFrame {
     /**
      * Constructor that accepts a date and builds the UI.
      */
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public SleepPage(LocalDate date) {
         this.date = date;
         addMenuBarPanel();
@@ -82,10 +89,24 @@ public class SleepPage extends TemplateFrame {
     /**
      * No-arg constructor uses the date from SessionContext.
      */
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public SleepPage() {
         this(SessionContext.getDate());
     }
 
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private String getProgressText() {
         return String.format("Weekly Sleep Progress: %d / %d hours",
                 totalSleep, WEEKLY_GOAL);

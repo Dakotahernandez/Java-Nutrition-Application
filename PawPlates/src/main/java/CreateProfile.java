@@ -30,7 +30,13 @@ public class CreateProfile {
     public static void main(String[] args) {
         setUp();
     }*/
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public static void setUp() {
         //code from other menu layout file
         JFrame frame = new JFrame("Create Profile");
@@ -162,6 +168,13 @@ public class CreateProfile {
 
 
     //taken from other file for consistency
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public static JMenuBar userMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Menu");
@@ -177,6 +190,13 @@ public class CreateProfile {
         return menuBar;
     }
     //taken from other file for consistency
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public static JMenuBar logoutMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Logout");

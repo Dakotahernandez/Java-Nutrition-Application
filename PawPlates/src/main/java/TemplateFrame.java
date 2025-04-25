@@ -46,6 +46,13 @@ public class TemplateFrame extends JFrame {
     protected JPanel northPanel;  // BorderLayout
     protected GridBagConstraints c;
 
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public TemplateFrame() {
         // Initialize panels
         centerPanel = new JPanel(new GridBagLayout());
@@ -70,7 +77,13 @@ public class TemplateFrame extends JFrame {
         // Add the center panel
         add(centerPanel, BorderLayout.CENTER);
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void addMenuBarPanel() {
         JPanel menuBarPanel = new JPanel(new GridBagLayout());
         menuBarPanel.setBackground(Theme.BG_DARK);
@@ -95,7 +108,13 @@ public class TemplateFrame extends JFrame {
         northPanel.add(menuBarPanel, BorderLayout.NORTH);
         add(northPanel, BorderLayout.NORTH);
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void addTextField(String prompt, JTextField textField, int x, int y) {
         c.insets = new Insets(5, 5, 5, 5);
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -113,7 +132,13 @@ public class TemplateFrame extends JFrame {
         textField.setCaretColor(Theme.FG_LIGHT);
         centerPanel.add(textField, c);
     }
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void addButton(JButton button, int row) {
         c.insets = new Insets(5, 5, 5, 5);
         c.fill = GridBagConstraints.HORIZONTAL;
@@ -128,6 +153,13 @@ public class TemplateFrame extends JFrame {
     /**
      * Adds a themed progress bar (and label) into the northPanel.
      * If you pass an AnimatedProgressBar, it will animate smoothly.
+     */
+    /**
+     * * Description
+     * *
+     * * @param
+     * * @return
+     * * @throws
      */
     public JLabel addProgressBar(JProgressBar progressBar, int setValue, String progressText) {
         JPanel progressBarPanel = new JPanel();

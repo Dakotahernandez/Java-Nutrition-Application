@@ -55,7 +55,13 @@ public class RecordWeight extends TemplateFrame {
 
     private DefaultTableModel tableModel;
     private JTable weightTable;
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public RecordWeight(LocalDate date) {
         this.pageDate = date;
         addMenuBarPanel();

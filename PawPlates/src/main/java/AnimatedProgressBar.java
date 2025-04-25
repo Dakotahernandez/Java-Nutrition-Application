@@ -34,8 +34,13 @@ public class AnimatedProgressBar extends JProgressBar {
     private int targetValue;
     private static final int ANIMATION_DELAY_MS = 8;
     private static final int STEP             = 3;
-
-
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public AnimatedProgressBar(int min, int max) {
         super(min, max);
         setStringPainted(true);
@@ -44,12 +49,26 @@ public class AnimatedProgressBar extends JProgressBar {
     /**
      * Smoothly animate the bar value from its current position to newValue.
      */
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public void animateTo(int newValue) {
         targetValue = newValue;
         if (timer != null && timer.isRunning()) {
             timer.stop();
         }
         timer = new Timer(ANIMATION_DELAY_MS, new ActionListener() {
+            /**
+             * Description
+             *
+             * @param
+             * @return
+             * @throws
+             */
             @Override
             public void actionPerformed(ActionEvent e) {
                 int current = getValue();

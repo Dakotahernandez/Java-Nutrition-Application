@@ -47,6 +47,13 @@ public class HomePage extends JFrame {
     private static final DateTimeFormatter FORMATTER =
             DateTimeFormatter.ofPattern("MMMM d, yyyy");
 
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public HomePage() {
         setUp();
     }
@@ -54,10 +61,24 @@ public class HomePage extends JFrame {
     /**
      * Expose the currently selected date so other pages can use it.
      */
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public LocalDate getSelectedDate() {
         return datePicker.getDate();
     }
 
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     private void setUp() {
         frame = new JFrame("PawPlates");
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);

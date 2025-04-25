@@ -20,6 +20,13 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ResetPasswordPage3 extends JFrame {
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
     public ResetPasswordPage3(String username) {
         setTitle("Set New Password");
         setExtendedState(JFrame.MAXIMIZED_BOTH);
