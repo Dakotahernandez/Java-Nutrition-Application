@@ -168,7 +168,7 @@ public class HomePage extends JFrame {
 
         // Logo image
         try {
-            BufferedImage img = ImageIO.read(new File("src/main/resources/PawPlates.png"));
+            BufferedImage img = ImageIO.read(new File("src/main/resources/PawPlatesDark.png"));
             JLabel imgLabel = new JLabel(new ImageIcon(img));
             c.gridx = 1;
             c.gridy = 2;
