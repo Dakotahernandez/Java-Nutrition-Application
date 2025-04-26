@@ -1,7 +1,7 @@
 /**
  * =============================================================================
  * File:           TemplateFrame.java
- * Author:         Dakota Hernandez Joshua Carrol
+ * Authors:         Dakota Hernandez, Joshua Carrol
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:

@@ -1,7 +1,7 @@
 /**
  * =============================================================================
  * File:           UserMenu.java
- * Author:         Faith ota Dakota Hernandez
+ * Author:         Faith Ota, Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
