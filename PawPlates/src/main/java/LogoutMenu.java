@@ -26,12 +26,9 @@ import java.awt.event.ActionListener;
 public class LogoutMenu {
     public LogoutMenu() { }
     /**
-     * Description:
+     * Description: a method to add a logout menu bar to templates
      *
-     * @param
-     * @return
-     *   JMenuBar item with logout options
-     * @throws
+     * @return JMenuBar item with logout options
      */
     public static JMenuBar addLogoutMenu(){
         JMenuBar menuBar = new JMenuBar();
@@ -42,12 +39,9 @@ public class LogoutMenu {
 
         JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
 
-        signOut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                current.dispose();
-                new LoginPage();
-            }
+        signOut.addActionListener(e -> {
+            current.dispose();
+            new LoginPage();
         });
 
         menu.add(signOut);
