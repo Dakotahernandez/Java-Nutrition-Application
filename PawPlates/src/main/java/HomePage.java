@@ -219,25 +219,29 @@ public class HomePage extends JFrame {
             btn.setForeground(Theme.BUTTON_FG);
             btn.addActionListener(e -> {
                 dialog.dispose();
-                frame.dispose();
                 switch (text) {
                     case "Workout":
+                        frame.dispose();
                         new CreateExercise();
                         break;
                     case "Sleep":
+                        frame.dispose();
                         new SleepPage(SessionContext.getDate());
                         break;
                     case "Calories":
+                        frame.dispose();
                         new CalorieMacroPage(SessionContext.getDate());
                         break;
                     case "Weight":
+                        frame.dispose();
                         new RecordWeight(SessionContext.getDate());
                         break;
+                    case "Cancel":
                     default:
-                        // Cancel
+                        // Just close the dialog, don't touch the main frame
                         break;
                 }
-            });
+        });
             dialog.add(btn);
         }
 
