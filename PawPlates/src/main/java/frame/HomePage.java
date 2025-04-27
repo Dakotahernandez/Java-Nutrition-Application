@@ -112,26 +112,9 @@ public class HomePage extends JFrame {
 
         // DatePicker settings
         DatePickerSettings dateSettings = new DatePickerSettings();
-        dateSettings.setAllowEmptyDates(false);
         dateSettings.setFormatForDatesCommonEra(FORMATTER);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundOverallCalendarPanel, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundMonthAndYearMenuLabels, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.TextMonthAndYearMenuLabels, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundMonthAndYearNavigationButtons, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.TextMonthAndYearNavigationButtons, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundTopLeftLabelAboveWeekNumbers, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundCalendarPanelLabelsOnHover, Theme.MID_GRAY);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextWeekdays, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextWeekNumbers, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextNormalDates, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundNormalDates, Theme.BG_DARKER);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundVetoedDates, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Theme.ACCENT_GREEN);
-        dateSettings.setColor(DatePickerSettings.DateArea.DatePickerTextValidDate, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundTodayLabel, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.TextTodayLabel, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundClearLabel, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.TextClearLabel, Theme.FG_LIGHT);
+        Theme.applyDarkThemeToDatePicker(dateSettings);
+
 
         // Initialize DatePicker
         datePicker = new DatePicker(dateSettings);
