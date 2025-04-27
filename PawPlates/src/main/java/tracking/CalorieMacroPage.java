@@ -1,6 +1,6 @@
-package tracking; /**
+/**
  * =============================================================================
- * File:           tracking.CalorieMacroPage.java
+ * File:           CalorieMacroPage.java
  * Author:         Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -14,12 +14,12 @@ package tracking; /**
  *   - java.awt.*              (AWT layout and events)
  *   - java.time.LocalDate     (date handling)
  *   - java.time.format.DateTimeFormatter (date formatting)
- *   - frame.TemplateFrame           (application template frame)
- *   - frame.AnimatedProgressBar     (smooth progress bar animation)
+ *   - TemplateFrame           (application template frame)
+ *   - AnimatedProgressBar     (smooth progress bar animation)
  *
  * Usage:
  *   // Create for today's date and show
- *   tracking.CalorieMacroPage page = new tracking.CalorieMacroPage(LocalDate.now());
+ *   CalorieMacroPage page = new CalorieMacroPage(LocalDate.now());
  *   page.setVisible(true);
  *
  * TODO:
@@ -36,7 +36,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import frame.*;
 
 public class CalorieMacroPage extends TemplateFrame {
 
@@ -138,7 +137,7 @@ public class CalorieMacroPage extends TemplateFrame {
     }
 
     /**
-     * No-arg constructor: defaults to the date in frame.SessionContext.
+     * No-arg constructor: defaults to the date in SessionContext.
      */
     /**
      * Description
