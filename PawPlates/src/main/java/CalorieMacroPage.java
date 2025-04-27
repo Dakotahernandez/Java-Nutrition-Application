@@ -74,7 +74,7 @@ public class CalorieMacroPage extends TemplateFrame {
         setTitle("Calorie/Macro Tracker – " + date.format(FORMATTER));
 
         calorieProgressBar = new AnimatedProgressBar(0, DAILY_LIMIT);
-        calorieProgressBar.setForeground(Theme.ACCENT_GREEN);
+        calorieProgressBar.setForeground(Theme.ACCENT_COLOR);
         calorieProgressBar.setBackground(Theme.BG_LIGHTER);
         progressLabel = addProgressBar(calorieProgressBar, 0, getProgressText());
         progressLabel.setFont(Theme.HEADER_FONT);

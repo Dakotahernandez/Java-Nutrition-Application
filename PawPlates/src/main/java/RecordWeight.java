@@ -98,7 +98,7 @@ public class RecordWeight extends TemplateFrame {
         plot.setBackgroundPaint(Theme.BG_DARK);
         plot.setDomainGridlinePaint(Theme.MID_GRAY);
         plot.setRangeGridlinePaint(Theme.MID_GRAY);
-        plot.getRenderer().setSeriesPaint(0, Theme.ACCENT_GREEN);
+        plot.getRenderer().setSeriesPaint(0, Theme.ACCENT_COLOR);
         plot.getRenderer().setSeriesPaint(1, Theme.MID_GRAY);
         chart.setBackgroundPaint(Theme.BG_DARK);
         chart.getTitle().setPaint(Theme.FG_LIGHT);
@@ -159,7 +159,7 @@ public class RecordWeight extends TemplateFrame {
         inputPanel.add(weightField, gbc);
 
         JButton confirm = new JButton("Confirm");
-        confirm.setBackground(Theme.ACCENT_GREEN);
+        confirm.setBackground(Theme.ACCENT_COLOR);
         confirm.setForeground(Theme.FG_LIGHT);
         confirm.setFont(Theme.NORMAL_FONT);
         confirm.setBorder(BorderFactory.createLineBorder(Theme.BUTTON_BORDER));
