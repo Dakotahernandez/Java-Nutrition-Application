@@ -1,4 +1,4 @@
-/**
+package frame; /**
  * =============================================================================
  * File:
  * Author:
@@ -14,6 +14,9 @@
  *
  * =============================================================================
  */
+import user.User;
+import user.UserDatabase;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

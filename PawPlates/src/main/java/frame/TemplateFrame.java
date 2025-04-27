@@ -1,6 +1,6 @@
-/**
+package frame; /**
  * =============================================================================
- * File:           TemplateFrame.java
+ * File:           frame.TemplateFrame.java
  * Authors:         Dakota Hernandez, Joshua Carrol
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -24,7 +24,7 @@
  *
  * Usage:
  *   // Extend this frame for all pages:
- *   public class MyPage extends TemplateFrame {
+ *   public class MyPage extends frame.TemplateFrame {
  *       public MyPage() {
  *           addMenuBarPanel();
  *           // build UI on centerPanel...
@@ -88,7 +88,7 @@ public class TemplateFrame extends JFrame {
         JPanel menuBarPanel = new JPanel(new GridBagLayout());
         menuBarPanel.setBackground(Theme.BG_DARK);
 
-        // User menu (left)
+        // user.User menu (left)
         c.insets = new Insets(0,0,0,0);
         c.gridx = 0; c.gridy = 0;
         c.weightx = 1.0; c.fill = GridBagConstraints.HORIZONTAL;
@@ -152,7 +152,7 @@ public class TemplateFrame extends JFrame {
 
     /**
      * Adds a themed progress bar (and label) into the northPanel.
-     * If you pass an AnimatedProgressBar, it will animate smoothly.
+     * If you pass an frame.AnimatedProgressBar, it will animate smoothly.
      */
     /**
      * * Description

@@ -1,4 +1,4 @@
-/**
+package tracking; /**
  * =============================================================================
  * File:
  * Author:
@@ -18,7 +18,7 @@ import java.sql.Time;
 import java.util.Date;
 
 /*
- * PURPOSE: Be able to create Workout instances to add it to a user's progress
+ * PURPOSE: Be able to create workout.Workout instances to add it to a user's progress
  * COMPLETED: constructor, getter/setter methods, ...
  */
 
@@ -93,7 +93,7 @@ public class Workout {
         this.duration = duration;
     }
 
-    //Create a Workout
+    //Create a workout.Workout
     /**
      * Description
      *

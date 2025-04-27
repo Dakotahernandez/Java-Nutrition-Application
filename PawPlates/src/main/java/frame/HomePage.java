@@ -1,6 +1,6 @@
-/**
+package frame; /**
  * =============================================================================
- * File:           HomePage.java
+ * File:           frame.HomePage.java
  * Authors:        Mac Johnson Dakota Hernandez Faith ota
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
  *
  * Usage:
  *   // Instantiate and display the home page
- *   new HomePage();
+ *   new frame.HomePage();
  *
  * TODO:
  *
@@ -31,6 +31,11 @@
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import tracking.CalorieMacroPage;
+import tracking.CreateExercise;
+import tracking.RecordWeight;
+import tracking.SleepPage;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -211,7 +216,7 @@ public class HomePage extends JFrame {
         dialog.setLayout(new GridLayout(5, 1, 10, 10));
         dialog.getContentPane().setBackground(Theme.BG_DARKER);
 
-        String[] options = {"Workout", "Sleep", "Calories", "Weight", "Cancel"};
+        String[] options = {"workout.Workout", "Sleep", "Calories", "Weight", "Cancel"};
         for (String text : options) {
             JButton btn = new JButton(text);
             btn.setFont(Theme.NORMAL_FONT);
@@ -220,7 +225,7 @@ public class HomePage extends JFrame {
             btn.addActionListener(e -> {
                 dialog.dispose();
                 switch (text) {
-                    case "Workout":
+                    case "workout.Workout":
                         frame.dispose();
                         new CreateExercise();
                         break;

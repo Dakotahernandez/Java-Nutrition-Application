@@ -1,6 +1,6 @@
-/**
+package frame;/**
  * =============================================================================
- * File:           UserMenu.java
+ * File:           frame.UserMenu.java
  * Author:         Faith Ota, Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -18,17 +18,19 @@
  *
  * Usage:
  *   // In a JFrame subclass:
- *   setJMenuBar(UserMenu.addUserMenu());
+ *   setJMenuBar(frame.UserMenu.addUserMenu());
  *
  * TODO:
- *   - open SetGoalPage(SessionContext.getDate());
- *   - open RegistrationPage(SessionContext.getDate());
+ *   - open SetGoalPage(frame.SessionContext.getDate());
+ *   - open RegistrationPage(frame.SessionContext.getDate());
  * =============================================================================
  */
 
+import tracking.CalorieMacroPage;
+import tracking.CreateExercise;
+import tracking.SleepPage;
+
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.time.LocalDate;
 import javax.swing.SwingUtilities;
 
 public class UserMenu {
@@ -49,12 +51,12 @@ public class UserMenu {
         JMenu menu = new JMenu("Menu");
 
         JMenuItem home            = new JMenuItem("Home");
-        JMenuItem trackWorkout    = new JMenuItem("Track Workout");
+        JMenuItem trackWorkout    = new JMenuItem("Track workout.Workout");
         JMenuItem trackSleep      = new JMenuItem("Track Sleep");
         JMenuItem trackCals       = new JMenuItem("Track Calories");
         JMenuItem setGoal         = new JMenuItem("Set a Goal");
         JMenuItem registration    = new JMenuItem("Register for a Class");
-        JMenuItem createExercise  = new JMenuItem("Create an Exercise");
+        JMenuItem createExercise  = new JMenuItem("Create an workout.Exercise");
 
         // Home
         home.addActionListener(e -> {
@@ -63,7 +65,7 @@ public class UserMenu {
             new HomePage();
         });
 
-        // Track Workout
+        // Track workout.Workout
         trackWorkout.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
             current.dispose();
@@ -86,15 +88,15 @@ public class UserMenu {
 
         // Set a Goal (to be implemented)
         setGoal.addActionListener(e -> {
-            // TODO: open SetGoalPage(SessionContext.getDate());
+            // TODO: open SetGoalPage(frame.SessionContext.getDate());
         });
 
         // Register for a Class (to be implemented)
         registration.addActionListener(e -> {
-            // TODO: open RegistrationPage(SessionContext.getDate());
+            // TODO: open RegistrationPage(frame.SessionContext.getDate());
         });
 
-        // Create Exercise
+        // Create workout.Exercise
         createExercise.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
             current.dispose();

@@ -1,6 +1,6 @@
-/**
+package frame; /**
  * =============================================================================
- * File:           Theme.java
+ * File:           frame.Theme.java
  * Author:         Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -13,10 +13,10 @@
  *   - java.awt.Font
  *
  * Usage:
- *   // Reference Theme.BG_DARK for background color
- *   panel.setBackground(Theme.BG_DARK);
- *   // Use Theme.NORMAL_FONT for standard text
- *   label.setFont(Theme.NORMAL_FONT);
+ *   // Reference frame.Theme.BG_DARK for background color
+ *   panel.setBackground(frame.Theme.BG_DARK);
+ *   // Use frame.Theme.NORMAL_FONT for standard text
+ *   label.setFont(frame.Theme.NORMAL_FONT);
  *
  * TODO:
  *
@@ -27,7 +27,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 /**
- * The Theme class centralizes all the style settings for the application.
+ * The frame.Theme class centralizes all the style settings for the application.
  * Modify these constants to update the color scheme and fonts project-wide.
  */
 public final class Theme {

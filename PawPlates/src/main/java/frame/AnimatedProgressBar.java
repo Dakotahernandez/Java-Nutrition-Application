@@ -1,6 +1,6 @@
-/**
+package frame; /**
  * =============================================================================
- * File:           AnimatedProgressBar.java
+ * File:           frame.AnimatedProgressBar.java
  * Author:         Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -15,7 +15,7 @@
  *
  * Usage:
  *   // Create a bar ranging from 0 to 100
- *   AnimatedProgressBar bar = new AnimatedProgressBar(0, 100);
+ *   frame.AnimatedProgressBar bar = new frame.AnimatedProgressBar(0, 100);
  *   // Animate it to 75%
  *   bar.animateTo(75);
  *

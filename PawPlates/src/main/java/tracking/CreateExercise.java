@@ -1,4 +1,4 @@
-/**
+package tracking; /**
  * =============================================================================
  * File:
  * Author:
@@ -30,7 +30,7 @@ public class CreateExercise extends TemplateFrame {
         addMenuBarPanel();
 
         JTextField exerciseName = new JTextField(15);
-        addTextField("Exercise Name:", exerciseName, 0,0);
+        addTextField("workout.Exercise Name:", exerciseName, 0,0);
 
         JTextField focus = new JTextField(15);
         addTextField("Focus:", focus, 0,1);
@@ -48,16 +48,16 @@ public class CreateExercise extends TemplateFrame {
 
             String message = "";
             if(i==1) {
-                message = "Exercise Created Successfully";
+                message = "workout.Exercise Created Successfully";
             }
             else if(i==0){
-                message = "Exercise Already Exists";
+                message = "workout.Exercise Already Exists";
             }
             else{
-                message = "Exercise could not be added";
+                message = "workout.Exercise could not be added";
             }
             JOptionPane.showMessageDialog(this, message + "\n" +
-                    "Exercise Name: " + exerciseName.getText() + "\n" +
+                    "workout.Exercise Name: " + exerciseName.getText() + "\n" +
                     "Focus: " + focus.getText() + "\n" + "Description: " + description.getText()
 
             );

@@ -1,6 +1,6 @@
-/**
+package tracking; /**
  * =============================================================================
- * File:        RecordWeight.java
+ * File:        workout.RecordWeight.java
  * Authors:     Eli Hall, Dakota Hernandez
  * Created:     04/24/2025
  * -----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
  *   - org.jfree.data.time.*
  *
  * Usage:
- *   new RecordWeight(LocalDate selectedDate);
+ *   new workout.RecordWeight(LocalDate selectedDate);
  *
  * =============================================================================
  */

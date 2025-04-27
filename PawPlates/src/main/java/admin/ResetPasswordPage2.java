@@ -14,7 +14,7 @@
  *
  * =============================================================================
  */
-package org.example;
+package admin;
 
 import javax.swing.*;
 import java.awt.*;
