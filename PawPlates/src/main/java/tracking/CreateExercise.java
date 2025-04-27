@@ -16,6 +16,7 @@ package tracking; /**
  */
 import javax.swing.*;
 import java.awt.*;
+import frame.*;
 
 // This is the interface for creating an exercise
 public class CreateExercise extends TemplateFrame {

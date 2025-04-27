@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import frame.*;
 
 public class SleepPage extends TemplateFrame {
     private static final int WEEKLY_GOAL = 60;
