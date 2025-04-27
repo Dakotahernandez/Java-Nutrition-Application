@@ -20,6 +20,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 
 public class LoginPage extends JFrame {
     public static User CURRENT_USER;
@@ -162,8 +163,7 @@ public class LoginPage extends JFrame {
         c.anchor = GridBagConstraints.CENTER;
         login.addActionListener(e -> {
             try {
-                CURRENT_USER = new User(usernameField.getText(), passwordField.getText());
-                database.loginUser(CURRENT_USER);
+                CURRENT_USER = database.loginUser(usernameField.getText(), passwordField.getText());
                 frame.dispose();
                 new HomePage();
 
@@ -227,13 +227,10 @@ class CreateAccountPage extends JFrame {
         c.insets = new Insets(10, 10, 10, 10);
         c.fill = GridBagConstraints.HORIZONTAL;
 
-        Color labelWhite = new Color(255, 255, 255, 180);
-
         // title label
         JLabel title = new JLabel("Create a New Account", SwingConstants.CENTER);
         title.setFont(new Font("Arial", Font.BOLD, 20));
         title.setOpaque(true);
-        //title.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 0;
         c.gridwidth = 2;
@@ -243,7 +240,6 @@ class CreateAccountPage extends JFrame {
         JLabel username = new JLabel("Username:");
         username.setFont(new Font("Arial", Font.PLAIN, 14));
         username.setOpaque(true);
-        //username.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 1;
         c.gridwidth = 1;
@@ -257,10 +253,9 @@ class CreateAccountPage extends JFrame {
         panel.add(usernameField, c);
 
         // email label and field
-        JLabel email = new JLabel("Email (Optional):");
+        JLabel email = new JLabel("Email:");
         email.setFont(new Font("Arial", Font.PLAIN, 14));
         email.setOpaque(true);
-        //email.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 2;
         c.gridwidth = 1;
@@ -276,7 +271,6 @@ class CreateAccountPage extends JFrame {
         JLabel password = new JLabel("Password:");
         password.setFont(new Font("Arial", Font.PLAIN, 14));
         password.setOpaque(true);
-        //password.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 3;
         c.gridwidth = 1;
@@ -292,7 +286,6 @@ class CreateAccountPage extends JFrame {
         JLabel confirmPassword = new JLabel("Confirm Password:");
         confirmPassword.setFont(new Font("Arial", Font.PLAIN, 14));
         confirmPassword.setOpaque(true);
-        //confirmPassword.setBackground(labelWhite);
         c.gridx = 0;
         c.gridy = 4;
         c.gridwidth = 1;
@@ -304,13 +297,36 @@ class CreateAccountPage extends JFrame {
         c.gridy = 4;
         panel.add(confirmPasswordField, c);
 
+        // Account type field
+        JLabel accountTypeLabel = new JLabel("Account Type:");
+        accountTypeLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+        accountTypeLabel.setOpaque(true);
+        c.gridx = 0;
+        c.gridy = 5;
+        c.gridwidth = 1;
+        panel.add(accountTypeLabel, c);
+
+        ButtonGroup trainerButtonGroup = new ButtonGroup();
+        JRadioButton userButton = new JRadioButton("General User", true);
+        trainerButtonGroup.add(userButton);
+
+        JRadioButton trainerButton = new JRadioButton("Trainer");
+        trainerButtonGroup.add(trainerButton);
+
+        JPanel radioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        radioPanel.add(userButton);
+        radioPanel.add(trainerButton);
+
+        c.gridx = 1;
+        c.gridy = 5;
+        panel.add(radioPanel, c);
+
         // Message field
         JLabel message = new JLabel("");
         message.setFont(new Font("Arial", Font.PLAIN, 14));
         message.setOpaque(true);
-        //message.setBackground(labelWhite);
         c.gridx = 0;
-        c.gridy = 5;
+        c.gridy = 6;
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         panel.add(message, c);
@@ -319,18 +335,28 @@ class CreateAccountPage extends JFrame {
         JButton createAccount = new JButton("Create New Account");
         createAccount.setFont(new Font("Arial", Font.BOLD, 14));
         c.gridx = 0;
-        c.gridy = 6;
+        c.gridy = 7;
         c.gridwidth = 2;
         c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.CENTER;
         createAccount.addActionListener(e -> {
             try {
+                if (!Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())) {
+                    throw new IllegalArgumentException("Passwords do not match. Try again.");
+                }
+
                 LoginPage.CURRENT_USER = new User(usernameField.getText(), passwordField.getText());
+                LoginPage.CURRENT_USER.setEmail(emailField.getText());
+                LoginPage.CURRENT_USER.setTrainer(trainerButton.isSelected());
+
                 LoginPage.database.registerUser(LoginPage.CURRENT_USER);
                 message.setForeground(Color.BLACK);
-                message.setText("New account created with username and password.");
+                message.setText("New account created!");
                 usernameField.setText("");
+                emailField.setText("");
                 passwordField.setText("");
+                confirmPasswordField.setText("");
+
             }
             catch (IllegalArgumentException ex) {
                 message.setForeground(Color.RED);
@@ -342,12 +368,12 @@ class CreateAccountPage extends JFrame {
         JButton back = new JButton("Back");
         back.setFont(new Font("Arial", Font.BOLD, 14));
         c.gridx = 0;
-        c.gridy = 7;
+        c.gridy = 8;
         c.gridwidth = 2;
         c.anchor = GridBagConstraints.CENTER;
         back.addActionListener(e -> {
-            dispose();
             new LoginPage();
+            dispose();
         });
 
         panel.add(back, c);

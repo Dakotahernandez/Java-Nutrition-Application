@@ -21,6 +21,8 @@ public class User {
     String username;
     String password;
     String email;
+    int id;
+    boolean isTrainer = false;
     /**
      * Description
      *
@@ -73,5 +75,34 @@ public class User {
      */
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) throws IllegalArgumentException {
+        if (email == null) {
+            throw new IllegalArgumentException("Email cannot be empty.");
+        }
+        if (email.length() > 75) {
+            throw new IllegalArgumentException("Email cannot be more than 75 characters.");
+        }
+        if (!email.matches("^[\\w.-]+@[\\w.-]+\\.[\\w]+$")) {
+            throw new IllegalArgumentException("Email address is invalid.");
+        }
+        this.email = email;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isTrainer() {
+        return isTrainer;
+    }
+
+    public void setTrainer(boolean trainer) {
+        isTrainer = trainer;
     }
 }
