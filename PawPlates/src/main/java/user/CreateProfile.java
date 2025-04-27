@@ -1,4 +1,4 @@
-/**
+package user; /**
  * =============================================================================
  * File:
  * Author:
@@ -20,7 +20,7 @@ import java.awt.*;
 
 /* NOTE: This file contains code (menu, logout) taken from other files for consistency throughout
 the website general layout format, but this code is labelled as such for credit to the original programmer.
-NEW CODE: Initial create profile interface. User provides first and last name, then has a dropdown
+NEW CODE: Initial create profile interface. user.User provides first and last name, then has a dropdown
 box for gender and fitness level. then they have 2 drop down boxes for security question
 choices for resetting their password later if needed, and then they type in their answers.
 * */
@@ -178,7 +178,7 @@ public class CreateProfile {
     public static JMenuBar userMenuBar() {
         JMenuBar menuBar = new JMenuBar();
         JMenu menu = new JMenu("Menu");
-        JMenuItem trackWorkout = new JMenuItem("Track Workout");
+        JMenuItem trackWorkout = new JMenuItem("Track workout.Workout");
         JMenuItem trackCals = new JMenuItem("Track Calories");
         JMenuItem setGoal = new JMenuItem("Set a Goal");
         JMenuItem registration = new JMenuItem("Register for a Class");

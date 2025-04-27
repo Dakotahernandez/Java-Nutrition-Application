@@ -1,6 +1,6 @@
-/**
+package frame; /**
  * =============================================================================
- * File:           MenuBars.java
+ * File:           frame.MenuBars.java
  * Author:         Faith ota
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -19,7 +19,7 @@
  *   // Within a frame setup:
  *   GridBagConstraints gbc = new GridBagConstraints();
  *   JPanel content = new JPanel(new BorderLayout());
- *   MenuBars.addMenuBars(content, gbc);
+ *   frame.MenuBars.addMenuBars(content, gbc);
  *
  * TODO:
  *

@@ -1,6 +1,6 @@
-/**
+package frame; /**
  * =============================================================================
- * File:           HomePage.java
+ * File:           frame.HomePage.java
  * Authors:        Mac Johnson Dakota Hernandez Faith ota
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -22,7 +22,7 @@
  *
  * Usage:
  *   // Instantiate and display the home page
- *   new HomePage();
+ *   new frame.HomePage();
  *
  * TODO:
  *
@@ -31,6 +31,8 @@
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
+import tracking.*;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -107,26 +109,9 @@ public class HomePage extends JFrame {
 
         // DatePicker settings
         DatePickerSettings dateSettings = new DatePickerSettings();
-        dateSettings.setAllowEmptyDates(false);
         dateSettings.setFormatForDatesCommonEra(FORMATTER);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundOverallCalendarPanel, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundMonthAndYearMenuLabels, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.TextMonthAndYearMenuLabels, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundMonthAndYearNavigationButtons, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.TextMonthAndYearNavigationButtons, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundTopLeftLabelAboveWeekNumbers, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundCalendarPanelLabelsOnHover, Theme.MID_GRAY);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextWeekdays, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextWeekNumbers, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarTextNormalDates, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundNormalDates, Theme.BG_DARKER);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundVetoedDates, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.CalendarBackgroundSelectedDate, Theme.ACCENT_GREEN);
-        dateSettings.setColor(DatePickerSettings.DateArea.DatePickerTextValidDate, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundTodayLabel, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.TextTodayLabel, Theme.FG_LIGHT);
-        dateSettings.setColor(DatePickerSettings.DateArea.BackgroundClearLabel, Theme.BG_DARK);
-        dateSettings.setColor(DatePickerSettings.DateArea.TextClearLabel, Theme.FG_LIGHT);
+        Theme.applyDarkThemeToDatePicker(dateSettings);
+
 
         // Initialize DatePicker
         datePicker = new DatePicker(dateSettings);
@@ -211,7 +196,7 @@ public class HomePage extends JFrame {
         dialog.setLayout(new GridLayout(5, 1, 10, 10));
         dialog.getContentPane().setBackground(Theme.BG_DARKER);
 
-        String[] options = {"Workout", "Sleep", "Calories", "Weight", "Cancel"};
+        String[] options = {"workout.Workout", "Sleep", "Calories", "Weight", "Cancel"};
         for (String text : options) {
             JButton btn = new JButton(text);
             btn.setFont(Theme.NORMAL_FONT);
@@ -220,7 +205,7 @@ public class HomePage extends JFrame {
             btn.addActionListener(e -> {
                 dialog.dispose();
                 switch (text) {
-                    case "Workout":
+                    case "workout.Workout":
                         frame.dispose();
                         new CreateExercise();
                         break;

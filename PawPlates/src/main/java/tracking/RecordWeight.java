@@ -1,6 +1,6 @@
-/**
+package tracking; /**
  * =============================================================================
- * File:        RecordWeight.java
+ * File:        workout.RecordWeight.java
  * Authors:     Eli Hall, Dakota Hernandez
  * Created:     04/24/2025
  * -----------------------------------------------------------------------------
@@ -20,7 +20,7 @@
  *   - org.jfree.data.time.*
  *
  * Usage:
- *   new RecordWeight(LocalDate selectedDate);
+ *   new workout.RecordWeight(LocalDate selectedDate);
  *
  * =============================================================================
  */
@@ -30,7 +30,9 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import frame.*;
 
+import frame.TemplateFrame;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -98,7 +100,7 @@ public class RecordWeight extends TemplateFrame {
         plot.setBackgroundPaint(Theme.BG_DARK);
         plot.setDomainGridlinePaint(Theme.MID_GRAY);
         plot.setRangeGridlinePaint(Theme.MID_GRAY);
-        plot.getRenderer().setSeriesPaint(0, Theme.ACCENT_GREEN);
+        plot.getRenderer().setSeriesPaint(0, Theme.ACCENT_COLOR);
         plot.getRenderer().setSeriesPaint(1, Theme.MID_GRAY);
         chart.setBackgroundPaint(Theme.BG_DARK);
         chart.getTitle().setPaint(Theme.FG_LIGHT);
@@ -159,7 +161,7 @@ public class RecordWeight extends TemplateFrame {
         inputPanel.add(weightField, gbc);
 
         JButton confirm = new JButton("Confirm");
-        confirm.setBackground(Theme.ACCENT_GREEN);
+        confirm.setBackground(Theme.ACCENT_COLOR);
         confirm.setForeground(Theme.FG_LIGHT);
         confirm.setFont(Theme.NORMAL_FONT);
         confirm.setBorder(BorderFactory.createLineBorder(Theme.BUTTON_BORDER));

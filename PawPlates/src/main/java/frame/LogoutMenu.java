@@ -1,31 +1,32 @@
-/**
+package frame; /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           frame.LogoutMenu.java
+ * Author:         Faith Ota
+ * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Creates the application's logout menu bar to exit the program
  *
  * Dependencies:
- *
- *
+ *   - javax.swing.*;
+ *   - java.awt.event.ActionEvent;
+ *   - java.awt.event.ActionListener;
  * Usage:
+ *   Within a frame setup with the other menu bar in frame.MenuBars() to combine both
+ *   menus as one object.
  *
+ *   frame.TemplateFrame uses frame.MenuBars as a part of the template frame for the home
+ *   page and tracking pages.
  * =============================================================================
  */
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class LogoutMenu {
     public LogoutMenu() { }
     /**
-     * Description
+     * Description: a method to add a logout menu bar to templates
      *
-     * @param
-     * @return
-     * @throws
+     * @return JMenuBar item with logout options
      */
     public static JMenuBar addLogoutMenu(){
         JMenuBar menuBar = new JMenuBar();
@@ -34,11 +35,11 @@ public class LogoutMenu {
         JMenuItem settings = new JMenuItem("Settings");
         JMenuItem help = new JMenuItem("Help");
 
-        signOut.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new LoginPage();
-            }
+        JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
+
+        signOut.addActionListener(e -> {
+            current.dispose();
+            new LoginPage();
         });
 
         menu.add(signOut);

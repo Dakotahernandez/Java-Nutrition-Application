@@ -1,3 +1,4 @@
+package tracking;
 /**
  * =============================================================================
  * File:           CalorieMacroPage.java
@@ -36,6 +37,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import frame.*;
 
 public class CalorieMacroPage extends TemplateFrame {
 
@@ -72,7 +74,7 @@ public class CalorieMacroPage extends TemplateFrame {
 
         // -------- Progress Bar Setup --------
         calorieProgressBar = new AnimatedProgressBar(0, DAILY_LIMIT);
-        calorieProgressBar.setForeground(Theme.ACCENT_GREEN);
+        calorieProgressBar.setForeground(Theme.ACCENT_COLOR);
         calorieProgressBar.setBackground(Theme.BG_LIGHTER);
         progressLabel = addProgressBar(calorieProgressBar, 0, getProgressText());
         progressLabel.setFont(Theme.HEADER_FONT);

@@ -1,4 +1,4 @@
-/**
+package tracking; /**
  * =============================================================================
  * File:
  * Author:
@@ -18,6 +18,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import frame.*;
 
 public class SleepPage extends TemplateFrame {
     private static final int WEEKLY_GOAL = 60;
@@ -78,7 +79,7 @@ public class SleepPage extends TemplateFrame {
         });
         addButton(enter, 1);
 
-        // Add the center panel (inherited from TemplateFrame)
+        // Add the center panel (inherited from frame.TemplateFrame)
         add(centerPanel, BorderLayout.CENTER);
 
         pack();
@@ -87,7 +88,7 @@ public class SleepPage extends TemplateFrame {
     }
 
     /**
-     * No-arg constructor uses the date from SessionContext.
+     * No-arg constructor uses the date from frame.SessionContext.
      */
     /**
      * Description
