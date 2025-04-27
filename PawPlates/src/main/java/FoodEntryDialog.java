@@ -24,6 +24,7 @@
 
 import javax.swing.*;
 import java.awt.*;
+import frame.*;
 
 public class FoodEntryDialog extends JDialog {
     private final JTextField[] fields = new JTextField[7];
