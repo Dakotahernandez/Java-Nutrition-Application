@@ -31,10 +31,7 @@ package frame; /**
 
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
-import tracking.CalorieMacroPage;
-import tracking.CreateExercise;
-import tracking.RecordWeight;
-import tracking.SleepPage;
+import tracking.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
