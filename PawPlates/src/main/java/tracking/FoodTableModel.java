@@ -1,11 +1,11 @@
-/**
+package tracking; /**
  * =============================================================================
- * File:           FoodTableModel.java
+ * File:           tracking.FoodTableModel.java
  * Author:         Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
  * Description:
- *   A custom AbstractTableModel for displaying and managing a list of FoodEntry
+ *   A custom AbstractTableModel for displaying and managing a list of tracking.FoodEntry
  *   objects in a JTable. Includes built-in sorting and filtering support.
  *
  * Dependencies:
@@ -13,10 +13,10 @@
  *   - java.util.List
  *   - java.util.ArrayList
  *   - java.util.Comparator
- *   - FoodEntry
+ *   - tracking.FoodEntry
  *
  * Usage:
- *   FoodTableModel model = new FoodTableModel(foodList);
+ *   tracking.FoodTableModel model = new tracking.FoodTableModel(foodList);
  *   model.filter("Chicken");
  *   model.sortByColumn(1, true); // Sort by Calories ascending
  *

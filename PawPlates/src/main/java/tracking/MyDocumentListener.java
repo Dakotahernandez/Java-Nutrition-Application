@@ -1,6 +1,6 @@
-/**
+package tracking; /**
  * =============================================================================
- * File:           MyDocumentListener.java
+ * File:           tracking.MyDocumentListener.java
  * Author:         Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -13,7 +13,7 @@
  *   - javax.swing.event.DocumentEvent
  *
  * Usage:
- *   textField.getDocument().addDocumentListener((MyDocumentListener) e -> { ... });
+ *   textField.getDocument().addDocumentListener((tracking.MyDocumentListener) e -> { ... });
  *
  * TODO:
  *   - None
