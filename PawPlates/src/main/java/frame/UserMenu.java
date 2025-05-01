@@ -28,6 +28,7 @@ package frame;/**
 
 import tracking.CalorieMacroPage;
 import tracking.CreateExercise;
+import tracking.SetGoalPage;
 import tracking.SleepPage;
 
 import javax.swing.*;
@@ -89,7 +90,9 @@ public class UserMenu {
 
         // Set a Goal (to be implemented)
         setGoal.addActionListener(e -> {
-            // TODO: open SetGoalPage(frame.SessionContext.getDate());
+            JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
+            current.dispose();
+            new SetGoalPage(SessionContext.getDate());
         });
 
         // Register for a Class (to be implemented)
