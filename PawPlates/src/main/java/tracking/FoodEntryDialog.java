@@ -1,6 +1,6 @@
-/**
+package tracking; /**
  * =============================================================================
- * File:           FoodEntryDialog.java
+ * File:           tracking.FoodEntryDialog.java
  * Author:         Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -11,10 +11,10 @@
  * Dependencies:
  *   - javax.swing.*
  *   - java.awt.*
- *   - FoodEntry
+ *   - tracking.FoodEntry
  *
  * Usage:
- *   FoodEntryDialog dialog = new FoodEntryDialog(parentFrame, foodEntry);
+ *   tracking.FoodEntryDialog dialog = new tracking.FoodEntryDialog(parentFrame, foodEntry);
  *   dialog.setVisible(true);
  *
  * TODO:
