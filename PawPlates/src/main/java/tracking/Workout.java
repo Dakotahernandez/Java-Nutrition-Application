@@ -16,6 +16,7 @@ package tracking; /**
  */
 import java.sql.Time;
 import java.util.Date;
+import java.util.*;
 
 /*
  * PURPOSE: Be able to create workout.Workout instances to add it to a user's progress
@@ -24,8 +25,33 @@ import java.util.Date;
 
 public class Workout {
     private Date date;
-    private String focus;
-    private Time duration;
+    private List<Exercise> exercises;
+
+
+    //Parameterized Constructor
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
+    public Workout(Date date, String focus, List<Exercise> exercises) {
+        this.date = date;
+        this.exercises = exercises;
+    }
+
+    public void addExcercise(Exercise exercise) {
+        exercises.add(exercise);
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
 
     //Setter Methods:
     /**
@@ -36,22 +62,7 @@ public class Workout {
      * @throws
      */
     public void setDate(Date date) { this.date = date; }
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public void setDuration(Time duration) { this.duration = duration; }
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public void setFocus(String focus) { this.focus = focus; }
+
 
     //Getter Methods:
     /**
@@ -62,47 +73,7 @@ public class Workout {
      * @throws
      */
     public Date getDate() { return date; }
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public String getFocus() { return focus; }
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public Time getDuration() { return duration; }
 
-    //Parameterized Constructor
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    Workout(Date date, String focus, Time duration){
-        this.date = date;
-        this.focus = focus;
-        this.duration = duration;
-    }
 
-    //Create a workout.Workout
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    Workout createWorkout(Date date, String focus, Time duration){
-        Workout w = new Workout(date, focus, duration);
-        return w;
-    }
+
 }

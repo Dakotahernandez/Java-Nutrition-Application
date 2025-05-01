@@ -36,7 +36,6 @@ public class Exercise {
     public Exercise() {
         name ="";
         focus = "";
-
         description = "";
         durationReps = 0;
         caloriesBurned = 0;
@@ -48,7 +47,7 @@ public class Exercise {
      * @return
      * @throws
      */
-    public Exercise(String name, String focus, int durationReps, int caloriesBurned, String description) {
+    public Exercise(String name, String focus, int durationReps, int caloriesBurned,String description) {
         this.name = name;
         this.focus = focus;
         this.description = description;
