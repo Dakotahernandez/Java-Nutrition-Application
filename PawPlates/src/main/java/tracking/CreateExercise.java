@@ -31,40 +31,58 @@ public class CreateExercise extends TemplateFrame {
         addMenuBarPanel();
 
         JTextField exerciseName = new JTextField(15);
-        addTextField("workout.Exercise Name:", exerciseName, 0,0);
+        addTextField("Exercise Name:", exerciseName, 0,0);
 
         JTextField focus = new JTextField(15);
         addTextField("Focus:", focus, 0,1);
 
-        JTextField description = new JTextField(15);
-        addTextField("Description:", description, 0,2);
+        JTextField durationReps = new JTextField(15);
+        addTextField("Duration(mins)/Reps:", durationReps, 0,2);
 
-        JButton submitButton = new JButton("Add Entry");
-        addButton(submitButton, 5);
+        JTextField caloriesBurned = new JTextField(15);
+        addTextField("Calories Burned:", caloriesBurned, 0,3);
+
+        JTextField description = new JTextField(15);
+        addTextField("Description:", description, 0,4);
+
+        JButton submitButton = new JButton("Create Workout");
+        addButton(submitButton, 6);
 
         // Action listener for "Add Entry" Button
         submitButton.addActionListener(e -> {
-            Exercise exercise = new Exercise(exerciseName.getText(), focus.getText(), description.getText());
-            int i = exercise.writeCSV();
+            int calBurned;
+            int durReps;
+            try{
+                durReps = Integer.parseInt(durationReps.getText());
+                calBurned = Integer.parseInt(caloriesBurned.getText());
+            }catch(NumberFormatException ex){
+                JOptionPane.showMessageDialog(this,
+                        "Please enter a valid number for Duration/Reps and Calories Burned.",
+                        "Invalid Input",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-            String message = "";
-            if(i==1) {
-                message = "workout.Exercise Created Successfully";
-            }
-            else if(i==0){
-                message = "workout.Exercise Already Exists";
-            }
-            else{
-                message = "workout.Exercise could not be added";
-            }
+            Exercise exercise = new Exercise(exerciseName.getText(), focus.getText(), calBurned,durReps, description.getText());
+
+
+            //FIXME add exercise to the database
+
+            String message = "Created Exercise";
+
             JOptionPane.showMessageDialog(this, message + "\n" +
-                    "workout.Exercise Name: " + exerciseName.getText() + "\n" +
-                    "Focus: " + focus.getText() + "\n" + "Description: " + description.getText()
+                    "workout.Exercise Name: " + exercise.getName() + "\n" +
+                    "Focus: " + exercise.getFocus() +
+                    "\n" + "Calories Burned: " + exercise.getCaloriesBurned()+
+                    "\n" + "Duration/Reps: " + exercise.getDurationReps() +
+                    "\n" + "Description: " + exercise.getDescription()
 
             );
             exerciseName.setText("");
             focus.setText("");
             description.setText("");
+            caloriesBurned.setText("");
+            durationReps.setText("");
         });
 
         add(centerPanel, BorderLayout.CENTER);
