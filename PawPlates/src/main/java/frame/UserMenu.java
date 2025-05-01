@@ -32,6 +32,7 @@ import tracking.SleepPage;
 
 import javax.swing.*;
 import javax.swing.SwingUtilities;
+import java.awt.*;
 
 public class UserMenu {
 
@@ -61,29 +62,29 @@ public class UserMenu {
         // Home
         home.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
-            current.dispose();
             new HomePage();
+            current.dispose();
         });
 
         // Track workout.Workout
         trackWorkout.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
-            current.dispose();
             new CreateExercise();
+            current.dispose();
         });
 
         // Track Sleep (passes selected date)
         trackSleep.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
-            current.dispose();
             new SleepPage(SessionContext.getDate());
+            current.dispose();
         });
 
         // Track Calories (passes selected date)
         trackCals.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
-            current.dispose();
             new CalorieMacroPage(SessionContext.getDate());
+            current.dispose();
         });
 
         // Set a Goal (to be implemented)
@@ -99,8 +100,8 @@ public class UserMenu {
         // Create workout.Exercise
         createExercise.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
-            current.dispose();
             new CreateExercise();
+            current.dispose();
         });
 
         menu.add(home);
@@ -112,6 +113,34 @@ public class UserMenu {
         menu.add(createExercise);
 
         menuBar.add(menu);
+        menuBar.add(Box.createHorizontalGlue());
+
+        // USER MENU
+        JMenu userMenu = new JMenu(LoginPage.CURRENT_USER.getUsername());
+
+        JMenuItem profile = new JMenuItem("Profile");
+        JMenuItem logout = new JMenuItem("Sign Out");
+
+        // profile
+        profile.addActionListener(e -> {
+            JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
+            // new Profile
+            current.dispose();
+        });
+
+        // logout
+        logout.addActionListener(e -> {
+            JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
+            new LoginPage();
+            LoginPage.CURRENT_USER = null;
+            current.dispose();
+        });
+
+        userMenu.add(profile);
+        userMenu.add(logout);
+
+        menuBar.add(userMenu);
+
         return menuBar;
     }
 }

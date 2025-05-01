@@ -50,3 +50,6 @@ public class LogoutMenu {
         return menuBar;
     }
 }
+
+// NOTE: Mac has refactored this and instead just uses this code in the UserMenu class.
+// This class is currently not needed. Refactor when you can.
