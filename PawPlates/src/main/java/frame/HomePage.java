@@ -178,6 +178,10 @@ public class HomePage extends JFrame {
         goals.setFont(Theme.NORMAL_FONT);
         goals.setBackground(Theme.BUTTON_BG);
         goals.setForeground(Theme.BUTTON_FG);
+        goals.addActionListener(e-> {
+            frame.dispose();
+            new SetGoalPage(SessionContext.getDate());
+        });
         c.gridx = 1;
         mainPanel.add(goals, c);
 

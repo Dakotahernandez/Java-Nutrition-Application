@@ -26,9 +26,7 @@ package frame;/**
  * =============================================================================
  */
 
-import tracking.CalorieMacroPage;
-import tracking.CreateExercise;
-import tracking.SleepPage;
+import tracking.*;
 
 import javax.swing.*;
 import javax.swing.SwingUtilities;
@@ -52,12 +50,12 @@ public class UserMenu {
         JMenu menu = new JMenu("Menu");
 
         JMenuItem home            = new JMenuItem("Home");
-        JMenuItem trackWorkout    = new JMenuItem("Track workout.Workout");
+        JMenuItem trackWorkout    = new JMenuItem("Track Workout");
         JMenuItem trackSleep      = new JMenuItem("Track Sleep");
         JMenuItem trackCals       = new JMenuItem("Track Calories");
         JMenuItem setGoal         = new JMenuItem("Set a Goal");
         JMenuItem registration    = new JMenuItem("Register for a Class");
-        JMenuItem createExercise  = new JMenuItem("Create an workout.Exercise");
+        JMenuItem createExercise  = new JMenuItem("Create an Exercise");
 
         // Home
         home.addActionListener(e -> {
@@ -69,7 +67,7 @@ public class UserMenu {
         // Track workout.Workout
         trackWorkout.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
-            new CreateExercise();
+            new CreateWorkoutPage();
             current.dispose();
         });
 
@@ -89,7 +87,9 @@ public class UserMenu {
 
         // Set a Goal (to be implemented)
         setGoal.addActionListener(e -> {
-            // TODO: open SetGoalPage(frame.SessionContext.getDate());
+            JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
+            current.dispose();
+            new SetGoalPage(SessionContext.getDate());
         });
 
         // Register for a Class (to be implemented)

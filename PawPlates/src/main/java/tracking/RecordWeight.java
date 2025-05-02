@@ -42,8 +42,8 @@ import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 
 public class RecordWeight extends TemplateFrame {
-    private static final int GOAL_WEIGHT = 145;
-    private static final int START_WEIGHT = 165;
+    private static int GOAL_WEIGHT = 130;
+    private static int START_WEIGHT = 150;
     private static final int DAYS_SHOWN = 10; //  adjustable days shown in table/chart
 
     private static int curWeight = START_WEIGHT;
@@ -216,6 +216,10 @@ public class RecordWeight extends TemplateFrame {
         pack();
         setVisible(true);
     }
+
+    public static void setStartWeight(int startWeight) { START_WEIGHT = startWeight; }
+
+    public static void setGoalWeight(int goalWeight) { GOAL_WEIGHT = goalWeight; }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new RecordWeight(LocalDate.now()));
