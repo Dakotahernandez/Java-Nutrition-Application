@@ -44,6 +44,8 @@ import java.awt.*;
 public class TemplateFrame extends JFrame {
     protected JPanel centerPanel; // gridBagLayout
     protected JPanel northPanel;  // BorderLayout
+    protected JPanel eastPanel;
+    protected JPanel westPanel;
     protected GridBagConstraints c;
 
     /**
@@ -57,8 +59,12 @@ public class TemplateFrame extends JFrame {
         // Initialize panels
         centerPanel = new JPanel(new GridBagLayout());
         northPanel  = new JPanel(new BorderLayout());
+        eastPanel  = new JPanel(new GridBagLayout());
+        westPanel  = new JPanel(new GridBagLayout());
         centerPanel.setBackground(Theme.BG_DARK);
         northPanel.setBackground(Theme.BG_DARK);
+        eastPanel.setBackground(Theme.BG_DARK);
+        westPanel.setBackground(Theme.BG_DARK);
 
         // Window settings
         setExtendedState(JFrame.MAXIMIZED_BOTH);

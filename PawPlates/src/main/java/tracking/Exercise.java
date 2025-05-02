@@ -14,17 +14,15 @@ package tracking; /**
  *
  * =============================================================================
  */
-import java.io.*;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class Exercise {
     private String name;
     private String focus; //cardio, weight training
     private String description;
-    private int durationReps;
+    private int duration;
+    private int reps;
     private int caloriesBurned;
     /**
      * Description
@@ -37,7 +35,7 @@ public class Exercise {
         name ="";
         focus = "";
         description = "";
-        durationReps = 0;
+        duration = 0;
         caloriesBurned = 0;
     }
     /**
@@ -47,11 +45,12 @@ public class Exercise {
      * @return
      * @throws
      */
-    public Exercise(String name, String focus, int durationReps, int caloriesBurned,String description) {
+    public Exercise(String name, String focus, int reps, int duration, int caloriesBurned,String description) {
         this.name = name;
         this.focus = focus;
         this.description = description;
-        this.durationReps = durationReps;
+        this.reps = reps;
+        this.duration = duration;
         this.caloriesBurned = caloriesBurned;
     }
     /**
@@ -115,12 +114,12 @@ public class Exercise {
         this.description = description;
     }
 
-    public int getDurationReps() {
-        return durationReps;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setDurationReps(int durationReps) {
-        this.durationReps = durationReps;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
 
     public int getCaloriesBurned() {
@@ -131,17 +130,29 @@ public class Exercise {
         this.caloriesBurned = caloriesBurned;
     }
 
+    public int getReps() {
+        return reps;
+    }
+
+    public void setReps(int reps) {
+        this.reps = reps;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exercise exercise = (Exercise) o;
-        return durationReps == exercise.durationReps && caloriesBurned == exercise.caloriesBurned && Objects.equals(name, exercise.name) && Objects.equals(focus, exercise.focus) && Objects.equals(description, exercise.description);
+        return duration == exercise.duration && caloriesBurned == exercise.caloriesBurned && Objects.equals(name, exercise.name) && Objects.equals(focus, exercise.focus) && Objects.equals(description, exercise.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, focus, description, durationReps, caloriesBurned);
+        return Objects.hash(name, focus, description, duration, caloriesBurned);
+    }
+
+    public String toString() {
+        return name + ": " + focus;
     }
 
 //    //returns 1 if written, 0 if it already exists, -1 if exception
