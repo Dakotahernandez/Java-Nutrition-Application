@@ -41,7 +41,7 @@ import frame.*;
 
 public class CalorieMacroPage extends TemplateFrame {
 
-    private static final int DAILY_LIMIT = 2000;
+    private static int DAILY_LIMIT;
     private static int totalCalsSoFar = 0;
     private static AnimatedProgressBar calorieProgressBar;
     private static JLabel progressLabel;
@@ -137,6 +137,8 @@ public class CalorieMacroPage extends TemplateFrame {
         setSize(1000, 500);
         setVisible(true);
     }
+
+    public static void setDailyLimit(int dailyLimit) { DAILY_LIMIT = dailyLimit; }
 
     /**
      * No-arg constructor: defaults to the date in SessionContext.
@@ -766,6 +768,7 @@ public class CalorieMacroPage extends TemplateFrame {
         private String defaultToZero(String text) {
             return (text == null || text.trim().isEmpty()) ? "0" : text.trim();
         }
+
     }
     /**
      * Description
