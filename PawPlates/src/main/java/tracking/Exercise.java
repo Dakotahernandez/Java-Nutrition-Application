@@ -152,7 +152,7 @@ public class Exercise {
     }
 
     public String toString() {
-        return name + ": " + focus;
+        return name;
     }
 
 //    //returns 1 if written, 0 if it already exists, -1 if exception
