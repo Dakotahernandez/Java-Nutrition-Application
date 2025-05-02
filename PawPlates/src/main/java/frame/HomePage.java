@@ -32,7 +32,7 @@ package frame; /**
 import com.github.lgooddatepicker.components.DatePicker;
 import com.github.lgooddatepicker.components.DatePickerSettings;
 import tracking.*;
-
+import reminder.RemindersPage;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -179,12 +179,18 @@ public class HomePage extends JFrame {
         c.gridx = 1;
         mainPanel.add(goals, c);
 
+
         JButton rem = new JButton("Your Reminders");
         rem.setFont(Theme.NORMAL_FONT);
         rem.setBackground(Theme.BUTTON_BG);
         rem.setForeground(Theme.BUTTON_FG);
+        rem.addActionListener(e -> {
+            frame.dispose();
+            new RemindersPage();
+        });
         c.gridx = 2;
         mainPanel.add(rem, c);
+
 
         contentPane.add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
