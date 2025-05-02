@@ -27,7 +27,6 @@ public class RemindersPage extends TemplateFrame {
     private final JCheckBox motivationCheckbox;
     private final JCheckBox meanMotivationCheckBox;
     private final JButton confirmRemindersButton;
-
     private final JCheckBox useAltEmailCheckbox;
     private final JTextField altEmailField;
     private final JLabel altEmailLabel;
