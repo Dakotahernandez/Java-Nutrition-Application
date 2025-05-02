@@ -99,8 +99,10 @@ public class HomePage extends JFrame {
         mainPanel.setBackground(Theme.BG_DARK);
         GridBagConstraints c = new GridBagConstraints();
 
+        c.insets = new Insets(10, 10, 10, 10);
+
         // Greeting
-        JLabel helloUser = new JLabel("Hello, " + LoginPage.CURRENT_USER.getUsername());
+        JLabel helloUser = new JLabel("Hello, " + LoginPage.CURRENT_USER.getUsername() + "!");
         helloUser.setFont(Theme.HEADER_FONT);
         helloUser.setForeground(Theme.FG_LIGHT);
         c.gridx = 1;
@@ -185,6 +187,28 @@ public class HomePage extends JFrame {
         rem.setForeground(Theme.BUTTON_FG);
         c.gridx = 2;
         mainPanel.add(rem, c);
+
+
+
+        JButton myClasses = new JButton("My Lesson Plans");
+        myClasses.setFont(Theme.NORMAL_FONT);
+        myClasses.setBackground(Theme.BUTTON_BG);
+        myClasses.setForeground(Theme.BUTTON_FG);
+
+        myClasses.addActionListener(e -> {
+            if (LoginPage.CURRENT_USER.isTrainer()) {
+                TrainerPlanDetails.showTrainerPlanDetails(LoginPage.CURRENT_USER.getId());
+                frame.dispose();
+            }
+            else {
+                // show user classes
+                frame.dispose();
+            }
+        });
+
+        c.gridx = 1;
+        c.gridy = 4;
+        mainPanel.add(myClasses, c);
 
         contentPane.add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
