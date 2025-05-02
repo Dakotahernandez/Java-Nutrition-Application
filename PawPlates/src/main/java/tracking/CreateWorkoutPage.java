@@ -4,21 +4,33 @@ import frame.TemplateFrame;
 import frame.Theme;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.DefaultTextUI;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.List;
 
 public class CreateWorkoutPage extends TemplateFrame {
-    DefaultListModel<Exercise> currExercises;
-    List<Exercise> exercises;
+    DefaultListModel<Exercise> workoutDefaultList; //used to create JList
+    DefaultListModel<Exercise> exerciseDefaultList; //used to create JList
+
+    List<Exercise> exercises; //arrayList
+    JList<Exercise> workoutJList; //used for scrollpane
+    JList<Exercise> exerciseJList; //used for scrollpane
+
+    Workout workout;
 
     public CreateWorkoutPage() {
         setTitle("Create Workout");
         addMenuBarPanel();
+        workout = new Workout();
 
         //test exercises will need to get user exercises from database
         exercises = new ArrayList<>();
@@ -48,10 +60,11 @@ public class CreateWorkoutPage extends TemplateFrame {
         JTextField workoutName = new JTextField(15);
         addTextField("Workout Name:", workoutName, 0,0);
 
-        currExercises = toListModel(exercises);
-        JList<Exercise> workoutList = new JList<>(currExercises);
-        workoutList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane scrollPane = new JScrollPane(workoutList);
+//        workoutDefaultList = toListModel(exercises);
+        workoutDefaultList = workout.getDefaultListModel();
+        workoutJList = new JList<>(workoutDefaultList);
+        workoutJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane scrollPane = new JScrollPane(workoutJList);
         scrollPane.setPreferredSize(new Dimension(180, 300));
         scrollPane.setBorder(BorderFactory.createTitledBorder("Current Workout"));
         c.insets = new Insets(25, 5, 5, 5);
@@ -132,9 +145,12 @@ public class CreateWorkoutPage extends TemplateFrame {
         c.gridx = 0; c.gridy = 1;
         westPanel.add(blankLabel2);
 
-        JList<Exercise> exerciseList = new JList<>(currExercises);
-        exerciseList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        JScrollPane sP = new JScrollPane(exerciseList);
+        //for testing
+        exerciseDefaultList = toListModel(exercises);
+//        exerciseDefaultList= new DefaultListModel<>();
+        exerciseJList = new JList<>(exerciseDefaultList);
+        exerciseJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        JScrollPane sP = new JScrollPane(exerciseJList);
         sP.setPreferredSize(new Dimension(180, 300));
         sP.setBorder(BorderFactory.createTitledBorder("Your Exercises"));
         c.insets = new Insets(25, 5, 5, 5);
@@ -146,7 +162,7 @@ public class CreateWorkoutPage extends TemplateFrame {
 
         //invisible button for spacing
         c.insets = new Insets(10, 10, 10, 10);
-        JButton addButton = new JButton("Add Exercise");
+        JButton addButton = new JButton("Add Exercise To Workout");
         c.gridx = 1; c.gridy = 2; c.gridwidth = 2; c.gridheight = 1;
         addButton.setBackground(Theme.BUTTON_BG);
         addButton.setForeground(Theme.BUTTON_FG);
@@ -165,55 +181,121 @@ public class CreateWorkoutPage extends TemplateFrame {
 
 
 
-        workoutList.addMouseListener(new MouseAdapter() {
+        workoutName.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(e)) {
-                    int index = workoutList.locationToIndex(e.getPoint());
-                    if (index != -1) {
-                        Exercise selected = workoutList.getModel().getElementAt(index);
-                        nameLabel.setText("Selected Exercise: " + selected.getName());
-                        focusLabel.setText("Focus: " + selected.getFocus() );
-                                caloriesLabel.setText("Calories Burned: " + selected.getCaloriesBurned());
-                                repsLabel.setText("Reps: " + selected.getReps() );
-                                durationLabel.setText( "Duration: " + selected.getDuration() );
-                                descriptionLabel.setText("Description: " + selected.getDescription());
+            public void insertUpdate(DocumentEvent e) {
+                workoutNameLbl.setText("Workout Name: " + workoutName.getText());
+            }
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                workoutNameLbl.setText("Workout Name: " + workoutName.getText());
+            }
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+            }
+        });
 
+        createWorkout.addActionListener(e->{ //FIXME do not allow creation if name is empty
+                    String input = JOptionPane.showInputDialog(this,
+                            "Enter workout date (yyyy-mm-dd):","Workout Creation Confirmation", JOptionPane.QUESTION_MESSAGE);
+                    if (input != null) { // user does not cancel
+                        try {
+                            LocalDate date = LocalDate.parse(input);
+                            workout.setDate(date);
+                            workout.setName(workoutName.getText());
+                            JOptionPane.showMessageDialog(this,
+                                    "Created Exercise: " + workout.getName(), "Workout Creation",JOptionPane.INFORMATION_MESSAGE);
+                            //FIXME save workout and clear selections
+                        } catch (DateTimeParseException ex) {
+                            JOptionPane.showMessageDialog(this,
+                                    "Invalid date format. Please use yyyy-MM-dd.");
+                        }
                     }
+        });
+
+        createExercise.addActionListener(e->{
+                JFrame current = (JFrame) SwingUtilities.getWindowAncestor(createExercise);
+                new CreateExercise();
+                current.dispose();
+        });
+
+        addButton.addActionListener(e->{
+            Exercise exercise = (exerciseJList.getSelectedValue());
+            if(exercise != null) {
+                workout.addExcercise(exercise);
+                totalDurationLbl.setText("Total Duration: " + workout.getTotalDuration());
+                totalCaloriesLbl.setText("Total Calories Burned: " + workout.getTotalCalories());
+                numExercisesLbl.setText("Number of Exercises: " + workout.getExerciseCount());
+
+                workoutDefaultList.addElement(exercise);
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Please select an exercise to add.");
+            }
+
+        });
+
+        removeExercise.addActionListener(e->{
+            int index =  workoutJList.getSelectedIndex();
+            if(index != -1) {
+                workout.removeExercise(workoutJList.getSelectedValue());
+                workoutDefaultList.remove(index);
+                totalDurationLbl.setText("Total Duration: " + workout.getTotalDuration());
+                totalCaloriesLbl.setText("Total Calories Burned: " + workout.getTotalCalories());
+                numExercisesLbl.setText("Number of Exercises: " + workout.getExerciseCount());
+
+                nameLabel.setText("Selected Exercise: ");
+                focusLabel.setText("Focus: ");
+                caloriesLabel.setText("Calories Burned: ");
+                repsLabel.setText("Reps: ");
+                durationLabel.setText( "Duration: ");
+                descriptionLabel.setText("Description: ");
+            }
+            else{
+                JOptionPane.showMessageDialog(this, "Please select an exercise to remove.");
+            }
+        });
+
+        workoutJList.addListSelectionListener(e->{
+            if (!e.getValueIsAdjusting()) {
+                Exercise selected = workoutJList.getSelectedValue();
+                if (selected != null) {
+                    nameLabel.setText("Selected Exercise: " + selected.getName());
+                    focusLabel.setText("Focus: " + selected.getFocus() );
+                    caloriesLabel.setText("Calories Burned: " + selected.getCaloriesBurned());
+                    repsLabel.setText("Reps: " + selected.getReps() );
+                    durationLabel.setText( "Duration: " + selected.getDuration() );
+                    descriptionLabel.setText("Description: " + selected.getDescription());
                 }
             }
         });
 
-        exerciseList.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                if (e.getClickCount() == 2 && SwingUtilities.isLeftMouseButton(e)) {
-                    int index = workoutList.locationToIndex(e.getPoint());
-                    if (index != -1) {
-                        Exercise selected = workoutList.getModel().getElementAt(index);
-                        nameLabel.setText("Selected Exercise: " + selected.getName());
-                        focusLabel.setText("Focus: " + selected.getFocus() );
-                        caloriesLabel.setText("Calories Burned: " + selected.getCaloriesBurned());
-                        repsLabel.setText("Reps: " + selected.getReps() );
-                        durationLabel.setText( "Duration: " + selected.getDuration() );
-                        descriptionLabel.setText("Description: " + selected.getDescription());
-
-                    }
+        exerciseJList.addListSelectionListener(e->{
+            if (!e.getValueIsAdjusting()) {
+                Exercise selected = exerciseJList.getSelectedValue();
+                if (selected != null) {
+                    nameLabel.setText("Selected Exercise: " + selected.getName());
+                    focusLabel.setText("Focus: " + selected.getFocus() );
+                    caloriesLabel.setText("Calories Burned: " + selected.getCaloriesBurned());
+                    repsLabel.setText("Reps: " + selected.getReps() );
+                    durationLabel.setText( "Duration: " + selected.getDuration() );
+                    descriptionLabel.setText("Description: " + selected.getDescription());
                 }
             }
         });
 
-        workoutList.addFocusListener(new FocusAdapter() {
+
+        workoutJList.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                exerciseList.clearSelection();
+                exerciseJList.clearSelection();
             }
         });
 
-        exerciseList.addFocusListener(new FocusAdapter() {
+        exerciseJList.addFocusListener(new FocusAdapter() {
             @Override
             public void focusGained(FocusEvent e) {
-                workoutList.clearSelection();
+                workoutJList.clearSelection();
             }
         });
 

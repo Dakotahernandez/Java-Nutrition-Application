@@ -14,7 +14,9 @@ package tracking; /**
  *
  * =============================================================================
  */
+import javax.swing.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.*;
 
@@ -24,7 +26,8 @@ import java.util.*;
  */
 
 public class Workout {
-    private Date date;
+    private String name;
+    private LocalDate date;
     private List<Exercise> exercises;
 
 
@@ -36,13 +39,48 @@ public class Workout {
      * @return
      * @throws
      */
-    public Workout(Date date, String focus, List<Exercise> exercises) {
+    public Workout(LocalDate date, String focus, List<Exercise> exercises) {
         this.date = date;
         this.exercises = exercises;
     }
 
+    public Workout(){
+        date = LocalDate.now();
+        exercises = new ArrayList<>();
+    }
+
+    public DefaultListModel<Exercise> getDefaultListModel(){
+        DefaultListModel<Exercise> model = new DefaultListModel<>();
+        exercises.forEach(model::addElement);
+        return model;
+    }
+
+    public int getTotalDuration(){
+        return exercises.stream().mapToInt(Exercise::getDuration).sum();
+    }
+    public int getTotalCalories() {
+        return exercises.stream()
+                .mapToInt(e -> e.getCaloriesBurned())
+                .sum();
+    }
+    public int getExerciseCount() {
+        return exercises.size();
+    }
+
     public void addExcercise(Exercise exercise) {
         exercises.add(exercise);
+    }
+
+    public void removeExercise(Exercise exercise){
+        exercises.remove(exercise);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setExercises(List<Exercise> exercises) {
@@ -61,7 +99,7 @@ public class Workout {
      * @return
      * @throws
      */
-    public void setDate(Date date) { this.date = date; }
+    public void setDate(LocalDate date) { this.date = date; }
 
 
     //Getter Methods:
@@ -72,7 +110,7 @@ public class Workout {
      * @return
      * @throws
      */
-    public Date getDate() { return date; }
+    public LocalDate getDate() { return date; }
 
 
 
