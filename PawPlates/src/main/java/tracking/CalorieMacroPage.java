@@ -41,7 +41,7 @@ import frame.*;
 
 public class CalorieMacroPage extends TemplateFrame {
 
-    private static int DAILY_LIMIT;
+    private static int DAILY_LIMIT = 2000;
     private static int totalCalsSoFar = 0;
     private static AnimatedProgressBar calorieProgressBar;
     private static JLabel progressLabel;
