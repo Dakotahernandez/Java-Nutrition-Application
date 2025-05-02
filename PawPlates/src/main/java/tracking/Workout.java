@@ -14,8 +14,11 @@ package tracking; /**
  *
  * =============================================================================
  */
+import javax.swing.*;
 import java.sql.Time;
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.*;
 
 /*
  * PURPOSE: Be able to create workout.Workout instances to add it to a user's progress
@@ -23,61 +26,10 @@ import java.util.Date;
  */
 
 public class Workout {
-    private Date date;
-    private String focus;
-    private Time duration;
+    private String name;
+    private LocalDate date;
+    private List<Exercise> exercises;
 
-    //Setter Methods:
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public void setDate(Date date) { this.date = date; }
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public void setDuration(Time duration) { this.duration = duration; }
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public void setFocus(String focus) { this.focus = focus; }
-
-    //Getter Methods:
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public Date getDate() { return date; }
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public String getFocus() { return focus; }
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
-     */
-    public Time getDuration() { return duration; }
 
     //Parameterized Constructor
     /**
@@ -87,13 +39,59 @@ public class Workout {
      * @return
      * @throws
      */
-    Workout(Date date, String focus, Time duration){
+    public Workout(LocalDate date, String focus, List<Exercise> exercises) {
         this.date = date;
-        this.focus = focus;
-        this.duration = duration;
+        this.exercises = exercises;
     }
 
-    //Create a workout.Workout
+    public Workout(){
+        date = LocalDate.now();
+        exercises = new ArrayList<>();
+    }
+
+    public DefaultListModel<Exercise> getDefaultListModel(){
+        DefaultListModel<Exercise> model = new DefaultListModel<>();
+        exercises.forEach(model::addElement);
+        return model;
+    }
+
+    public int getTotalDuration(){
+        return exercises.stream().mapToInt(Exercise::getDuration).sum();
+    }
+    public int getTotalCalories() {
+        return exercises.stream()
+                .mapToInt(e -> e.getCaloriesBurned())
+                .sum();
+    }
+    public int getExerciseCount() {
+        return exercises.size();
+    }
+
+    public void addExcercise(Exercise exercise) {
+        exercises.add(exercise);
+    }
+
+    public void removeExercise(Exercise exercise){
+        exercises.remove(exercise);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setExercises(List<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+
+    public List<Exercise> getExercises() {
+        return exercises;
+    }
+
+    //Setter Methods:
     /**
      * Description
      *
@@ -101,8 +99,19 @@ public class Workout {
      * @return
      * @throws
      */
-    Workout createWorkout(Date date, String focus, Time duration){
-        Workout w = new Workout(date, focus, duration);
-        return w;
-    }
+    public void setDate(LocalDate date) { this.date = date; }
+
+
+    //Getter Methods:
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
+    public LocalDate getDate() { return date; }
+
+
+
 }

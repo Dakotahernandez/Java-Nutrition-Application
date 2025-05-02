@@ -151,10 +151,16 @@ public class UserDatabase {
 
             Statement statement = connection.createStatement();
             statement.execute(sql);
+
+            TrainerWorkoutPlan.initializeTable();
+            TrainerWorkout.initializeTable();
+            TrainerExercise.initializeTable();
         }
         catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
     private void dropTable() {

@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import frame.*;
 
 public class SleepPage extends TemplateFrame {
-    private static final int WEEKLY_GOAL = 60;
+    private static int WEEKLY_GOAL = 60;
     private static int totalSleep = 0;
 
     private final LocalDate date;
@@ -112,6 +112,8 @@ public class SleepPage extends TemplateFrame {
         return String.format("Weekly Sleep Progress: %d / %d hours",
                 totalSleep, WEEKLY_GOAL);
     }
+
+    public static void setWeeklyGoal(int weeklyGoal) {  WEEKLY_GOAL = weeklyGoal; }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SleepPage::new);
