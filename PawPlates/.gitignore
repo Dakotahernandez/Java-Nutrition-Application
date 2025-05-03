@@ -36,3 +36,6 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# ignore Mailjet config file
+src/main/resources/config.properties
