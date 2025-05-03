@@ -47,7 +47,7 @@ public final class Theme {
     public static final Color ACCENT_COLOR = new Color(10, 121, 107);
     public static final Color MID_GRAY = new Color(70, 70, 70);
     public static final Color BUTTON_BORDER = new Color(100, 100, 100);
-
+    public static final Color GOAL_WEIGHT = new Color(255, 10, 10);
     // Button Styles
     public static final Color BUTTON_BG = MID_GRAY;
     public static final Color BUTTON_FG = FG_LIGHT;

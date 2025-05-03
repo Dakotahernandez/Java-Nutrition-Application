@@ -101,7 +101,7 @@ public class RecordWeight extends TemplateFrame {
         plot.setDomainGridlinePaint(Theme.MID_GRAY);
         plot.setRangeGridlinePaint(Theme.MID_GRAY);
         plot.getRenderer().setSeriesPaint(0, Theme.ACCENT_COLOR);
-        plot.getRenderer().setSeriesPaint(1, Theme.MID_GRAY);
+        plot.getRenderer().setSeriesPaint(1, Theme.GOAL_WEIGHT);
         chart.setBackgroundPaint(Theme.BG_DARK);
         chart.getTitle().setPaint(Theme.FG_LIGHT);
         plot.getDomainAxis().setLabelPaint(Theme.FG_LIGHT);
