@@ -71,7 +71,7 @@ public class CreateExercise extends TemplateFrame {
             Exercise exercise = new Exercise(nameField.getText(), focusField.getText(), calBurned, reps, duration, descriptionField.getText());
 
 
-            //FIXME add exercise to the database
+            //FIXME add exercise to the database here
 
 
             JOptionPane.showMessageDialog(this,

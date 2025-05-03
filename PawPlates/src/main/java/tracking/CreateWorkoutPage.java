@@ -32,6 +32,7 @@ public class CreateWorkoutPage extends TemplateFrame {
         addMenuBarPanel();
         workout = new Workout();
 
+        //FIXME need to initialize exercises (arraylist of exercise) of the user's exercises here
         //test exercises will need to get user exercises from database
         exercises = new ArrayList<>();
         exercises.add(new Exercise("Push-ups", "Chest", 20, 0, 100, "Standard bodyweight push-ups."));
@@ -195,21 +196,49 @@ public class CreateWorkoutPage extends TemplateFrame {
             }
         });
 
-        createWorkout.addActionListener(e->{ //FIXME do not allow creation if name is empty
-                    String input = JOptionPane.showInputDialog(this,
-                            "Enter workout date (yyyy-mm-dd):","Workout Creation Confirmation", JOptionPane.QUESTION_MESSAGE);
-                    if (input != null) { // user does not cancel
-                        try {
-                            LocalDate date = LocalDate.parse(input);
-                            workout.setDate(date);
-                            workout.setName(workoutName.getText());
-                            JOptionPane.showMessageDialog(this,
-                                    "Created Exercise: " + workout.getName(), "Workout Creation",JOptionPane.INFORMATION_MESSAGE);
-                            //FIXME save workout and clear selections
-                        } catch (DateTimeParseException ex) {
-                            JOptionPane.showMessageDialog(this,
-                                    "Invalid date format. Please use yyyy-MM-dd.");
+        createWorkout.addActionListener(e->{
+                    String name = workoutName.getText();
+                    if(name != null && !name.equals("")) {
+                        if (workout.getExerciseCount() != 0) {
+                            String input = JOptionPane.showInputDialog(this,
+                                    "Enter workout date (yyyy-mm-dd):", "Workout Creation Confirmation", JOptionPane.QUESTION_MESSAGE);
+                            if (input != null) { // user does not cancel
+                                try {
+                                    LocalDate date = LocalDate.parse(input);
+                                    workout.setDate(date);
+                                    workout.setName(name);
+                                    JOptionPane.showMessageDialog(this,
+                                            "Created Exercise: " + workout.getName(), "Workout Creation", JOptionPane.INFORMATION_MESSAGE);
+                                    //FIXME save workout to the Database here
+
+                                    //clearing current workout creation
+                                    workoutName.setText("");
+                                    workoutDefaultList.clear();
+                                    workout = new Workout();
+                                    totalDurationLbl.setText("Total Duration: ");
+                                    totalCaloriesLbl.setText("Total Calories Burned: ");
+                                    numExercisesLbl.setText("Number of Exercises: ");
+                                    nameLabel.setText("Selected Exercise: ");
+                                    focusLabel.setText("Focus: ");
+                                    caloriesLabel.setText("Calories Burned: ");
+                                    repsLabel.setText("Reps: ");
+                                    durationLabel.setText( "Duration: ");
+                                    descriptionLabel.setText("Description: ");
+
+                                } catch (DateTimeParseException ex) {
+                                    JOptionPane.showMessageDialog(this,
+                                            "Invalid date format. Please use yyyy-mm-dd.");
+                                }
+                            }
                         }
+                        else{
+                            JOptionPane.showMessageDialog(this,
+                                    "Please add an exercise to the workout.");
+                        }
+                    }
+                    else{
+                        JOptionPane.showMessageDialog(this,
+                                "Please add a workout name.");
                     }
         });
 
