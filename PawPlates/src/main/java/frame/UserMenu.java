@@ -27,6 +27,7 @@ package frame;/**
  */
 
 import tracking.*;
+import tracking.Food.CalorieMacroPage;
 
 import javax.swing.*;
 import javax.swing.SwingUtilities;

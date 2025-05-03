@@ -2,6 +2,7 @@ package tracking;
 
 import frame.HomePage;
 import frame.TemplateFrame;
+import tracking.Food.CalorieMacroPage;
 
 import javax.swing.*;
 

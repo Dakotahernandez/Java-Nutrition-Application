@@ -34,7 +34,7 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import tracking.*;
 import reminder.RemindersPage;
 import tracking.Food.CalorieMacroPage;
-import tracking.weight.RecordWeight;
+import tracking.RecordWeight;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
