@@ -4,8 +4,7 @@ import frame.HomePage;
 import frame.TemplateFrame;
 
 import javax.swing.*;
-import java.time.LocalDate;
-import java.util.Date;
+
 
 /**
  * =============================================================================
@@ -14,21 +13,22 @@ import java.util.Date;
  * Created: 05/01/2025
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Application's page to set goals & update calorie bar, weight graph, and sleep progress
+ *   bars/graphs
  *
  * Dependencies:
- *
+ *   - frame.HomePage
+ *   - frame.TemplateFrame
+ *   - javax.swing.*
  *
  * Usage:
- *
+ *   Display the goals page and update the calorie, sleep, and weight graphs (if saved)
  * =============================================================================
  */
 
 public class SetGoalPage extends TemplateFrame {
-    private LocalDate date; //this will be a start goal
 
-    public SetGoalPage(LocalDate date){
-        this.date = date;
+    public SetGoalPage(){
         addMenuBarPanel();
         setTitle("Set A Goal");
 
