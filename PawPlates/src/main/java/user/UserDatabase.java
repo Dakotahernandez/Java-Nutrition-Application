@@ -174,4 +174,28 @@ public class UserDatabase {
             e.printStackTrace();
         }
     }
+    public User getUserById(int id) {
+        try {
+            String sql = "SELECT * FROM users WHERE id = ?";
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet result = ps.executeQuery();
+
+            if (result.next()) {
+                User user = new User(
+                        result.getString("username"),
+                        result.getString("password")
+                );
+                user.setId(id);
+                user.setEmail(result.getString("email"));
+                user.setTrainer(result.getBoolean("isTrainer"));
+                return user;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }
+

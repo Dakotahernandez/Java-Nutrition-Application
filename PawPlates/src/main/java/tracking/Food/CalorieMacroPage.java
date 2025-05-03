@@ -1,4 +1,4 @@
-package tracking;
+package tracking.Food;
 /**
  * =============================================================================
  * File:           CalorieMacroPage.java
@@ -39,7 +39,13 @@ import java.util.ArrayList;
 import java.util.List;
 import frame.*;
 
+//database time!!!!
+import tracking.Food.FoodEntryDatabase;
+
+
 public class CalorieMacroPage extends TemplateFrame {
+
+    private static final FoodEntryDatabase db = new FoodEntryDatabase();
 
     private static int DAILY_LIMIT = 2000;
     private static int totalCalsSoFar = 0;
@@ -80,10 +86,32 @@ public class CalorieMacroPage extends TemplateFrame {
         progressLabel.setFont(Theme.HEADER_FONT);
         progressLabel.setForeground(Theme.FG_LIGHT);
 
+
+
+
         // -------- Initialize Models and Tables --------
-        breakfastModel = new FoodTableModel(new ArrayList<>());
-        lunchModel     = new FoodTableModel(new ArrayList<>());
-        dinnerModel    = new FoodTableModel(new ArrayList<>());
+        List<FoodEntry> breakfastEntries = new ArrayList<>();
+        List<FoodEntry> lunchEntries     = new ArrayList<>();
+        List<FoodEntry> dinnerEntries    = new ArrayList<>();
+
+        List<FoodEntry> allEntries = new ArrayList<>();
+        allEntries.addAll(db.loadEntries(LoginPage.CURRENT_USER.getId(), date, "Breakfast"));
+        allEntries.addAll(db.loadEntries(LoginPage.CURRENT_USER.getId(), date, "Lunch"));
+        allEntries.addAll(db.loadEntries(LoginPage.CURRENT_USER.getId(), date, "Dinner"));
+
+        for (FoodEntry entry : allEntries) {
+            switch (entry.getMealType()) {
+                case "Breakfast": breakfastEntries.add(entry); break;
+                case "Lunch":     lunchEntries.add(entry);     break;
+                case "Dinner":    dinnerEntries.add(entry);    break;
+            }
+        }
+
+        breakfastModel = new FoodTableModel(breakfastEntries);
+        lunchModel     = new FoodTableModel(lunchEntries);
+        dinnerModel    = new FoodTableModel(dinnerEntries);
+
+
 
         breakfastTable = createStyledTable(breakfastModel);
         lunchTable     = createStyledTable(lunchModel);
@@ -119,7 +147,10 @@ public class CalorieMacroPage extends TemplateFrame {
                     "Confirm",
                     JOptionPane.YES_NO_OPTION
             ) == JOptionPane.YES_OPTION) {
-                getModelForTable(tbl).removeRecord(tbl.convertRowIndexToModel(row));
+                FoodTableModel model = getModelForTable(tbl);
+                FoodEntry entry = model.getRecordAt(tbl.convertRowIndexToModel(row));
+                model.removeRecord(tbl.convertRowIndexToModel(row));
+                FoodEntryDatabase.deleteEntry(entry, date); // ← remove from DB too
                 updateCalorieProgress();
             }
         });
@@ -281,11 +312,11 @@ public class CalorieMacroPage extends TemplateFrame {
         return dinnerModel;
     }
     /**
-     * Description
+     * Opens the food entry dialog for adding or editing an entry.
      *
-     * @param
-     * @return
-     * @throws
+     * @param entry Existing entry if editing, null if adding
+     * @param row   Row index in the table (for editing)
+     * @param tabs  Reference to the tabbed pane to determine selected meal
      */
     private void openDialog(FoodEntry entry, int row, JTabbedPane tabs) {
         FoodEntryDialog dlg = new FoodEntryDialog(this, entry);
@@ -293,19 +324,26 @@ public class CalorieMacroPage extends TemplateFrame {
         if (dlg.isSaved()) {
             FoodEntry rec = dlg.getRecord();
             FoodTableModel target = getModelForMeal(rec.getMealType());
+
             if (entry == null) {
-                target.addRecord(rec);
+                // Add new
+                target.addRecord(rec);  // ⬅️ This already saves to DB. Removed duplicate saveEntry call.
             } else {
+                // Edited entry
                 if (!entry.getMealType().equals(rec.getMealType())) {
                     getModelForMeal(entry.getMealType()).removeRecord(row);
-                    target.addRecord(rec);
+                    db.deleteEntry(entry, date);
+                    target.addRecord(rec);  // saveEntry inside this method
                 } else {
                     target.updateRecord(row, rec);
+                    db.updateEntry(entry, rec, date);
                 }
             }
+
             updateCalorieProgress();
         }
     }
+
     /**
      * Description
      *
@@ -502,7 +540,7 @@ public class CalorieMacroPage extends TemplateFrame {
         public void setMealType(String mealType) { this.mealType = mealType; }
     }
 
-    public static class FoodTableModel extends AbstractTableModel {
+    public class FoodTableModel extends AbstractTableModel {
         private final String[] columns = {
                 "Food", "Calories", "Protein", "Carbs", "Fats", "Fiber", "Notes", "Meal"
         };
@@ -546,8 +584,12 @@ public class CalorieMacroPage extends TemplateFrame {
          */
         public void addRecord(FoodEntry record) {
             data.add(record);
+            CalorieMacroPage.this.db.saveEntry(record, SessionContext.getDate());
             fireTableDataChanged();
         }
+
+
+
         /**
          * Description
          *
@@ -556,9 +598,11 @@ public class CalorieMacroPage extends TemplateFrame {
          * @throws
          */
         public void removeRecord(int row) {
-            data.remove(row);
+            FoodEntry entry = data.remove(row);
+            FoodEntryDatabase.deleteEntry(entry, SessionContext.getDate());
             fireTableDataChanged();
         }
+
         /**
          * Description
          *
@@ -567,9 +611,12 @@ public class CalorieMacroPage extends TemplateFrame {
          * @throws
          */
         public void updateRecord(int row, FoodEntry record) {
+            FoodEntry oldEntry = data.get(row);
+            FoodEntryDatabase.updateEntry(oldEntry, record, SessionContext.getDate());
             data.set(row, record);
             fireTableDataChanged();
         }
+
         /**
          * Description
          *

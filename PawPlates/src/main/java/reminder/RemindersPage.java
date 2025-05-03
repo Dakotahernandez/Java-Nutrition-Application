@@ -10,6 +10,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import user.User;
 import frame.LoginPage;
+import user.UserDatabase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -55,6 +56,7 @@ public class RemindersPage extends TemplateFrame {
         workoutCheckbox = new JCheckBox("Go work out");
         motivationCheckbox = new JCheckBox("Stay motivated");
         meanMotivationCheckBox = new JCheckBox("Get motivated by HATE");
+
         JCheckBox[] boxes = {
                 weightCheckbox, mealsCheckbox, waterCheckbox,
                 workoutCheckbox, motivationCheckbox, meanMotivationCheckBox
@@ -112,11 +114,16 @@ public class RemindersPage extends TemplateFrame {
 
     private void sendReminderConfirmation() {
         try {
-            String[] keys = loadMailjetKeys();
-            MailjetClient client = new MailjetClient(keys[0], keys[1]);
+            Properties config = loadConfigProperties();
+            MailjetClient client = new MailjetClient(
+                    config.getProperty("MAILJET_API_KEY", ""),
+                    config.getProperty("MAILJET_SECRET_KEY", "")
+            );
 
             // Determine recipient
-            User currentUser = LoginPage.CURRENT_USER;
+            UserDatabase db = new UserDatabase();
+            User currentUser = db.getUserById(LoginPage.CURRENT_USER.getId());
+
             String toEmail = useAltEmailCheckbox.isSelected()
                     ? altEmailField.getText().trim()
                     : currentUser.getEmail();
@@ -125,7 +132,7 @@ public class RemindersPage extends TemplateFrame {
                 JOptionPane.showMessageDialog(this, "Recipient email is required.");
                 return;
             }
-
+            //email REGEX
             if (!toEmail.matches("^[\\w.-]+@[\\w.-]+\\.[\\w]+$")) {
                 JOptionPane.showMessageDialog(this, "Please enter a valid email address.");
                 return;
@@ -148,12 +155,13 @@ public class RemindersPage extends TemplateFrame {
             String htmlSummary = String.join("<br>", selected);
             String plainText = String.join("\n", selected);
 
-            MailjetRequest request = new MailjetRequest(Emailv31.resource)
+            // Send confirmation email
+            MailjetRequest confirmRequest = new MailjetRequest(Emailv31.resource)
                     .property(Emailv31.MESSAGES, new JSONArray()
                             .put(new JSONObject()
                                     .put(Emailv31.Message.FROM, new JSONObject()
-                                            .put("Email", keys[2])
-                                            .put("Name", keys[3]))
+                                            .put("Email", config.getProperty("MAILJET_FROM_EMAIL", ""))
+                                            .put("Name", config.getProperty("MAILJET_FROM_NAME", "Reminder Bot")))
                                     .put(Emailv31.Message.TO, new JSONArray()
                                             .put(new JSONObject()
                                                     .put("Email", toEmail)
@@ -163,31 +171,70 @@ public class RemindersPage extends TemplateFrame {
                                     .put(Emailv31.Message.HTMLPART,
                                             "<h3>You’ve subscribed to the following reminders:</h3><p>" + htmlSummary + "</p>")
                             ));
+            client.post(confirmRequest);
 
-            MailjetResponse response = client.post(request);
+            // Send all delected reminder emails using template IDs from config
+            if (weightCheckbox.isSelected()) {
+                sendTemplateEmail(client, config, toEmail, currentUser.getUsername(), "TEMPLATE_ID_WEIGHT");
+            }
+            if (mealsCheckbox.isSelected()) {
+                sendTemplateEmail(client, config, toEmail, currentUser.getUsername(), "TEMPLATE_ID_MEALS");
+            }
+            if (waterCheckbox.isSelected()) {
+                sendTemplateEmail(client, config, toEmail, currentUser.getUsername(), "TEMPLATE_ID_WATER");
+            }
+            if (workoutCheckbox.isSelected()) {
+                sendTemplateEmail(client, config, toEmail, currentUser.getUsername(), "TEMPLATE_ID_WORKOUT");
+            }
+            if (motivationCheckbox.isSelected()) {
+                sendTemplateEmail(client, config, toEmail, currentUser.getUsername(), "TEMPLATE_ID_MOTIVATION");
+            }
+            if (meanMotivationCheckBox.isSelected()) {
+                sendTemplateEmail(client, config, toEmail, currentUser.getUsername(), "TEMPLATE_ID_MEAN");
+            }
 
             JOptionPane.showMessageDialog(this,
-                    "Confirmation email sent to: " + toEmail);
+                    "Confirmation + reminders sent to: " + toEmail);
         } catch (Exception ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this,
-                    "Failed to send confirmation: " + ex.getMessage());
+                    "Failed to send confirmation or reminders: " + ex.getMessage());
         }
     }
 
-    private String[] loadMailjetKeys() {
+    private void sendTemplateEmail(MailjetClient client, Properties config, String toEmail, String name, String templateKey) {
+        try {
+            int templateId = Integer.parseInt(config.getProperty(templateKey, "0"));
+            if (templateId == 0) return;
+
+            MailjetRequest request = new MailjetRequest(Emailv31.resource)
+                    .property(Emailv31.MESSAGES, new JSONArray()
+                            .put(new JSONObject()
+                                    .put(Emailv31.Message.FROM, new JSONObject()
+                                            .put("Email", config.getProperty("MAILJET_FROM_EMAIL", ""))
+                                            .put("Name", config.getProperty("MAILJET_FROM_NAME", "Reminder Bot")))
+                                    .put(Emailv31.Message.TO, new JSONArray()
+                                            .put(new JSONObject()
+                                                    .put("Email", toEmail)
+                                                    .put("Name", name)))
+                                    .put(Emailv31.Message.TEMPLATEID, templateId)
+                                    .put(Emailv31.Message.TEMPLATELANGUAGE, true)
+                                    .put(Emailv31.Message.SUBJECT, "Your Daily Reminder")
+                            ));
+            client.post(request);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private Properties loadConfigProperties() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             Properties prop = new Properties();
             prop.load(input);
-            return new String[]{
-                    prop.getProperty("MAILJET_API_KEY", ""),
-                    prop.getProperty("MAILJET_SECRET_KEY", ""),
-                    prop.getProperty("MAILJET_FROM_EMAIL", ""),
-                    prop.getProperty("MAILJET_FROM_NAME", "Reminder Bot")
-            };
+            return prop;
         } catch (Exception e) {
             e.printStackTrace();
-            return new String[]{"", "", "", ""};
+            return new Properties();
         }
     }
 }

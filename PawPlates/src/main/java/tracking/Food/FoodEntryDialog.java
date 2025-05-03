@@ -1,6 +1,6 @@
-package tracking; /**
+package tracking.Food; /**
  * =============================================================================
- * File:           tracking.FoodEntryDialog.java
+ * File:           tracking.Food.FoodEntryDialog.java
  * Author:         Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -11,10 +11,10 @@ package tracking; /**
  * Dependencies:
  *   - javax.swing.*
  *   - java.awt.*
- *   - tracking.FoodEntry
+ *   - tracking.Food.FoodEntry
  *
  * Usage:
- *   tracking.FoodEntryDialog dialog = new tracking.FoodEntryDialog(parentFrame, foodEntry);
+ *   tracking.Food.FoodEntryDialog dialog = new tracking.Food.FoodEntryDialog(parentFrame, foodEntry);
  *   dialog.setVisible(true);
  *
  * TODO:

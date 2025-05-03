@@ -1,8 +1,8 @@
-package tracking;
+package tracking.Food;
 
 /**
  * =============================================================================
- * File:           tracking.FoodEntry.java
+ * File:           tracking.Food.FoodEntry.java
  * Author:         Dakota Hernandez
  * Created:        04/20/25
  * -----------------------------------------------------------------------------
@@ -14,7 +14,7 @@ package tracking;
  *   - None (basic Java class)
  *
  * Usage:
- *   tracking.FoodEntry entry = new tracking.FoodEntry(...);
+ *   tracking.Food.FoodEntry entry = new tracking.Food.FoodEntry(...);
  *
  * TODO:
  *   - Extend validation if needed.
