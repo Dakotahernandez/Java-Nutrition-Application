@@ -180,6 +180,10 @@ public class HomePage extends JFrame {
         goals.setBackground(Theme.BUTTON_BG);
         goals.setForeground(Theme.BUTTON_FG);
         c.gridx = 1;
+        goals.addActionListener(e->{
+            this.dispose();
+            new SetGoalPage();
+        });
         mainPanel.add(goals, c);
 
         JButton rem = new JButton("Your Reminders");

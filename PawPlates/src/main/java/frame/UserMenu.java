@@ -89,7 +89,7 @@ public class UserMenu {
         setGoal.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
             current.dispose();
-            new SetGoalPage(SessionContext.getDate());
+            new SetGoalPage();
         });
 
         // Register for a Class (to be implemented)
