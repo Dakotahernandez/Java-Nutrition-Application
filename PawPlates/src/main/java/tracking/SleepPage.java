@@ -19,9 +19,13 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import frame.*;
+import tracking.weightAndGoals.WeightDatabase;
+import java.sql.SQLException;
+import java.util.Optional;
+import frame.LoginPage;
 
 public class SleepPage extends TemplateFrame {
-    private static int WEEKLY_GOAL = 60;
+    private static int WEEKLY_GOAL;
     private static int totalSleep = 0;
 
     private final LocalDate date;
@@ -42,6 +46,17 @@ public class SleepPage extends TemplateFrame {
         this.date = date;
         addMenuBarPanel();
         setTitle("Sleep Tracker – " + date.format(FORMATTER));
+
+        try {
+            WeightDatabase db = new WeightDatabase();
+            int userId = LoginPage.CURRENT_USER.getId();
+            WEEKLY_GOAL = db.getWeightGoal(userId)
+                    .map(g -> g.weeklySleepGoal)
+                    .orElse(60);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            WEEKLY_GOAL = 60;
+        }
 
         JProgressBar sleepProgress = new JProgressBar(0, WEEKLY_GOAL);
         JLabel progressLabel =
