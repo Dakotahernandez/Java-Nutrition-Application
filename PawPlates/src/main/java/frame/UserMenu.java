@@ -29,6 +29,7 @@ package frame;/**
 import tracking.*;
 import tracking.Food.CalorieMacroPage;
 import tracking.weightAndGoals.SetGoalPage;
+import tracking.weightAndGoals.SleepPage;
 
 import javax.swing.*;
 import javax.swing.SwingUtilities;

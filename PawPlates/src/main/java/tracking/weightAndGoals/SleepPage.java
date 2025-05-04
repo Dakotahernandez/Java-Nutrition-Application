@@ -1,4 +1,4 @@
-package tracking; /**
+package tracking.weightAndGoals; /**
  * =============================================================================
  * File:
  * Author:
@@ -19,9 +19,9 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import frame.*;
-import tracking.weightAndGoals.WeightDatabase;
+
 import java.sql.SQLException;
-import java.util.Optional;
+
 import frame.LoginPage;
 
 public class SleepPage extends TemplateFrame {

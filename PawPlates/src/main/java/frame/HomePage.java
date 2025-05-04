@@ -36,6 +36,7 @@ import reminder.RemindersPage;
 import tracking.Food.CalorieMacroPage;
 import tracking.weightAndGoals.RecordWeight;
 import tracking.weightAndGoals.SetGoalPage;
+import tracking.weightAndGoals.SleepPage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
