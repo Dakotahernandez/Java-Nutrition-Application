@@ -26,6 +26,7 @@ import java.util.*;
  */
 
 public class Workout {
+    private int id;
     private String name;
     private LocalDate date;
     private List<Exercise> exercises;
@@ -39,8 +40,24 @@ public class Workout {
      * @return
      * @throws
      */
-    public Workout(LocalDate date, String focus, List<Exercise> exercises) {
+    public Workout(LocalDate date, String name,  List<Exercise> exercises) {
+        id = -1;
         this.date = date;
+        this.name = name;
+        this.exercises = exercises;
+    }
+
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
+    public Workout(int id, LocalDate date, String name, List<Exercise> exercises) {
+        this.id = id;
+        this.date = date;
+        this.name = name;
         this.exercises = exercises;
     }
 
@@ -73,6 +90,14 @@ public class Workout {
 
     public void removeExercise(Exercise exercise){
         exercises.remove(exercise);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {

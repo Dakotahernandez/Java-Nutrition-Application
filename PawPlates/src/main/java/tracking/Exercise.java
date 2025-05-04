@@ -18,6 +18,7 @@ package tracking; /**
 import java.util.Objects;
 
 public class Exercise {
+    int id;
     private String name;
     private String focus; //cardio, weight training
     private String description;
@@ -46,6 +47,7 @@ public class Exercise {
      * @throws
      */
     public Exercise(String name, String focus, int reps, int duration, int caloriesBurned,String description) {
+        this.id = -1;
         this.name = name;
         this.focus = focus;
         this.description = description;
@@ -53,6 +55,31 @@ public class Exercise {
         this.duration = duration;
         this.caloriesBurned = caloriesBurned;
     }
+    /**
+     * Description
+     *
+     * @param
+     * @return
+     * @throws
+     */
+    public Exercise(int id, String name, String focus, int reps, int duration, int caloriesBurned,String description) {
+        this.id = id;
+        this.name = name;
+        this.focus = focus;
+        this.description = description;
+        this.reps = reps;
+        this.duration = duration;
+        this.caloriesBurned = caloriesBurned;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     /**
      * Description
      *

@@ -20,6 +20,7 @@ import frame.*;
 
 // This is the interface for creating an exercise
 public class CreateExercise extends TemplateFrame {
+    private static final ExerciseDatabase db = new ExerciseDatabase();
     /**
      * Description
      *
@@ -72,7 +73,13 @@ public class CreateExercise extends TemplateFrame {
 
 
             //FIXME add exercise to the database here
-
+            int generatedId = db.saveExercise(exercise);
+            if(generatedId == -1){
+                System.out.println("Not Saved Exercise");
+            }
+            else{
+                exercise.setId(generatedId);
+            }
 
             JOptionPane.showMessageDialog(this,
                     "Exercise Name: " + exercise.getName() + "\n" +

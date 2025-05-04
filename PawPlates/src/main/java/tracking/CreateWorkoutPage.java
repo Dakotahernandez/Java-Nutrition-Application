@@ -1,5 +1,6 @@
 package tracking;
 
+import frame.LoginPage;
 import frame.TemplateFrame;
 import frame.Theme;
 
@@ -18,6 +19,9 @@ import java.util.*;
 import java.util.List;
 
 public class CreateWorkoutPage extends TemplateFrame {
+    private static final ExerciseDatabase exerciseDB = new ExerciseDatabase();
+    private static final WorkoutDatabase workoutDB = new WorkoutDatabase();
+
     DefaultListModel<Exercise> workoutDefaultList; //used to create JList
     DefaultListModel<Exercise> exerciseDefaultList; //used to create JList
 
@@ -32,30 +36,16 @@ public class CreateWorkoutPage extends TemplateFrame {
         addMenuBarPanel();
         workout = new Workout();
 
-        //FIXME need to initialize exercises (arraylist of exercise) of the user's exercises here
+        //initialize exercises (arraylist of exercise) of the user's exercises
+        int userId = LoginPage.CURRENT_USER.getId();
+        exercises = exerciseDB.loadExercisesForUser(userId);
         //test exercises will need to get user exercises from database
-        exercises = new ArrayList<>();
-        exercises.add(new Exercise("Push-ups", "Chest", 20, 0, 100, "Standard bodyweight push-ups."));
-        exercises.add(new Exercise("Running", "Cardio", 0, 30, 300, "Outdoor running session."));
-        exercises.add(new Exercise("Squats", "Legs", 15, 0, 120, "Bodyweight squats."));
-        exercises.add(new Exercise("Jump Rope", "Cardio", 0, 10, 150, "Continuous jumping rope."));
-        exercises.add(new Exercise("Plank", "Core", 0, 5, 80, "Hold plank position."));
-
-        exercises.add(new Exercise("Push-ups", "Chest", 20, 0, 100, "Standard bodyweight push-ups."));
-        exercises.add(new Exercise("Running", "Cardio", 0, 30, 300, "Outdoor running session."));
-        exercises.add(new Exercise("Squats", "Legs", 15, 0, 120, "Bodyweight squats."));
-        exercises.add(new Exercise("Jump Rope", "Cardio", 0, 10, 150, "Continuous jumping rope."));
-        exercises.add(new Exercise("Plank", "Core", 0, 5, 80, "Hold plank position."));
-        exercises.add(new Exercise("Push-ups", "Chest", 20, 0, 100, "Standard bodyweight push-ups."));
-        exercises.add(new Exercise("Running", "Cardio", 0, 30, 300, "Outdoor running session."));
-        exercises.add(new Exercise("Squats", "Legs", 15, 0, 120, "Bodyweight squats."));
-        exercises.add(new Exercise("Jump Rope", "Cardio", 0, 10, 150, "Continuous jumping rope."));
-        exercises.add(new Exercise("Plank", "Core", 0, 5, 80, "Hold plank position."));
-        exercises.add(new Exercise("Push-ups", "Chest", 20, 0, 100, "Standard bodyweight push-ups."));
-        exercises.add(new Exercise("Running", "Cardio", 0, 30, 300, "Outdoor running session."));
-        exercises.add(new Exercise("Squats", "Legs", 15, 0, 120, "Bodyweight squats."));
-        exercises.add(new Exercise("Jump Rope", "Cardio", 0, 10, 150, "Continuous jumping rope."));
-        exercises.add(new Exercise("Plank", "Core", 0, 5, 80, "Hold plank position."));
+//        exercises = new ArrayList<>();
+//        exercises.add(new Exercise("Push-ups", "Chest", 20, 0, 100, "Standard bodyweight push-ups."));
+//        exercises.add(new Exercise("Running", "Cardio", 0, 30, 300, "Outdoor running session."));
+//        exercises.add(new Exercise("Squats", "Legs", 15, 0, 120, "Bodyweight squats."));
+//        exercises.add(new Exercise("Jump Rope", "Cardio", 0, 10, 150, "Continuous jumping rope."));
+//        exercises.add(new Exercise("Plank", "Core", 0, 5, 80, "Hold plank position."));
 
         //centerPanel
         JTextField workoutName = new JTextField(15);
@@ -148,7 +138,6 @@ public class CreateWorkoutPage extends TemplateFrame {
 
         //for testing
         exerciseDefaultList = toListModel(exercises);
-//        exerciseDefaultList= new DefaultListModel<>();
         exerciseJList = new JList<>(exerciseDefaultList);
         exerciseJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane sP = new JScrollPane(exerciseJList);
@@ -209,7 +198,15 @@ public class CreateWorkoutPage extends TemplateFrame {
                                     workout.setName(name);
                                     JOptionPane.showMessageDialog(this,
                                             "Created Exercise: " + workout.getName(), "Workout Creation", JOptionPane.INFORMATION_MESSAGE);
-                                    //FIXME save workout to the Database here
+
+                                    //save workout to the Database here
+                                    int id = workoutDB.saveWorkout(workout);
+                                    if(id == -1){
+                                        System.out.println("Workout Not Saved to Database");
+                                    }
+                                    else{
+                                        workout.setId(id);
+                                    }
 
                                     //clearing current workout creation
                                     workoutName.setText("");
