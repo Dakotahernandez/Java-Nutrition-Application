@@ -28,10 +28,10 @@ package frame;/**
 
 import tracking.*;
 import tracking.Food.CalorieMacroPage;
+import tracking.weightAndGoals.SetGoalPage;
 
 import javax.swing.*;
 import javax.swing.SwingUtilities;
-import java.awt.*;
 
 public class UserMenu {
 
@@ -89,8 +89,8 @@ public class UserMenu {
         // Set a Goal (to be implemented)
         setGoal.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
-            current.dispose();
             new SetGoalPage();
+            current.dispose();
         });
 
         // Register for a Class (to be implemented)

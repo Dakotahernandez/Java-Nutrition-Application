@@ -1,5 +1,33 @@
 package tracking.Food;
-
+/**
+ * =============================================================================
+ * File:        FoodEntryDatabase.java
+ * Authors:     Dakota Hernandez
+ * Created:     04/24/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Manages storage and CRUD operations for food entries per user and date.
+ *   Integrates with CalorieMacroPage.FoodEntry and persists entries in SQLite.
+ *
+ * Dependencies:
+ *   - user.User
+ *   - frame.LoginPage
+ *   - java.sql.Connection
+ *   - java.sql.DriverManager
+ *   - java.sql.PreparedStatement
+ *   - java.sql.ResultSet
+ *   - java.sql.SQLException
+ *   - java.sql.Statement
+ *   - java.time.LocalDate
+ *   - java.util.List
+ *   - java.util.ArrayList
+ *   - tracking.Food.CalorieMacroPage.FoodEntry
+ *
+ * Usage:
+ *   new FoodEntryDatabase();
+ *
+ * =============================================================================
+ */
 import user.User;
 import frame.LoginPage;
 

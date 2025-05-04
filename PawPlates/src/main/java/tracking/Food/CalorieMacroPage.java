@@ -23,8 +23,6 @@ package tracking.Food;
  *   CalorieMacroPage page = new CalorieMacroPage(LocalDate.now());
  *   page.setVisible(true);
  *
- * TODO:
- *   - Connect to the database
  * =============================================================================
  */
 import javax.swing.*;
@@ -41,13 +39,17 @@ import frame.*;
 
 //database time!!!!
 import tracking.Food.FoodEntryDatabase;
+import tracking.weightAndGoals.WeightDatabase;
+import tracking.weightAndGoals.WeightDatabase;
+import tracking.weightAndGoals.WeightDatabase.WeightGoal;
+import java.sql.SQLException;
 
 
 public class CalorieMacroPage extends TemplateFrame {
 
     private static final FoodEntryDatabase db = new FoodEntryDatabase();
 
-    private static int DAILY_LIMIT = 2000;
+    private static int DAILY_LIMIT;
     private static int totalCalsSoFar = 0;
     private static AnimatedProgressBar calorieProgressBar;
     private static JLabel progressLabel;
@@ -79,6 +81,17 @@ public class CalorieMacroPage extends TemplateFrame {
         setTitle("Calorie/Macro Tracker – " + date.format(FORMATTER));
 
         // -------- Progress Bar Setup --------
+        // ─── fetch daily‐calorie goal from DB (default to 2000)
+        try {
+            WeightDatabase wdb = new WeightDatabase();
+            DAILY_LIMIT = wdb
+                    .getWeightGoal(LoginPage.CURRENT_USER.getId())
+                    .map(g -> g.dailyCalGoal)
+                    .orElse(2000);
+        } catch (SQLException e) {
+            DAILY_LIMIT = 2000;
+            e.printStackTrace();
+        }
         calorieProgressBar = new AnimatedProgressBar(0, DAILY_LIMIT);
         calorieProgressBar.setForeground(Theme.ACCENT_COLOR);
         calorieProgressBar.setBackground(Theme.BG_LIGHTER);

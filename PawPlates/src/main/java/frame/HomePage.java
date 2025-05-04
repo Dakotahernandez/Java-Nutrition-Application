@@ -34,7 +34,8 @@ import com.github.lgooddatepicker.components.DatePickerSettings;
 import tracking.*;
 import reminder.RemindersPage;
 import tracking.Food.CalorieMacroPage;
-import tracking.RecordWeight;
+import tracking.weightAndGoals.RecordWeight;
+import tracking.weightAndGoals.SetGoalPage;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -181,7 +182,7 @@ public class HomePage extends JFrame {
         goals.setForeground(Theme.BUTTON_FG);
         c.gridx = 1;
         goals.addActionListener(e->{
-            this.dispose();
+            frame.dispose();
             new SetGoalPage();
         });
         mainPanel.add(goals, c);
@@ -231,8 +232,9 @@ public class HomePage extends JFrame {
                         break;
                     case "Weight":
                         frame.dispose();
-                        new RecordWeight(SessionContext.getDate());
+                        new RecordWeight(getSelectedDate());
                         break;
+
                     case "Cancel":
                     default:
                         // Just close the dialog, don't touch the main frame
