@@ -43,7 +43,10 @@ public class WeightDatabase {
     public WeightDatabase() {
         initialize();
     }
-
+    /**
+     * Initializes the SQLite connection and ensures required tables exist.
+     * Also applies schema migrations for goal fields if needed.
+     */
     private void initialize() {
         try {
             conn = DriverManager.getConnection(DB_URL);
@@ -88,8 +91,14 @@ public class WeightDatabase {
     }
 
     /**
-     * Insert or update a user's comprehensive goals: start/target weight,
-     * daily calorie goal, and weekly sleep goal.
+     * Inserts or updates a user's weight goal information.
+     *
+     * @param userId           the user's ID
+     * @param startWeight      the user's starting weight
+     * @param goalWeight       the user's target weight
+     * @param dailyCalGoal     the user's daily calorie goal
+     * @param weeklySleepGoal  the user's weekly sleep goal in hours
+     * @throws SQLException if a database error occurs
      */
     public void setWeightGoal(int userId,
                               double startWeight,
@@ -115,7 +124,11 @@ public class WeightDatabase {
     }
 
     /**
-     * Fetch a user's comprehensive goals, if set.
+     * Retrieves the weight goal for the given user if it exists.
+     *
+     * @param userId the user's ID
+     * @return an Optional containing the WeightGoal if found, or empty otherwise
+     * @throws SQLException if a database error occurs
      */
     public Optional<WeightGoal> getWeightGoal(int userId) throws SQLException {
         String sql =
@@ -139,7 +152,12 @@ public class WeightDatabase {
     }
 
     /**
-     * Add or replace a weight reading for a given date.
+     * Inserts or updates a weight entry for the user on a specific date.
+     *
+     * @param userId the user's ID
+     * @param date   the date of the weight entry
+     * @param weight the user's weight on that date
+     * @throws SQLException if a database error occurs
      */
     public void addWeightEntry(int userId, LocalDate date, double weight) throws SQLException {
         String sql =
@@ -154,7 +172,11 @@ public class WeightDatabase {
     }
 
     /**
-     * Retrieve all weight entries for a user, sorted by date ASC.
+     * Retrieves all weight entries for the given user, ordered by date.
+     *
+     * @param userId the user's ID
+     * @return a list of WeightEntry objects sorted by date ascending
+     * @throws SQLException if a database error occurs
      */
     public List<WeightEntry> getWeightEntries(int userId) throws SQLException {
         String sql =
@@ -177,7 +199,7 @@ public class WeightDatabase {
     // --- DTO Classes ---
 
     /**
-     * Simple holder for a user's comprehensive goals.
+     * Represents a single weight entry with date and weight value.
      */
     public static class WeightGoal {
         public final int userId;

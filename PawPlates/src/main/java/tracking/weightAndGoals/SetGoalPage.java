@@ -45,6 +45,10 @@ public class SetGoalPage extends TemplateFrame {
     private final WeightDatabase db;
     private final int userId;
 
+    /**
+     * Constructs the SetGoalPage for the current logged-in user.
+     * Initializes and displays existing goals and provides UI for updating them.
+     */
     public SetGoalPage() {
         // --- Menu Bar ---
         addMenuBarPanel();
@@ -126,13 +130,27 @@ public class SetGoalPage extends TemplateFrame {
         setVisible(true);
     }
 
+    /**
+     * Creates a styled JLabel with the given text using the application's theme.
+     *
+     * @param text the text to display in the label
+     * @return a JLabel styled with the theme's font and color
+     */
     private JLabel createLabel(String text) {
         JLabel l = new JLabel(text);
         l.setForeground(Theme.FG_LIGHT);
         l.setFont(Theme.NORMAL_FONT);
         return l;
     }
-
+    /**
+     * Adds a label and text field to the given panel using GridBagLayout constraints.
+     *
+     * @param p the parent panel to add components to
+     * @param labelText the text for the associated label
+     * @param field the JTextField to add next to the label
+     * @param gbc the layout constraints for positioning
+     * @param row the row number for vertical positioning
+     */
     private void addTextField(JPanel p, String labelText, JTextField field,
                               GridBagConstraints gbc, int row) {
         gbc.gridx = 0; gbc.gridy = row;
@@ -144,6 +162,12 @@ public class SetGoalPage extends TemplateFrame {
         p.add(field, gbc);
     }
 
+
+    /**
+     * Handles the action of saving user-entered goal values to the database.
+     * Validates and parses inputs, then saves via the WeightDatabase.
+     * Displays success or error messages depending on the outcome.
+     */
     private void onSave() {
         try {
             double s = Double.parseDouble(startingWeightField.getText());

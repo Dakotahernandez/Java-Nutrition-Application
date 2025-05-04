@@ -55,12 +55,10 @@ public class HomePage extends JFrame {
             DateTimeFormatter.ofPattern("MMMM d, yyyy");
 
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Constructs the main HomePage window and initializes all UI components,
+     * including the user greeting, date picker, logo, and navigation buttons.
      */
+
     public HomePage() {
         setUp();
     }
@@ -69,22 +67,20 @@ public class HomePage extends JFrame {
      * Expose the currently selected date so other pages can use it.
      */
     /**
-     * Description
+     * Returns the currently selected date from the date picker.
+     * Useful for passing the date context to other pages.
      *
-     * @param
-     * @return
-     * @throws
+     * @return the selected LocalDate
      */
+
     public LocalDate getSelectedDate() {
         return datePicker.getDate();
     }
 
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets up and configures the entire HomePage UI layout,
+     * including the content pane, greeting message, date picker,
+     * logo image, and navigation buttons for tracking, goals, and reminders.
      */
     private void setUp() {
         frame = new JFrame("PawPlates");
@@ -203,6 +199,11 @@ public class HomePage extends JFrame {
         contentPane.add(mainPanel, BorderLayout.CENTER);
         frame.setVisible(true);
     }
+    /**
+     * Opens a modal dialog with buttons that let the user select what they want to track.
+     * Launches the corresponding tracking page based on the selection.
+     * Options include: workout, sleep, calories, and weight.
+     */
 
     private void trackSomethingDialogue() {
         JDialog dialog = new JDialog(this, "Tracking Menu", true);

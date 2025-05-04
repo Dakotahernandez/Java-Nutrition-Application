@@ -60,11 +60,11 @@ public final class Theme {
     // Helper to apply dark mode to DatePickerSettings
     // ======================
     /**
-     * Description
+     * Applies a cohesive dark theme to all visual elements of a DatePicker component
+     * using the specified DatePickerSettings object. Adjusts background and text colors
+     * to match the application's dark UI design.
      *
-     * @param
-     * @return
-     * @throws
+     * @param settings the DatePickerSettings instance to apply dark styling to
      */
     public static void applyDarkThemeToDatePicker(DatePickerSettings settings) {
         settings.setAllowEmptyDates(false);

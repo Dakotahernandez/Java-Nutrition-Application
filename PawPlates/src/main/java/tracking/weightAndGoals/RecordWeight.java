@@ -63,6 +63,11 @@ public class RecordWeight extends TemplateFrame {
 
     private DefaultTableModel tableModel;
     private JTable weightTable;
+    /**
+     * Constructs the RecordWeight page for tracking weight over a fixed date range.
+     *
+     * @param date the reference date to anchor the displayed weight history
+     */
 
     public RecordWeight(LocalDate date) {
         this.pageDate = date;

@@ -1,4 +1,36 @@
 package reminder;
+/**
+ * =============================================================================
+ * File:        reminder.RemindersPage.java
+ * Authors:     Dakota Hernandez
+ * Created:     04/20/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   A page for selecting and confirming daily email reminders. Users can choose
+ *   from preset reminders like weight tracking or motivation and optionally specify
+ *   a different recipient email. Confirmation and reminder emails are sent using
+ *   the Mailjet API, with templates configured in a properties file.
+ *
+ * Dependencies:
+ *   - javax.swing.*
+ *   - java.awt.*
+ *   - java.util.Properties
+ *   - java.util.List, ArrayList
+ *   - org.json.*
+ *   - com.mailjet.client.*
+ *   - frame.TemplateFrame
+ *   - frame.Theme
+ *   - frame.LoginPage
+ *   - user.User
+ *   - user.UserDatabase
+ *
+ * Usage:
+ *   new RemindersPage();  // Opens the reminders selection and confirmation page
+ *
+ * TODO:
+ *   - Add user customization for reminder timing
+ * =============================================================================
+ */
 
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
@@ -32,6 +64,11 @@ public class RemindersPage extends TemplateFrame {
     private final JTextField altEmailField;
     private final JLabel altEmailLabel;
 
+    /**
+     * Constructs the RemindersPage UI, allowing users to select daily email reminders
+     * and optionally enter an alternate email address. Users can confirm their choices
+     * and receive an email confirmation along with their selected reminder messages.
+     */
     public RemindersPage() {
         super();
         setTitle("Daily Reminders");
@@ -111,6 +148,13 @@ public class RemindersPage extends TemplateFrame {
 
         setVisible(true);
     }
+    /**
+     * Gathers the selected reminder options and sends a confirmation email to the user.
+     * If reminders are selected, sends one email summarizing all selected options and
+     * dispatches separate template-based emails for each selected reminder.
+     *
+     * Includes email validation, Mailjet client configuration, and graceful error handling.
+     */
 
     private void sendReminderConfirmation() {
         try {
@@ -201,7 +245,16 @@ public class RemindersPage extends TemplateFrame {
                     "Failed to send confirmation or reminders: " + ex.getMessage());
         }
     }
-
+    /**
+     * Sends an individual email using a Mailjet template based on the provided key.
+     * Template ID is retrieved from the config file using the key (e.g., "TEMPLATE_ID_MEALS").
+     *
+     * @param client       the MailjetClient used to send the request
+     * @param config       the Properties object containing API keys and template IDs
+     * @param toEmail      the recipient's email address
+     * @param name         the recipient's name
+     * @param templateKey  the property key used to find the template ID in config
+     */
     private void sendTemplateEmail(MailjetClient client, Properties config, String toEmail, String name, String templateKey) {
         try {
             int templateId = Integer.parseInt(config.getProperty(templateKey, "0"));
@@ -226,7 +279,12 @@ public class RemindersPage extends TemplateFrame {
             e.printStackTrace();
         }
     }
-
+    /**
+     * Loads Mailjet API keys and template ID configuration values from the config.properties file
+     * located in the application's resources directory.
+     *
+     * @return a Properties object containing the loaded configuration, or empty if loading fails
+     */
     private Properties loadConfigProperties() {
         try (InputStream input = getClass().getClassLoader().getResourceAsStream("config.properties")) {
             Properties prop = new Properties();

@@ -25,17 +25,19 @@ package tracking.Food; /**
 import javax.swing.*;
 import java.awt.*;
 import frame.*;
-
+/**
+ * A modal dialog window allowing the user to input or edit a food entry.
+ * Fields include name, calories, macros, notes, and meal type.
+ */
 public class FoodEntryDialog extends JDialog {
     private final JTextField[] fields = new JTextField[7];
     private JComboBox<String> mealComboBox;
     private boolean saved = false;
     /**
-     * Description
+     * Constructs the dialog UI and pre-populates fields if a record is provided.
      *
-     * @param
-     * @return
-     * @throws
+     * @param parent the parent frame that owns this dialog
+     * @param record an existing FoodEntry to edit, or null to create a new one
      */
     public FoodEntryDialog(Frame parent, FoodEntry record) {
         super(parent, "Food Entry Form", true);
@@ -117,21 +119,17 @@ public class FoodEntryDialog extends JDialog {
         setLocationRelativeTo(parent);
     }
     /**
-     * Description
+     * Returns whether the user clicked the "Save" button.
      *
-     * @param
-     * @return
-     * @throws
+     * @return true if saved, false otherwise
      */
     public boolean isSaved() {
         return saved;
     }
     /**
-     * Description
+     * Constructs a FoodEntry object from the current form values.
      *
-     * @param
-     * @return
-     * @throws
+     * @return a new FoodEntry filled with the form's input
      */
     public FoodEntry getRecord() {
         String food     = fields[0].getText().trim();
@@ -145,11 +143,10 @@ public class FoodEntryDialog extends JDialog {
         return new FoodEntry(food, calories, protein, carbs, fats, fiber, notes, mealType);
     }
     /**
-     * Description
+     * Safely parses an integer from a string. Returns 0 if parsing fails.
      *
-     * @param
-     * @return
-     * @throws
+     * @param text the string to parse
+     * @return the parsed integer, or 0 if invalid
      */
     private int parseIntSafe(String text) {
         try {
@@ -159,11 +156,10 @@ public class FoodEntryDialog extends JDialog {
         }
     }
     /**
-     * Description
+     * Converts an empty or null string to "0".
      *
-     * @param
-     * @return
-     * @throws
+     * @param text input string
+     * @return "0" if empty, or trimmed text
      */
     private String defaultToZero(String text) {
         return (text == null || text.trim().isEmpty()) ? "0" : text.trim();

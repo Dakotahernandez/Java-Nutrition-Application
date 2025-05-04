@@ -16,11 +16,8 @@ package tracking.Food;
  * Usage:
  *   tracking.Food.FoodEntry entry = new tracking.Food.FoodEntry(...);
  *
- * TODO:
- *   - Extend validation if needed.
  * =============================================================================
  */
-
 public class FoodEntry {
     private String foodName;
     private int calories;
@@ -31,11 +28,16 @@ public class FoodEntry {
     private String notes;
     private String mealType;
     /**
-     * Description
+     * Constructs a new FoodEntry with all nutritional and metadata fields.
      *
-     * @param
-     * @return
-     * @throws
+     * @param foodName  the name of the food
+     * @param calories  the calorie count
+     * @param protein   the amount of protein
+     * @param carbs     the amount of carbohydrates
+     * @param fats      the amount of fats
+     * @param fiber     the amount of dietary fiber
+     * @param notes     any additional notes
+     * @param mealType  the meal this entry belongs to (e.g., Breakfast, Lunch, Dinner)
      */
     public FoodEntry(String foodName, int calories, String protein, String carbs, String fats, String fiber, String notes, String mealType) {
         this.foodName = foodName;
@@ -48,131 +50,83 @@ public class FoodEntry {
         this.mealType = mealType;
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Gets the name of the food.
+     * @return the food name
      */
     public String getFoodName() { return foodName; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Gets the number of calories.
+     * @return the calorie count
      */
     public int getCalories() { return calories; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Gets the amount of protein.
+     * @return protein in grams or as a string
      */
     public String getProtein() { return protein; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Gets the amount of carbohydrates.
+     * @return carbs in grams or as a string
      */
     public String getCarbs() { return carbs; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Gets the amount of fats.
+     * @return fats in grams or as a string
      */
     public String getFats() { return fats; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Gets the amount of dietary fiber.
+     * @return fiber in grams or as a string
      */
     public String getFiber() { return fiber; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Gets any additional notes.
+     * @return notes for the food entry
      */
     public String getNotes() { return notes; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Gets the meal type (Breakfast, Lunch, Dinner).
+     * @return the meal type
      */
     public String getMealType() { return mealType; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets the name of the food.
+     * @param foodName the food name to set
      */
     public void setFoodName(String foodName) { this.foodName = foodName; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets the calorie count.
+     * @param calories the number of calories
      */
     public void setCalories(int calories) { this.calories = calories; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets the amount of protein.
+     * @param protein protein value to set
      */
     public void setProtein(String protein) { this.protein = protein; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets the amount of carbohydrates.
+     * @param carbs carbohydrate value to set
      */
     public void setCarbs(String carbs) { this.carbs = carbs; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets the amount of fats.
+     * @param fats fat value to set
      */
     public void setFats(String fats) { this.fats = fats; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets the amount of dietary fiber.
+     * @param fiber fiber value to set
      */
     public void setFiber(String fiber) { this.fiber = fiber; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets additional notes.
+     * @param notes notes to associate with this entry
      */
     public void setNotes(String notes) { this.notes = notes; }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Sets the meal type.
+     * @param mealType the type of meal (Breakfast, Lunch, Dinner)
      */
     public void setMealType(String mealType) { this.mealType = mealType; }
 }

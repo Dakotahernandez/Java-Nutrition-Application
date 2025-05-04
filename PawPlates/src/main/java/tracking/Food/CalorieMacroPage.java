@@ -68,11 +68,11 @@ public class CalorieMacroPage extends TemplateFrame {
     private JTable dinnerTable;
 
     /**
-     * Description
+     * Constructs the CalorieMacroPage for a given date. It initializes the
+     * food entry tables by meal, sets up the progress bar based on the user's
+     * daily calorie goal, and provides add/edit/delete functionality.
      *
-     * @param
-     * @return
-     * @throws
+     * @param date The date for which the food entries and macros are being tracked.
      */
     public CalorieMacroPage(LocalDate date) {
         this.date = date;
@@ -185,14 +185,7 @@ public class CalorieMacroPage extends TemplateFrame {
     public static void setDailyLimit(int dailyLimit) { DAILY_LIMIT = dailyLimit; }
 
     /**
-     * No-arg constructor: defaults to the date in SessionContext.
-     */
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Constructs the CalorieMacroPage using the current session date.
      */
     public CalorieMacroPage() {
         this(SessionContext.getDate());
@@ -201,11 +194,10 @@ public class CalorieMacroPage extends TemplateFrame {
 
     // === Helper methods ===
     /**
-     * Description
+     * Creates a styled JButton with the provided text and applies the theme.
      *
-     * @param
-     * @return
-     * @throws
+     * @param text The button's label.
+     * @return A styled JButton.
      */
     private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
@@ -215,11 +207,9 @@ public class CalorieMacroPage extends TemplateFrame {
         return button;
     }
     /**
-     * Description
+     * Returns the current calorie tracking text to display above the progress bar.
      *
-     * @param
-     * @return
-     * @throws
+     * @return A formatted string showing current and goal calories.
      */
     private String getProgressText() {
         if (totalCalsSoFar <= DAILY_LIMIT) {
@@ -233,11 +223,11 @@ public class CalorieMacroPage extends TemplateFrame {
         }
     }
     /**
-     * Description
+     * Creates a panel for displaying a specific meal's food entry table and its filters.
      *
-     * @param
-     * @return
-     * @throws
+     * @param model The table model holding food entries.
+     * @param table The JTable component.
+     * @return A JPanel containing filters and the scrollable table.
      */
     private JPanel createMealPanel(FoodTableModel model, JTable table) {
         JPanel filterPanel = new JPanel(new GridLayout(1, 7, 5, 5));
@@ -258,11 +248,9 @@ public class CalorieMacroPage extends TemplateFrame {
         return panel;
     }
     /**
-     * Description
+     * Creates a themed JTextField for use in table filtering.
      *
-     * @param
-     * @return
-     * @throws
+     * @return A styled JTextField.
      */
     private JTextField createStyledFilterField() {
         JTextField field = new JTextField();
@@ -272,11 +260,10 @@ public class CalorieMacroPage extends TemplateFrame {
         return field;
     }
     /**
-     * Description
+     * Applies styling to a JTable component.
      *
-     * @param
-     * @return
-     * @throws
+     * @param model The data model for the table.
+     * @return A JTable with custom styling.
      */
     private JTable createStyledTable(FoodTableModel model) {
         JTable table = new JTable(model);
@@ -295,11 +282,10 @@ public class CalorieMacroPage extends TemplateFrame {
         return table;
     }
     /**
-     * Description
+     * Returns the currently visible JTable in the selected tab.
      *
-     * @param
-     * @return
-     * @throws
+     * @param tabs The JTabbedPane containing all meal tables.
+     * @return The currently visible JTable, or null if not found.
      */
     private JTable getCurrentTable(JTabbedPane tabs) {
         Component sel = tabs.getSelectedComponent();
@@ -313,11 +299,10 @@ public class CalorieMacroPage extends TemplateFrame {
         return null;
     }
     /**
-     * Description
+     * Returns the model corresponding to a specific JTable.
      *
-     * @param
-     * @return
-     * @throws
+     * @param table The JTable whose model is needed.
+     * @return The associated FoodTableModel.
      */
     private FoodTableModel getModelForTable(JTable table) {
         if (table == breakfastTable) return breakfastModel;
@@ -358,11 +343,10 @@ public class CalorieMacroPage extends TemplateFrame {
     }
 
     /**
-     * Description
+     * Returns the model corresponding to the specified meal type.
      *
-     * @param
-     * @return
-     * @throws
+     * @param mealType "Breakfast", "Lunch", or "Dinner".
+     * @return The corresponding FoodTableModel.
      */
     private FoodTableModel getModelForMeal(String mealType) {
         if ("Breakfast".equals(mealType)) return breakfastModel;
@@ -370,11 +354,7 @@ public class CalorieMacroPage extends TemplateFrame {
         return dinnerModel;
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Recalculates total calories and updates the animated progress bar.
      */
     private void updateCalorieProgress() {
         int sum = 0;
@@ -387,7 +367,10 @@ public class CalorieMacroPage extends TemplateFrame {
     }
 
     // -------------------- Supporting Inner Classes ------------------------
-
+    /**
+     * Represents a single food entry with nutritional information and meal context.
+     * This class is used to store and retrieve user-inputted food tracking data.
+     */
     public static class FoodEntry {
         private String foodName;
         private int calories;
@@ -397,23 +380,21 @@ public class CalorieMacroPage extends TemplateFrame {
         private String fiber;
         private String notes;
         private String mealType;
+
         /**
-         * Description
+         * Constructs a FoodEntry object with all nutritional values and metadata.
          *
-         * @param
-         * @return
-         * @throws
+         * @param foodName  Name of the food item.
+         * @param calories  Total calories in the food item.
+         * @param protein   Amount of protein (in grams or description).
+         * @param carbs     Amount of carbohydrates.
+         * @param fats      Amount of fats.
+         * @param fiber     Amount of fiber.
+         * @param notes     Optional notes or description.
+         * @param mealType  Meal category ("Breakfast", "Lunch", or "Dinner").
          */
-        public FoodEntry(
-                String foodName,
-                int calories,
-                String protein,
-                String carbs,
-                String fats,
-                String fiber,
-                String notes,
-                String mealType
-        ) {
+        public FoodEntry(String foodName, int calories, String protein, String carbs,
+                         String fats, String fiber, String notes, String mealType) {
             this.foodName = foodName;
             this.calories = calories;
             this.protein  = protein;
@@ -423,177 +404,124 @@ public class CalorieMacroPage extends TemplateFrame {
             this.notes    = notes;
             this.mealType = mealType;
         }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
+
+        /** @return The name of the food item. */
         public String getFoodName() { return foodName; }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
-        public int    getCalories() { return calories; }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
-        public String getProtein()  { return protein;  }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
-        public String getCarbs()    { return carbs;    }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
-        public String getFats()     { return fats;     }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
-        public String getFiber()    { return fiber;    }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
-        public String getNotes()    { return notes;    }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
+
+        /** @return The number of calories. */
+        public int getCalories() { return calories; }
+
+        /** @return The amount of protein. */
+        public String getProtein() { return protein; }
+
+        /** @return The amount of carbohydrates. */
+        public String getCarbs() { return carbs; }
+
+        /** @return The amount of fats. */
+        public String getFats() { return fats; }
+
+        /** @return The amount of fiber. */
+        public String getFiber() { return fiber; }
+
+        /** @return Any user notes associated with this entry. */
+        public String getNotes() { return notes; }
+
+        /** @return The meal type this entry belongs to. */
         public String getMealType() { return mealType; }
+
         /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
+         * Sets the food item's name.
+         * @param foodName The name to set.
          */
         public void setFoodName(String foodName) { this.foodName = foodName; }
+
         /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
+         * Sets the calorie value.
+         * @param calories The calorie count to set.
          */
-        public void setCalories(int calories)    { this.calories = calories; }
+        public void setCalories(int calories) { this.calories = calories; }
+
         /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
+         * Sets the protein value.
+         * @param protein The protein value to set.
          */
-        public void setProtein(String protein)   { this.protein  = protein;  }
+        public void setProtein(String protein) { this.protein = protein; }
+
         /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
+         * Sets the carbohydrate value.
+         * @param carbs The carbohydrate value to set.
          */
-        public void setCarbs(String carbs)       { this.carbs    = carbs;    }
+        public void setCarbs(String carbs) { this.carbs = carbs; }
+
         /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
+         * Sets the fat value.
+         * @param fats The fat value to set.
          */
-        public void setFats(String fats)         { this.fats     = fats;     }
+        public void setFats(String fats) { this.fats = fats; }
+
         /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
+         * Sets the fiber value.
+         * @param fiber The fiber value to set.
          */
-        public void setFiber(String fiber)       { this.fiber    = fiber;    }
+        public void setFiber(String fiber) { this.fiber = fiber; }
+
         /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
+         * Sets the notes for the entry.
+         * @param notes Any notes to attach to the entry.
          */
-        public void setNotes(String notes)       { this.notes    = notes;    }
+        public void setNotes(String notes) { this.notes = notes; }
+
         /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
+         * Sets the meal type for the entry.
+         * @param mealType The meal category ("Breakfast", "Lunch", or "Dinner").
          */
         public void setMealType(String mealType) { this.mealType = mealType; }
     }
 
+
+    /**
+     * Table model used to represent and manipulate a list of {@link FoodEntry} objects
+     * in a JTable. Supports adding, updating, and removing entries, with automatic
+     * database persistence and UI refresh.
+     */
     public class FoodTableModel extends AbstractTableModel {
         private final String[] columns = {
                 "Food", "Calories", "Protein", "Carbs", "Fats", "Fiber", "Notes", "Meal"
         };
         private List<FoodEntry> data;
+
         /**
-         * Description
+         * Constructs the table model using an existing list of food entries.
          *
-         * @param
-         * @return
-         * @throws
+         * @param data The list of {@link FoodEntry} records to manage.
          */
         public FoodTableModel(List<FoodEntry> data) {
             this.data = data;
         }
+
         /**
-         * Description
+         * Returns the full list of current food entries.
          *
-         * @param
-         * @return
-         * @throws
+         * @return List of {@link FoodEntry} objects.
          */
         public List<FoodEntry> getData() {
             return data;
         }
+
         /**
-         * Description
+         * Retrieves the food record at a specific row.
          *
-         * @param
-         * @return
-         * @throws
+         * @param row Row index in the table.
+         * @return The {@link FoodEntry} at the specified row.
          */
         public FoodEntry getRecordAt(int row) {
             return data.get(row);
         }
+
         /**
-         * Description
+         * Adds a new record to the model and database, then updates the table view.
          *
-         * @param
-         * @return
-         * @throws
+         * @param record The new {@link FoodEntry} to add.
          */
         public void addRecord(FoodEntry record) {
             data.add(record);
@@ -601,14 +529,10 @@ public class CalorieMacroPage extends TemplateFrame {
             fireTableDataChanged();
         }
 
-
-
         /**
-         * Description
+         * Removes a record from the model and database, then updates the table view.
          *
-         * @param
-         * @return
-         * @throws
+         * @param row The row index of the record to remove.
          */
         public void removeRecord(int row) {
             FoodEntry entry = data.remove(row);
@@ -617,11 +541,10 @@ public class CalorieMacroPage extends TemplateFrame {
         }
 
         /**
-         * Description
+         * Updates a specific record in the model and database, then updates the table view.
          *
-         * @param
-         * @return
-         * @throws
+         * @param row    The index of the row to update.
+         * @param record The new {@link FoodEntry} to replace the old one.
          */
         public void updateRecord(int row, FoodEntry record) {
             FoodEntry oldEntry = data.get(row);
@@ -630,45 +553,35 @@ public class CalorieMacroPage extends TemplateFrame {
             fireTableDataChanged();
         }
 
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
+        /** @return Number of rows in the table. */
         @Override
         public int getRowCount() {
             return data.size();
         }
-        /**
-         * Description
-         *
-         * @param
-         * @return
-         * @throws
-         */
+
+        /** @return Number of columns in the table. */
         @Override
         public int getColumnCount() {
             return columns.length;
         }
+
         /**
-         * Description
+         * Gets the column name at a specific index.
          *
-         * @param
-         * @return
-         * @throws
+         * @param column Column index.
+         * @return Column name.
          */
         @Override
         public String getColumnName(int column) {
             return columns[column];
         }
+
         /**
-         * Description
+         * Retrieves the value for a given cell in the table.
          *
-         * @param
-         * @return
-         * @throws
+         * @param rowIndex    Row index.
+         * @param columnIndex Column index.
+         * @return Object representing the cell value.
          */
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
@@ -687,16 +600,16 @@ public class CalorieMacroPage extends TemplateFrame {
         }
     }
 
+
     public static class FoodEntryDialog extends JDialog {
         private final JTextField[] fields = new JTextField[7];
         private JComboBox<String> mealComboBox;
         private boolean saved = false;
         /**
-         * Description
+         * Constructs the dialog window for editing or creating a food entry.
          *
-         * @param
-         * @return
-         * @throws
+         * @param parent The parent frame for positioning.
+         * @param record The {@link FoodEntry} to edit, or null to create a new entry.
          */
         public FoodEntryDialog(Frame parent, FoodEntry record) {
             super(parent, "Food Entry Form", true);
@@ -777,21 +690,17 @@ public class CalorieMacroPage extends TemplateFrame {
             setLocationRelativeTo(parent);
         }
         /**
-         * Description
+         * Checks if the user pressed the "Save" button and passed validation.
          *
-         * @param
-         * @return
-         * @throws
+         * @return true if the user saved the entry, false if canceled or invalid.
          */
         public boolean isSaved() {
             return saved;
         }
         /**
-         * Description
+         * Builds a {@link FoodEntry} from the user input fields.
          *
-         * @param
-         * @return
-         * @throws
+         * @return A new or updated {@link FoodEntry} instance.
          */
         public FoodEntry getRecord() {
             String food     = fields[0].getText().trim();
@@ -805,12 +714,12 @@ public class CalorieMacroPage extends TemplateFrame {
             return new FoodEntry(food, calories, protein, carbs, fats, fiber, notes, mealType);
         }
         /**
-         * Description
+         * Parses a string into an integer, defaulting to 0 if parsing fails.
          *
-         * @param
-         * @return
-         * @throws
+         * @param text Input string to parse.
+         * @return Parsed integer or 0.
          */
+
         private int parseIntSafe(String text) {
             try {
                 return Integer.parseInt(text.trim());
@@ -819,11 +728,10 @@ public class CalorieMacroPage extends TemplateFrame {
             }
         }
         /**
-         * Description
+         * Returns "0" if the text is null or empty, otherwise trims and returns it.
          *
-         * @param
-         * @return
-         * @throws
+         * @param text Input string.
+         * @return Cleaned string or "0".
          */
         private String defaultToZero(String text) {
             return (text == null || text.trim().isEmpty()) ? "0" : text.trim();
@@ -831,11 +739,8 @@ public class CalorieMacroPage extends TemplateFrame {
 
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * A simplified DocumentListener that lets you handle all document changes
+     * (insert, remove, update) with a single update() method.
      */
     @FunctionalInterface
     public interface MyDocumentListener extends DocumentListener {

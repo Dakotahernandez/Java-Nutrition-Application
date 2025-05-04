@@ -49,11 +49,8 @@ public class TemplateFrame extends JFrame {
     protected GridBagConstraints c;
 
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Constructs a new TemplateFrame with a predefined layout and dark theme.
+     * Initializes common panels, sets full-screen mode, and applies global text input styling.
      */
     public TemplateFrame() {
         // Initialize panels
@@ -84,11 +81,8 @@ public class TemplateFrame extends JFrame {
         add(centerPanel, BorderLayout.CENTER);
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Adds a top menu bar to the frame containing the user menu (left)
+     * and the logout menu (right). Inserts the menu bar into the north panel.
      */
     public void addMenuBarPanel() {
         JPanel menuBarPanel = new JPanel(new GridBagLayout());
@@ -115,11 +109,13 @@ public class TemplateFrame extends JFrame {
         add(northPanel, BorderLayout.NORTH);
     }
     /**
-     * Description
+     * Adds a labeled JTextField to the center panel at the specified grid position.
+     * Applies dark theme styling to both label and text field.
      *
-     * @param
-     * @return
-     * @throws
+     * @param prompt     the label text to display next to the field
+     * @param textField  the JTextField component to add
+     * @param x          the grid x-coordinate for the label
+     * @param y          the grid y-coordinate for the label and field
      */
     public void addTextField(String prompt, JTextField textField, int x, int y) {
         c.insets = new Insets(5, 5, 5, 5);
@@ -139,11 +135,11 @@ public class TemplateFrame extends JFrame {
         centerPanel.add(textField, c);
     }
     /**
-     * Description
+     * Adds a styled JButton to the center panel at the specified row.
+     * Spans the button across two columns and centers it.
      *
-     * @param
-     * @return
-     * @throws
+     * @param button the JButton to add
+     * @param row    the grid row where the button should be placed
      */
     public void addButton(JButton button, int row) {
         c.insets = new Insets(5, 5, 5, 5);
@@ -157,15 +153,13 @@ public class TemplateFrame extends JFrame {
     }
 
     /**
-     * Adds a themed progress bar (and label) into the northPanel.
-     * If you pass an frame.AnimatedProgressBar, it will animate smoothly.
-     */
-    /**
-     * * Description
-     * *
-     * * @param
-     * * @return
-     * * @throws
+     * Adds a styled progress bar with an optional label below it to the north panel.
+     * Supports both standard and AnimatedProgressBar instances.
+     *
+     * @param progressBar   the JProgressBar to display (can be animated)
+     * @param setValue      the value to set or animate to
+     * @param progressText  the label text to display under the bar
+     * @return the JLabel that displays the progress text (in case further customization is needed)
      */
     public JLabel addProgressBar(JProgressBar progressBar, int setValue, String progressText) {
         JPanel progressBarPanel = new JPanel();

@@ -1,19 +1,32 @@
-package tracking.weightAndGoals; /**
+package tracking.weightAndGoals;
+
+/**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:        SleepPage.java
+ * Author:      Dakota Hernandez, Faith ota, Joshua Carroll
+ * Created:     04/25/2025
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   A Java Swing page for tracking daily sleep hours and comparing progress
+ *   against a weekly sleep goal. Displays a progress bar and input form.
+ *   Reads the user's goal from the database and updates sleep total in memory.
  *
  * Dependencies:
- *
+ *   - javax.swing.*
+ *   - java.awt.*
+ *   - java.time.LocalDate
+ *   - java.time.format.DateTimeFormatter
+ *   - frame.TemplateFrame
+ *   - frame.LoginPage
+ *   - tracking.weightAndGoals.WeightDatabase
  *
  * Usage:
+ *   new SleepPage();                       // Uses current date from SessionContext
+ *   new SleepPage(LocalDate.of(2025, 5, 4)); // Uses a specific date
  *
  * =============================================================================
  */
+
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
@@ -21,8 +34,6 @@ import java.time.format.DateTimeFormatter;
 import frame.*;
 
 import java.sql.SQLException;
-
-import frame.LoginPage;
 
 public class SleepPage extends TemplateFrame {
     private static int WEEKLY_GOAL;
@@ -33,14 +44,9 @@ public class SleepPage extends TemplateFrame {
             DateTimeFormatter.ofPattern("MMMM d, yyyy");
 
     /**
-     * Constructor that accepts a date and builds the UI.
-     */
-    /**
-     * Description
+     * Constructs the SleepPage for a given date, initializing UI and goal data.
      *
-     * @param
-     * @return
-     * @throws
+     * @param date the date to display and use in the header
      */
     public SleepPage(LocalDate date) {
         this.date = date;
@@ -103,33 +109,36 @@ public class SleepPage extends TemplateFrame {
     }
 
     /**
-     * No-arg constructor uses the date from frame.SessionContext.
-     */
-    /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Constructs the SleepPage using the current date from SessionContext.
      */
     public SleepPage() {
         this(SessionContext.getDate());
     }
 
     /**
-     * Description
+     * Returns a formatted progress string indicating weekly sleep status.
      *
-     * @param
-     * @return
-     * @throws
+     * @return the formatted string showing total sleep out of goal
      */
     private String getProgressText() {
         return String.format("Weekly Sleep Progress: %d / %d hours",
                 totalSleep, WEEKLY_GOAL);
     }
 
-    public static void setWeeklyGoal(int weeklyGoal) {  WEEKLY_GOAL = weeklyGoal; }
+    /**
+     * Updates the weekly sleep goal value used in the progress bar.
+     *
+     * @param weeklyGoal the new sleep goal in hours
+     */
+    public static void setWeeklyGoal(int weeklyGoal) {
+        WEEKLY_GOAL = weeklyGoal;
+    }
 
+    /**
+     * Main method for launching the SleepPage UI independently.
+     *
+     * @param args command-line arguments (not used)
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(SleepPage::new);
     }

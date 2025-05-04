@@ -25,35 +25,35 @@ import javax.swing.event.DocumentListener;
 
 @FunctionalInterface
 public interface MyDocumentListener extends DocumentListener {
+    /**
+     * Called whenever the document is changed and one of the event methods is triggered.
+     * This is the only method required to implement when using this functional interface.
+     *
+     * @param e the document event describing the change
+     */
     void update(DocumentEvent e);
     /**
-     * Description
+     * Handles insertion into the document and forwards it to the update method.
      *
-     * @param
-     * @return
-     * @throws
+     * @param e the document event describing the insertion
      */
     @Override
     default void insertUpdate(DocumentEvent e) {
         update(e);
     }
     /**
-     * Description
+     * Handles removal from the document and forwards it to the update method.
      *
-     * @param
-     * @return
-     * @throws
+     * @param e the document event describing the removal
      */
     @Override
     default void removeUpdate(DocumentEvent e) {
         update(e);
     }
     /**
-     * Description
+     * Handles attribute or formatting changes and forwards them to the update method.
      *
-     * @param
-     * @return
-     * @throws
+     * @param e the document event describing the change
      */
     @Override
     default void changedUpdate(DocumentEvent e) {

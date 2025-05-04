@@ -38,42 +38,29 @@ public class FoodTableModel extends AbstractTableModel {
     private List<FoodEntry> fullData; // All entries
     private List<FoodEntry> filteredData; // Visible entries (after filtering)
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Constructs a FoodTableModel with the given list of entries.
+     * Initializes both the full and filtered data sets.
      */
     public FoodTableModel(List<FoodEntry> data) {
         this.fullData = new ArrayList<>(data);
         this.filteredData = new ArrayList<>(data);
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Returns the currently visible (filtered) list of food entries.
      */
     public List<FoodEntry> getData() {
         return filteredData;
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Returns the FoodEntry object at the given visible row index.
      */
     public FoodEntry getRecordAt(int row) {
         return filteredData.get(row);
     }
+
+
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Adds a new FoodEntry to the model and updates the table view.
      */
     public void addRecord(FoodEntry record) {
         fullData.add(record);
@@ -81,11 +68,7 @@ public class FoodTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Removes a FoodEntry from both the full and filtered data sets.
      */
     public void removeRecord(int row) {
         FoodEntry toRemove = filteredData.get(row);
@@ -94,11 +77,7 @@ public class FoodTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Updates a FoodEntry in both the full and filtered data sets.
      */
     public void updateRecord(int row, FoodEntry record) {
         FoodEntry old = filteredData.get(row);
@@ -110,44 +89,28 @@ public class FoodTableModel extends AbstractTableModel {
         fireTableDataChanged();
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Returns the number of visible rows in the table.
      */
     @Override
     public int getRowCount() {
         return filteredData.size();
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Returns the number of columns in the table.
      */
     @Override
     public int getColumnCount() {
         return columns.length;
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Returns the name of the column at the specified index.
      */
     @Override
     public String getColumnName(int column) {
         return columns[column];
     }
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Returns the value to be displayed at the specified cell.
      */
     @Override
     public Object getValueAt(int rowIndex, int columnIndex) {
@@ -168,11 +131,8 @@ public class FoodTableModel extends AbstractTableModel {
 
 
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Filters the entries based on a search query.
+     * Matches against food name, notes, and meal type.
      */
     public void filter(String query) {
         if (query == null || query.trim().isEmpty()) {
