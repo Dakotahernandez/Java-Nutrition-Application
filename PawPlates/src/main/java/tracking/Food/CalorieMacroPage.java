@@ -99,7 +99,7 @@ public class CalorieMacroPage extends TemplateFrame {
         progressLabel.setFont(Theme.HEADER_FONT);
         progressLabel.setForeground(Theme.FG_LIGHT);
 
-
+        //
 
 
         // -------- Initialize Models and Tables --------
@@ -177,6 +177,9 @@ public class CalorieMacroPage extends TemplateFrame {
         // Assemble into frame
         add(tabbedPane,  BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+        //progress bar updates with presaved data :)
+        updateCalorieProgress();
+
 
         setSize(1000, 500);
         setVisible(true);
