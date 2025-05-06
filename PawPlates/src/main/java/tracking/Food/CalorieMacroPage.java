@@ -30,6 +30,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -235,8 +236,30 @@ public class CalorieMacroPage extends TemplateFrame {
     private JPanel createMealPanel(FoodTableModel model, JTable table) {
         JPanel filterPanel = new JPanel(new GridLayout(1, 7, 5, 5));
         filterPanel.setBackground(Theme.BG_DARK);
+
+        JTextField[] filters = new JTextField[7];
         for (int i = 0; i < 7; i++) {
-            filterPanel.add(createStyledFilterField());
+            filters[i] = createStyledFilterField();
+            filterPanel.add(filters[i]);
+        }
+
+        //  Get the sorter from the table
+        TableRowSorter<?> sorter = (TableRowSorter<?>) table.getRowSorter();
+
+        for (int i = 0; i < filters.length; i++) {
+            final int col = i;
+            filters[i].getDocument().addDocumentListener((MyDocumentListener) e -> {
+                String text = filters[col].getText();
+                RowFilter<Object, Object> rf = RowFilter.regexFilter("(?i)" + text, col);
+                List<RowFilter<Object,Object>> filtersList = new ArrayList<>();
+                for (int j = 0; j < filters.length; j++) {
+                    String tf = filters[j].getText();
+                    if (!tf.isEmpty()) {
+                        filtersList.add(RowFilter.regexFilter("(?i)" + tf, j));
+                    }
+                }
+                sorter.setRowFilter(RowFilter.andFilter(filtersList));
+            });
         }
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -250,6 +273,7 @@ public class CalorieMacroPage extends TemplateFrame {
         panel.add(scrollPane,  BorderLayout.CENTER);
         return panel;
     }
+
     /**
      * Creates a themed JTextField for use in table filtering.
      *
@@ -282,8 +306,14 @@ public class CalorieMacroPage extends TemplateFrame {
         header.setBackground(new Color(60, 60, 60));
         header.setForeground(Theme.FG_LIGHT);
         header.setFont(new Font("SansSerif", Font.BOLD, 14));
+
+        //  Enable sorting
+        TableRowSorter<FoodTableModel> sorter = new TableRowSorter<>(model);
+        table.setRowSorter(sorter);
+
         return table;
     }
+
     /**
      * Returns the currently visible JTable in the selected tab.
      *
