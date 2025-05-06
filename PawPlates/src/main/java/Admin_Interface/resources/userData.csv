@@ -1,0 +1,8 @@
+User/Trainer,FirstName,LastName,Email,IDNum,FitnessLevel,Gender,SecurityQ1,SecurityQ2,QAnswer1,QAnswer2
+Trainer,Tim,Miller,timmy@gmail.com,12345,x,Male,a,a,b,b
+User,Jose,Smith,coolguy@yahoo.com,68734,Beginner,Male,a,a,b,b
+User,Emma,Moore,emmamoore@hotmail.com,49852,Intermediate,Female,a,a,b,b
+User,Juan,Garcia,juanito123@gmail.com,49274,Elite,Male,a,a,b,b
+Trainer,Maria,Martinez,marmar@gmail.com,90231,x,Female,a,a,b,b
+User,Rosa,Ruiz,ruizspieces@gmail.com,11111,Advanced,Female,a,a,b,b
+User,Kate,Brown,kate222@gmail.com,13424,Beginner,Female,a,a,b,b
