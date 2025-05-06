@@ -211,7 +211,7 @@ public class HomePage extends JFrame {
         dialog.setLayout(new GridLayout(5, 1, 10, 10));
         dialog.getContentPane().setBackground(Theme.BG_DARKER);
 
-        String[] options = {"workout.Workout", "Sleep", "Calories", "Weight", "Cancel"};
+        String[] options = {"Workout", "Sleep", "Calories", "Weight", "Cancel"};
         for (String text : options) {
             JButton btn = new JButton(text);
             btn.setFont(Theme.NORMAL_FONT);
@@ -220,9 +220,9 @@ public class HomePage extends JFrame {
             btn.addActionListener(e -> {
                 dialog.dispose();
                 switch (text) {
-                    case "workout.Workout":
+                    case "Workout":
                         frame.dispose();
-                        new CreateExercise();
+                        new TrackWorkouts();
                         break;
                     case "Sleep":
                         frame.dispose();

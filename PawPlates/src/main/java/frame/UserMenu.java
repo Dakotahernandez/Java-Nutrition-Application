@@ -53,6 +53,8 @@ public class UserMenu {
 
         JMenuItem home            = new JMenuItem("Home");
         JMenuItem trackWorkout    = new JMenuItem("Track Workout");
+        JMenuItem createWorkout    = new JMenuItem("Create Workout");
+
         JMenuItem trackSleep      = new JMenuItem("Track Sleep");
         JMenuItem trackCals       = new JMenuItem("Track Calories");
         JMenuItem setGoal         = new JMenuItem("Set a Goal");
@@ -68,6 +70,13 @@ public class UserMenu {
 
         // Track workout.Workout
         trackWorkout.addActionListener(e -> {
+            JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
+            new TrackWorkouts();
+            current.dispose();
+        });
+
+        // Track workout.Workout
+        createWorkout.addActionListener(e -> {
             JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
             new CreateWorkoutPage();
             current.dispose();
@@ -108,6 +117,7 @@ public class UserMenu {
 
         menu.add(home);
         menu.add(trackWorkout);
+        menu.add(createWorkout);
         menu.add(trackSleep);
         menu.add(trackCals);
         menu.add(setGoal);
