@@ -135,7 +135,7 @@ public class TrackWorkouts extends TemplateFrame{
             exerciseTable.getColumnModel().getColumn(i).setHeaderRenderer(leftHeaderRenderer);
         }
 
-        TitledBorder exerciseBorder = BorderFactory.createTitledBorder("Highlight an exercise to view");
+        TitledBorder exerciseBorder = BorderFactory.createTitledBorder("Highlight a workout");
         exerciseBorder.setTitleFont(new Font("SansSerif", Font.BOLD, 14));
         exerciseBorder.setTitleColor(Theme.FG_LIGHT);
         exercisePanel.setBorder(exerciseBorder);
