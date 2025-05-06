@@ -177,7 +177,7 @@ public class CalorieMacroPage extends TemplateFrame {
         // Assemble into frame
         add(tabbedPane,  BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
-        //progress bar updates with presaved data :)
+        //progress bar updates with presaved data :) yay
         updateCalorieProgress();
 
 
