@@ -35,6 +35,7 @@ import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import frame.*;
 
@@ -296,23 +297,25 @@ public class CalorieMacroPage extends TemplateFrame {
         JTable table = new JTable(model);
         table.setRowHeight(25);
         table.setFont(Theme.NORMAL_FONT);
-        table.setBackground(Theme.BG_DARKER);
-        table.setForeground(Theme.FG_LIGHT);
-        table.setSelectionBackground(Theme.BG_LIGHTER);
-        table.setSelectionForeground(Theme.FG_LIGHT);
-        table.setGridColor(new Color(80, 80, 80));
+        table.setBackground(Theme.BG_DARKER);              // table background
+        table.setForeground(Theme.FG_LIGHT);               // cell text color
+        table.setSelectionBackground(Theme.BG_LIGHTER);    // row selection background
+        table.setSelectionForeground(Theme.FG_LIGHT);      // row selection text
+        table.setGridColor(Theme.BG_LIGHTER);              // subtle grid lines
 
         JTableHeader header = table.getTableHeader();
-        header.setBackground(new Color(60, 60, 60));
-        header.setForeground(Theme.FG_LIGHT);
-        header.setFont(new Font("SansSerif", Font.BOLD, 14));
+        header.setBackground(Theme.BG_DARK);               // header background
+        header.setForeground(Theme.FG_LIGHT);              // header text color
+        header.setFont(Theme.HEADER_FONT);                 // header font
 
-        //  Enable sorting
+        // ✅ Enable sorting and numeric sorting for "Calories" column (index 1)
         TableRowSorter<FoodTableModel> sorter = new TableRowSorter<>(model);
+        sorter.setComparator(1, Comparator.comparingInt(a -> (int) a));  // Calories (numeric)
         table.setRowSorter(sorter);
 
         return table;
     }
+
 
     /**
      * Returns the currently visible JTable in the selected tab.
