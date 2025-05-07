@@ -56,7 +56,7 @@ public class TrackWorkouts extends TemplateFrame{
         workoutTable.getColumnModel().getColumn(3).setPreferredWidth(125);// Calories
         workoutTable.getColumnModel().getColumn(4).setPreferredWidth(100);// Count
         JScrollPane workoutScrollPane = new JScrollPane(workoutTable);
-        workoutScrollPane.setPreferredSize(new Dimension(600, 300));
+        workoutScrollPane.setPreferredSize(new Dimension(500, 300));
 
         for (int i = 0; i < workoutTable.getColumnCount(); i++) {
             workoutTable.getColumnModel().getColumn(i).setHeaderRenderer(leftHeaderRenderer);
@@ -129,7 +129,7 @@ public class TrackWorkouts extends TemplateFrame{
         exerciseTable.getColumnModel().getColumn(3).setPreferredWidth(100); // Duration
         exerciseTable.getColumnModel().getColumn(4).setPreferredWidth(100); // Calories
         exerciseTable.getColumnModel().getColumn(5).setPreferredWidth(500); // Description
-        exerciseScrollPane.setPreferredSize(new Dimension(1000, 300));
+        exerciseScrollPane.setPreferredSize(new Dimension(800, 300));
 
         for (int i = 0; i < exerciseTable.getColumnCount(); i++) {
             exerciseTable.getColumnModel().getColumn(i).setHeaderRenderer(leftHeaderRenderer);
