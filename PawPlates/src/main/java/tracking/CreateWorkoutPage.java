@@ -137,11 +137,12 @@ public class CreateWorkoutPage extends TemplateFrame {
         westPanel.add(blankLabel2);
 
         //for testing
+
         exerciseDefaultList = toListModel(exercises);
         exerciseJList = new JList<>(exerciseDefaultList);
         exerciseJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         JScrollPane sP = new JScrollPane(exerciseJList);
-        sP.setPreferredSize(new Dimension(180, 300));
+        sP.setPreferredSize(new Dimension(150, 300));
         sP.setBorder(BorderFactory.createTitledBorder("Your Exercises"));
         c.insets = new Insets(25, 5, 5, 5);
 

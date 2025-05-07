@@ -30,10 +30,12 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import frame.*;
 
@@ -99,7 +101,7 @@ public class CalorieMacroPage extends TemplateFrame {
         progressLabel.setFont(Theme.HEADER_FONT);
         progressLabel.setForeground(Theme.FG_LIGHT);
 
-
+        //
 
 
         // -------- Initialize Models and Tables --------
@@ -177,6 +179,9 @@ public class CalorieMacroPage extends TemplateFrame {
         // Assemble into frame
         add(tabbedPane,  BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
+        //progress bar updates with presaved data :) yay
+        updateCalorieProgress();
+
 
         setSize(1000, 500);
         setVisible(true);
@@ -232,8 +237,30 @@ public class CalorieMacroPage extends TemplateFrame {
     private JPanel createMealPanel(FoodTableModel model, JTable table) {
         JPanel filterPanel = new JPanel(new GridLayout(1, 7, 5, 5));
         filterPanel.setBackground(Theme.BG_DARK);
+
+        JTextField[] filters = new JTextField[7];
         for (int i = 0; i < 7; i++) {
-            filterPanel.add(createStyledFilterField());
+            filters[i] = createStyledFilterField();
+            filterPanel.add(filters[i]);
+        }
+
+        //  Get the sorter from the table
+        TableRowSorter<?> sorter = (TableRowSorter<?>) table.getRowSorter();
+
+        for (int i = 0; i < filters.length; i++) {
+            final int col = i;
+            filters[i].getDocument().addDocumentListener((MyDocumentListener) e -> {
+                String text = filters[col].getText();
+                RowFilter<Object, Object> rf = RowFilter.regexFilter("(?i)" + text, col);
+                List<RowFilter<Object,Object>> filtersList = new ArrayList<>();
+                for (int j = 0; j < filters.length; j++) {
+                    String tf = filters[j].getText();
+                    if (!tf.isEmpty()) {
+                        filtersList.add(RowFilter.regexFilter("(?i)" + tf, j));
+                    }
+                }
+                sorter.setRowFilter(RowFilter.andFilter(filtersList));
+            });
         }
 
         JScrollPane scrollPane = new JScrollPane(table);
@@ -247,6 +274,7 @@ public class CalorieMacroPage extends TemplateFrame {
         panel.add(scrollPane,  BorderLayout.CENTER);
         return panel;
     }
+
     /**
      * Creates a themed JTextField for use in table filtering.
      *
@@ -269,18 +297,26 @@ public class CalorieMacroPage extends TemplateFrame {
         JTable table = new JTable(model);
         table.setRowHeight(25);
         table.setFont(Theme.NORMAL_FONT);
-        table.setBackground(Theme.BG_DARKER);
-        table.setForeground(Theme.FG_LIGHT);
-        table.setSelectionBackground(Theme.BG_LIGHTER);
-        table.setSelectionForeground(Theme.FG_LIGHT);
-        table.setGridColor(new Color(80, 80, 80));
+        table.setBackground(Theme.BG_DARKER);              // table background
+        table.setForeground(Theme.FG_LIGHT);               // cell text color
+        table.setSelectionBackground(Theme.BG_LIGHTER);    // row selection background
+        table.setSelectionForeground(Theme.FG_LIGHT);      // row selection text
+        table.setGridColor(Theme.BG_LIGHTER);              // subtle grid lines
 
         JTableHeader header = table.getTableHeader();
-        header.setBackground(new Color(60, 60, 60));
-        header.setForeground(Theme.FG_LIGHT);
-        header.setFont(new Font("SansSerif", Font.BOLD, 14));
+        header.setBackground(Theme.BG_DARK);               // header background
+        header.setForeground(Theme.FG_LIGHT);              // header text color
+        header.setFont(Theme.HEADER_FONT);                 // header font
+
+        // ✅ Enable sorting and numeric sorting for "Calories" column (index 1)
+        TableRowSorter<FoodTableModel> sorter = new TableRowSorter<>(model);
+        sorter.setComparator(1, Comparator.comparingInt(a -> (int) a));  // Calories (numeric)
+        table.setRowSorter(sorter);
+
         return table;
     }
+
+
     /**
      * Returns the currently visible JTable in the selected tab.
      *
