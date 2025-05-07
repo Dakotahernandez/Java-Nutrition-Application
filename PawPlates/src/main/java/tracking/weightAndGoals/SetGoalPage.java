@@ -175,6 +175,9 @@ public class SetGoalPage extends TemplateFrame {
             int c    = Integer.parseInt(goalCalField.getText());
             int w    = Integer.parseInt(goalSleepField.getText());
             db.setWeightGoal(userId, s, g, c, w);
+            if(s < 1 || g < 1 || c < 1 || w < 1){
+                throw new IllegalArgumentException();
+            }
             JOptionPane.showMessageDialog(this, "Goals saved successfully.");
             dispose();
             new HomePage();
@@ -185,6 +188,8 @@ public class SetGoalPage extends TemplateFrame {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this,
                     "Error saving goals.", "Database Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalArgumentException e){
+            JOptionPane.showMessageDialog(this, "Values must be positive", "Input Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
