@@ -359,8 +359,11 @@ public class UserPlanDetails extends JPanel {
         frame.setLayout(new BorderLayout());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+
         frame.add(UserMenu.addUserMenu(), BorderLayout.NORTH);
-        frame.add(new UserPlanDetails(userId));
+        UserPlanDetails upd = new UserPlanDetails(userId);
+        upd.searchPlans();
+        frame.add(upd);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }

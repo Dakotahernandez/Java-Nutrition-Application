@@ -197,7 +197,7 @@ public class HomePage extends JFrame {
         c.gridx = 2;
         mainPanel.add(rem, c);
 
-        JButton myClasses = new JButton("My Lesson Plans");
+        JButton myClasses = new JButton("Your Lesson Plans");
         myClasses.setFont(Theme.NORMAL_FONT);
         myClasses.setBackground(Theme.BUTTON_BG);
         myClasses.setForeground(Theme.BUTTON_FG);
