@@ -208,7 +208,7 @@ public class HomePage extends JFrame {
                 frame.dispose();
             }
             else {
-                // show user classes
+                UserPlanDetails.showUserPlanDetails(LoginPage.CURRENT_USER.getId());
                 frame.dispose();
             }
         });

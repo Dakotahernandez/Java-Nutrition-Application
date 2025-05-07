@@ -8,7 +8,6 @@ import java.awt.*;
 import java.sql.*;
 
 public class TrainerPlanDetails extends JPanel {
-    private JFrame frame;
     private int trainerId;
     private Connection connection;
     private JTable planTable;

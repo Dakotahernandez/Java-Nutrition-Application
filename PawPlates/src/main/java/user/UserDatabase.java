@@ -14,6 +14,8 @@ package user; /**
  *
  * =============================================================================
  */
+import tracking.UserPlanDetails;
+
 import java.sql.*;
 
 public class UserDatabase {
@@ -155,6 +157,8 @@ public class UserDatabase {
             TrainerWorkoutPlan.initializeTable();
             TrainerWorkout.initializeTable();
             TrainerExercise.initializeTable();
+
+            UserPlanDetails.initializeTable();
         }
         catch (Exception e) {
             e.printStackTrace();
