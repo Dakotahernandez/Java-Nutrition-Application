@@ -100,8 +100,8 @@ public class TemplateFrame extends JFrame {
         c.gridx = 1; c.gridy = 0;
         c.weightx = 0.0; c.fill = GridBagConstraints.NONE;
         c.anchor = GridBagConstraints.EAST;
-        LogoutMenu logoutMenu = new LogoutMenu();
-        menuBarPanel.add(logoutMenu.addLogoutMenu(), c);
+        //LogoutMenu logoutMenu = new LogoutMenu();
+        //menuBarPanel.add(logoutMenu.addLogoutMenu(), c);
 
         // Place into northPanel and add to frame
         northPanel.setBackground(Theme.BG_DARK);

@@ -58,7 +58,7 @@ public class MenuBars {
         gbc.weightx = 0.0;
         gbc.fill = GridBagConstraints.NONE;
         gbc.anchor = GridBagConstraints.EAST;
-        menuBarPanel.add(logoutMenu.addLogoutMenu(), gbc);
+        //menuBarPanel.add(logoutMenu.addLogoutMenu(), gbc);
         // Add the menu bar panel to the frame
         contentPane.add(menuBarPanel, BorderLayout.NORTH);
         return contentPane;
