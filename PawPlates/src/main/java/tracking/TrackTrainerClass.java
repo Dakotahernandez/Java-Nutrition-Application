@@ -1,3 +1,32 @@
+/**
+ * =============================================================================
+ * File: TrackTrainerClass.java
+ * Author: Joshua Carroll
+ * Created: 5/8/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ * GUI frame that displays all available trainer-led classes to a user.
+ * Users can register/unregister by checking the "Registered" checkbox,
+ * which updates the database accordingly. Displays details like trainer name,
+ * number of users, duration, and calories burned.
+ *
+ * Dependencies:
+ * - javax.swing.*
+ * - java.util.List
+ * - tracking.TrainerClassDatabase
+ * - tracking.TrainerClass
+ * - tracking.Exercise
+ * - frame.LoginPage
+ * - frame.TemplateFrame
+ * - frame.Theme
+ * - user.User
+ * - user.UserDatabase
+ *
+ * Usage:
+ * new TrackTrainerClass(); // Launches the trainer class tracking GUI
+ * =============================================================================
+ */
+
 package tracking;
 
 import frame.LoginPage;

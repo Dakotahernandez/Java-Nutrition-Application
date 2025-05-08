@@ -1,17 +1,19 @@
 package tracking; /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File: Exercise.java
+ * Author: Joshua Carroll
+ * Created:3/8/2025
  * -----------------------------------------------------------------------------
  * Description:
- *
+ * Represents an exercise performed during a workout. Tracks attributes such as
+ * name, focus (e.g., cardio, weight training), duration, repetitions, calories burned,
+ * and a description. Used for tracking workout details in the application.
  *
  * Dependencies:
- *
+ * java.util.Objects
  *
  * Usage:
- *
+ * Exercise e = new Exercise("Push-up", "Strength", 15, 5, 50, "Upper body strength exercise");
  * =============================================================================
  */
 
@@ -20,17 +22,14 @@ import java.util.Objects;
 public class Exercise {
     int id;
     private String name;
-    private String focus; //cardio, weight training
+    private String focus;
     private String description;
     private int duration;
     private int reps;
     private int caloriesBurned;
+
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Default constructor that initializes all fields to default values.
      */
     public Exercise() {
         name ="";
@@ -40,11 +39,14 @@ public class Exercise {
         caloriesBurned = 0;
     }
     /**
-     * Description
+     * Constructs an Exercise object without a specified ID.
      *
-     * @param
-     * @return
-     * @throws
+     * @param name            the name of the exercise
+     * @param focus           the focus category (e.g., cardio, strength)
+     * @param reps            the number of repetitions
+     * @param duration        the duration in minutes
+     * @param caloriesBurned  estimated calories burned during the exercise
+     * @param description     a textual description of the exercise
      */
     public Exercise(String name, String focus, int reps, int duration, int caloriesBurned,String description) {
         this.id = -1;
@@ -56,11 +58,15 @@ public class Exercise {
         this.caloriesBurned = caloriesBurned;
     }
     /**
-     * Description
+     * Constructs an Exercise object with a specified ID.
      *
-     * @param
-     * @return
-     * @throws
+     * @param id              the unique identifier for the exercise
+     * @param name            the name of the exercise
+     * @param focus           the focus category (e.g., cardio, strength)
+     * @param reps            the number of repetitions
+     * @param duration        the duration in minutes
+     * @param caloriesBurned  estimated calories burned during the exercise
+     * @param description     a textual description of the exercise
      */
     public Exercise(int id, String name, String focus, int reps, int duration, int caloriesBurned,String description) {
         this.id = id;
@@ -71,172 +77,167 @@ public class Exercise {
         this.duration = duration;
         this.caloriesBurned = caloriesBurned;
     }
-
+    /**
+     * Returns the exercise ID.
+     *
+     * @return the ID of the exercise
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the exercise ID.
+     *
+     * @param id the new ID to assign
+     */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Description
+     * Returns the name of the exercise.
      *
-     * @param
-     * @return
-     * @throws
+     * @return the exercise name
      */
     public String getName() {
         return name;
     }
+
     /**
-     * Description
+     * Sets the name of the exercise.
      *
-     * @param
-     * @return
-     * @throws
+     * @param name the new exercise name
      */
     public void setName(String name) {
         this.name = name;
     }
+
     /**
-     * Description
+     * Returns the focus of the exercise.
      *
-     * @param
-     * @return
-     * @throws
+     * @return the focus category (e.g., cardio, strength)
      */
     public String getFocus() {
         return focus;
     }
+
     /**
-     * Description
+     * Sets the focus category of the exercise.
      *
-     * @param
-     * @return
-     * @throws
+     * @param focus the new focus category
      */
     public void setFocus(String focus) {
         this.focus = focus;
     }
+
     /**
-     * Description
+     * Returns the description of the exercise.
      *
-     * @param
-     * @return
-     * @throws
+     * @return the textual description
      */
     public String getDescription() {
         return description;
     }
+
     /**
-     * Description
+     * Sets the description of the exercise.
      *
-     * @param
-     * @return
-     * @throws
+     * @param description the new description
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * Returns the duration of the exercise.
+     *
+     * @return the duration in minutes
+     */
     public int getDuration() {
         return duration;
     }
 
+    /**
+     * Sets the duration of the exercise.
+     *
+     * @param duration the new duration in minutes
+     */
     public void setDuration(int duration) {
         this.duration = duration;
     }
 
+    /**
+     * Returns the number of calories burned.
+     *
+     * @return calories burned during the exercise
+     */
     public int getCaloriesBurned() {
         return caloriesBurned;
     }
 
+    /**
+     * Sets the calories burned.
+     *
+     * @param caloriesBurned the new calorie value
+     */
     public void setCaloriesBurned(int caloriesBurned) {
         this.caloriesBurned = caloriesBurned;
     }
 
+    /**
+     * Returns the number of repetitions.
+     *
+     * @return the number of reps
+     */
     public int getReps() {
         return reps;
     }
 
+    /**
+     * Sets the number of repetitions.
+     *
+     * @param reps the new rep count
+     */
     public void setReps(int reps) {
         this.reps = reps;
     }
 
+    /**
+     * Checks equality between this Exercise and another object.
+     *
+     * @param o the object to compare to
+     * @return true if the objects are equal based on field values; false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Exercise exercise = (Exercise) o;
-        return duration == exercise.duration && caloriesBurned == exercise.caloriesBurned && Objects.equals(name, exercise.name) && Objects.equals(focus, exercise.focus) && Objects.equals(description, exercise.description);
+        return duration == exercise.duration &&
+                caloriesBurned == exercise.caloriesBurned &&
+                Objects.equals(name, exercise.name) &&
+                Objects.equals(focus, exercise.focus) &&
+                Objects.equals(description, exercise.description);
     }
 
+    /**
+     * Generates a hash code based on the exercise's fields.
+     *
+     * @return the hash code
+     */
     @Override
     public int hashCode() {
         return Objects.hash(name, focus, description, duration, caloriesBurned);
     }
 
+    /**
+     * Returns the string representation of the exercise.
+     *
+     * @return the exercise name
+     */
+    @Override
     public String toString() {
         return name;
     }
-
-//    //returns 1 if written, 0 if it already exists, -1 if exception
-//    /**
-//     * Description
-//     *
-//     * @param
-//     * @return
-//     * @throws
-//     */
-//    public int writeCSV() {
-//        if(!exists()) {
-//            try (BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/java/exercise.csv", true))) {
-//                writer.write("\n" + name + "," + focus + "," + description);
-//                return 1;
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//                return -1;
-//            }
-//        }
-//        return 0;
-//    }
-//    /**
-//     * Description
-//     *
-//     * @param
-//     * @return
-//     * @throws
-//     */
-//    public List<Exercise> readCSV(){
-//        List<Exercise> exercises = new ArrayList<>();
-//        try(BufferedReader reader = new BufferedReader(new FileReader("src/main/java/exercise.csv"))){
-//            String line = reader.readLine();
-//
-//            while((line = reader.readLine()) != null) {
-//                String[] val = line.split(",");
-//                if (val.length >= 3) {
-//                    exercises.add(new Exercise(val[0].trim(), val[1].trim(), val[2].trim()));
-//                }
-//            }
-//        }
-//        catch(IOException e){
-//            e.printStackTrace();
-//        }
-//        return exercises;
-//    }
-//
-//    //checks if this exercise already exists
-//    /**
-//     * Description
-//     *
-//     * @param
-//     * @return
-//     * @throws
-//     */
-//    public boolean exists(){
-//        List<Exercise> exercises = readCSV();
-//        return exercises.stream().anyMatch(e -> e.equals(this));
-//    }
 }

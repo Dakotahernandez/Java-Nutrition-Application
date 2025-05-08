@@ -1,18 +1,38 @@
+/**
+ * =============================================================================
+ * File: CreateWorkoutPage.java
+ * Author: Joshua Carroll
+ * Created: 3/29/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ * GUI interface that allows users to create a new workout by selecting exercises
+ * from their personal exercise list. Trainers can optionally convert the workout
+ * into a class by entering a date. The form includes dynamic updating of labels,
+ * validation of input, and integration with the database to persist the workout.
+ *
+ * Dependencies:
+ * - javax.swing.*
+ * - java.time.LocalDate
+ * - java.util.List
+ * - tracking.Exercise, Workout, TrainerClass
+ * - tracking.ExerciseDatabase, WorkoutDatabase, TrainerClassDatabase
+ * - frame.TemplateFrame, LoginPage, Theme
+ *
+ * Usage:
+ * new CreateWorkoutPage(); // Launches the workout creation interface
+ * =============================================================================
+ */
 package tracking;
 
 import frame.LoginPage;
 import frame.TemplateFrame;
 import frame.Theme;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.DefaultTextUI;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -44,6 +64,11 @@ public class CreateWorkoutPage extends TemplateFrame {
 
     Workout workout;
 
+    /**
+     * Constructs the CreateWorkoutPage GUI.
+     * Users can build a workout from a list of exercises, name it, and optionally,
+     * trainers can create a class from it. Data is stored via the appropriate database classes.
+     */
     public CreateWorkoutPage() {
         setTitle("Create Workout");
         addMenuBarPanel();
@@ -97,7 +122,7 @@ public class CreateWorkoutPage extends TemplateFrame {
                     if (workout.getExerciseCount() != 0) {
                         String input = JOptionPane.showInputDialog(this,
                                 "Enter class date (yyyy-mm-dd):", "Class Creation Confirmation", JOptionPane.QUESTION_MESSAGE);
-                        if (input != null) { // user does not cancel
+                        if (input != null) {
                             try {
                                 LocalDate date = LocalDate.parse(input);
                                 workout.setDate(date);
@@ -105,7 +130,6 @@ public class CreateWorkoutPage extends TemplateFrame {
                                 JOptionPane.showMessageDialog(this,
                                         "Created Class: " + workout.getName(), "Class Creation", JOptionPane.INFORMATION_MESSAGE);
 
-                                //save workout to the Database here
                                 TrainerClass trainerClass = new TrainerClass(date,name,workout.getExercises(),
                                         LoginPage.CURRENT_USER.getId(), new ArrayList<>());
                                 int classId = trainerClassDB.saveTrainerClass(trainerClass);
@@ -115,7 +139,6 @@ public class CreateWorkoutPage extends TemplateFrame {
                                     trainerClass.setId(classId);
                                 }
 
-                                //clearing current workout creation
                                 workoutName.setText("");
                                 workoutDefaultList.clear();
                                 workout = new Workout();
@@ -191,7 +214,7 @@ public class CreateWorkoutPage extends TemplateFrame {
         add(eastPanel, BorderLayout.EAST);
 
 
-        //west panel to center the panels
+        //west panel
         JLabel blankLabel = new JLabel("");
         blankLabel.setPreferredSize(new Dimension(300,25));
         c.insets = new Insets(5, 5, 5, 5);
@@ -202,8 +225,6 @@ public class CreateWorkoutPage extends TemplateFrame {
         blankLabel2.setPreferredSize(new Dimension(300,25));
         c.gridx = 0; c.gridy = 1;
         westPanel.add(blankLabel2);
-
-        //for testing
 
         exerciseDefaultList = toListModel(exercises);
         exerciseJList = new JList<>(exerciseDefaultList);
@@ -390,7 +411,13 @@ public class CreateWorkoutPage extends TemplateFrame {
         setVisible(true);
     }
 
-    //creates a DefaultListModel of exercises given a List of exercises
+    /**
+     * Converts a list of Exercise objects to a DefaultListModel,
+     * allowing it to be used in JList components.
+     *
+     * @param list the list of Exercise objects
+     * @return a DefaultListModel containing the same elements
+     */
     private static DefaultListModel<Exercise> toListModel(List<Exercise> list){
         DefaultListModel<Exercise> model = new DefaultListModel<>();
         list.forEach(model::addElement);
