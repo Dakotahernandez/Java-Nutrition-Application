@@ -29,12 +29,11 @@ import frame.*;
 public class CreateExercise extends TemplateFrame {
     private static final ExerciseDatabase db = new ExerciseDatabase();
 
+
     /**
-     * Description
-     *
-     * @param
-     * @return
-     * @throws
+     * Constructs the CreateExercise GUI.
+     * Provides labeled text fields for all exercise attributes and a submit button.
+     * Upon valid input, the exercise is saved to the database and a confirmation popup is shown.
      */
     public CreateExercise() {
         addMenuBarPanel();
