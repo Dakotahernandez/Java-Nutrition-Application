@@ -18,7 +18,6 @@ package frame; /**
  *   // Use frame.Theme.NORMAL_FONT for standard text
  *   label.setFont(frame.Theme.NORMAL_FONT);
  *
- * TODO:
  *
  * =============================================================================
  */

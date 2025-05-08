@@ -32,7 +32,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.Optional;
-
+import tracking.weightAndGoals.SetGoalPage;
 /**
  * Page to display and manage user goals for weight, calories, and sleep.
  * All goals are persisted in the database; other pages read these values.
@@ -102,10 +102,49 @@ public class SetGoalPage extends TemplateFrame {
         addTextField(inputPanel, "Starting Weight (lbs):", startingWeightField, gbc, 0);
         goalWeightField     = new JTextField(String.valueOf((int)goalW), 10);
         addTextField(inputPanel, "Goal Weight (lbs):",      goalWeightField,     gbc, 1);
-        goalCalField        = new JTextField(String.valueOf(calG), 5);
-        addTextField(inputPanel, "Daily Calorie Goal:",     goalCalField,        gbc, 2);
+        goalCalField = new JTextField(String.valueOf(calG), 5);
+        gbc.gridx = 0; gbc.gridy = 2;
+        JLabel calLabel = new JLabel("Daily Calorie Goal:");
+        calLabel.setForeground(Theme.FG_LIGHT);
+        calLabel.setFont(Theme.NORMAL_FONT);
+        inputPanel.add(calLabel, gbc);
+
+        gbc.gridx = 1;
+        inputPanel.add(goalCalField, gbc);
+
+
         goalSleepField      = new JTextField(String.valueOf(sleepG), 3);
         addTextField(inputPanel, "Weekly Sleep Goal (hrs):", goalSleepField,      gbc, 3);
+
+        // Add calorie calculator panel underneath inputs
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+
+        JPanel calcPanel = new JPanel();
+        calcPanel.setLayout(new BoxLayout(calcPanel, BoxLayout.Y_AXIS));
+        calcPanel.setBackground(Theme.BG_DARK);
+
+        JLabel helper = new JLabel("Calculate your calorie goal here:");
+        helper.setFont(Theme.NORMAL_FONT);
+        helper.setForeground(Theme.FG_MUTED);
+        helper.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JButton calcBtn = new JButton("Calculate");
+        calcBtn.setFont(Theme.NORMAL_FONT);
+        calcBtn.setBackground(Theme.BUTTON_BG);
+        calcBtn.setForeground(Theme.BUTTON_FG);
+        calcBtn.setBorder(BorderFactory.createLineBorder(Theme.BUTTON_BORDER));
+        calcBtn.setAlignmentX(Component.LEFT_ALIGNMENT);
+        calcBtn.addActionListener(e -> CalorieCalculatorPopup.show(calcBtn));
+
+        calcPanel.add(helper);
+        calcPanel.add(Box.createVerticalStrut(4));
+        calcPanel.add(calcBtn);
+
+        inputPanel.add(calcPanel, gbc);
+
 
         // --- Save button ---
         JButton save = new JButton("Save Goals");
