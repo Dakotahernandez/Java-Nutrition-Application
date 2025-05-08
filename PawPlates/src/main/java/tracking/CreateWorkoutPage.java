@@ -1,18 +1,38 @@
+/**
+ * =============================================================================
+ * File: CreateWorkoutPage.java
+ * Author: Joshua Carroll
+ * Created: 3/29/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ * GUI interface that allows users to create a new workout by selecting exercises
+ * from their personal exercise list. Trainers can optionally convert the workout
+ * into a class by entering a date. The form includes dynamic updating of labels,
+ * validation of input, and integration with the database to persist the workout.
+ *
+ * Dependencies:
+ * - javax.swing.*
+ * - java.time.LocalDate
+ * - java.util.List
+ * - tracking.Exercise, Workout, TrainerClass
+ * - tracking.ExerciseDatabase, WorkoutDatabase, TrainerClassDatabase
+ * - frame.TemplateFrame, LoginPage, Theme
+ *
+ * Usage:
+ * new CreateWorkoutPage(); // Launches the workout creation interface
+ * =============================================================================
+ */
 package tracking;
 
 import frame.LoginPage;
 import frame.TemplateFrame;
 import frame.Theme;
-
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.DefaultTextUI;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.*;
@@ -21,6 +41,8 @@ import java.util.List;
 public class CreateWorkoutPage extends TemplateFrame {
     private static final ExerciseDatabase exerciseDB = new ExerciseDatabase();
     private static final WorkoutDatabase workoutDB = new WorkoutDatabase();
+    private static final TrainerClassDatabase trainerClassDB = new TrainerClassDatabase();
+
 
     DefaultListModel<Exercise> workoutDefaultList; //used to create JList
     DefaultListModel<Exercise> exerciseDefaultList; //used to create JList
@@ -29,29 +51,36 @@ public class CreateWorkoutPage extends TemplateFrame {
     JList<Exercise> workoutJList; //used for scrollpane
     JList<Exercise> exerciseJList; //used for scrollpane
 
+    JLabel workoutNameLbl;
+    JLabel totalDurationLbl;
+    JLabel totalCaloriesLbl;
+    JLabel numExercisesLbl;
+    JLabel nameLabel;
+    JLabel focusLabel;
+    JLabel repsLabel;
+    JLabel durationLabel;
+    JLabel caloriesLabel;
+    JLabel descriptionLabel;
+
     Workout workout;
 
+    /**
+     * Constructs the CreateWorkoutPage GUI.
+     * Users can build a workout from a list of exercises, name it, and optionally,
+     * trainers can create a class from it. Data is stored via the appropriate database classes.
+     */
     public CreateWorkoutPage() {
         setTitle("Create Workout");
         addMenuBarPanel();
         workout = new Workout();
 
-        //initialize exercises (arraylist of exercise) of the user's exercises
         int userId = LoginPage.CURRENT_USER.getId();
         exercises = exerciseDB.loadExercisesForUser(userId);
-        //test exercises will need to get user exercises from database
-//        exercises = new ArrayList<>();
-//        exercises.add(new Exercise("Push-ups", "Chest", 20, 0, 100, "Standard bodyweight push-ups."));
-//        exercises.add(new Exercise("Running", "Cardio", 0, 30, 300, "Outdoor running session."));
-//        exercises.add(new Exercise("Squats", "Legs", 15, 0, 120, "Bodyweight squats."));
-//        exercises.add(new Exercise("Jump Rope", "Cardio", 0, 10, 150, "Continuous jumping rope."));
-//        exercises.add(new Exercise("Plank", "Core", 0, 5, 80, "Hold plank position."));
 
         //centerPanel
         JTextField workoutName = new JTextField(15);
         addTextField("Workout Name:", workoutName, 0,0);
 
-//        workoutDefaultList = toListModel(exercises);
         workoutDefaultList = workout.getDefaultListModel();
         workoutJList = new JList<>(workoutDefaultList);
         workoutJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -77,13 +106,74 @@ public class CreateWorkoutPage extends TemplateFrame {
         createWorkout.setForeground(Theme.BUTTON_FG);
         centerPanel.add(createWorkout, c);
 
+        if(LoginPage.CURRENT_USER.isTrainer()) {
+            JButton createClass = new JButton("Create Class");
+            c.gridx = 0;
+            c.gridy = 8;
+            c.gridwidth = 4;
+            c.gridheight = 1;
+            createClass.setBackground(Theme.BUTTON_BG);
+            createClass.setForeground(Theme.BUTTON_FG);
+            centerPanel.add(createClass, c);
+
+            createClass.addActionListener(e -> {
+                String name = workoutName.getText();
+                if(name != null && !name.equals("")) {
+                    if (workout.getExerciseCount() != 0) {
+                        String input = JOptionPane.showInputDialog(this,
+                                "Enter class date (yyyy-mm-dd):", "Class Creation Confirmation", JOptionPane.QUESTION_MESSAGE);
+                        if (input != null) {
+                            try {
+                                LocalDate date = LocalDate.parse(input);
+                                workout.setDate(date);
+                                workout.setName(name);
+                                JOptionPane.showMessageDialog(this,
+                                        "Created Class: " + workout.getName(), "Class Creation", JOptionPane.INFORMATION_MESSAGE);
+
+                                TrainerClass trainerClass = new TrainerClass(date,name,workout.getExercises(),
+                                        LoginPage.CURRENT_USER.getId(), new ArrayList<>());
+                                int classId = trainerClassDB.saveTrainerClass(trainerClass);
+                                if (classId == -1) {
+                                    System.out.println("TrainerClass Not Saved to Database");
+                                } else {
+                                    trainerClass.setId(classId);
+                                }
+
+                                workoutName.setText("");
+                                workoutDefaultList.clear();
+                                workout = new Workout();
+                                totalDurationLbl.setText("Total Duration: ");
+                                totalCaloriesLbl.setText("Total Calories Burned: ");
+                                numExercisesLbl.setText("Number of Exercises: ");
+                                nameLabel.setText("Selected Exercise: ");
+                                focusLabel.setText("Focus: ");
+                                caloriesLabel.setText("Calories Burned: ");
+                                repsLabel.setText("Reps: ");
+                                durationLabel.setText( "Duration: ");
+                                descriptionLabel.setText("Description: ");
+                            } catch (DateTimeParseException ex) {
+                                JOptionPane.showMessageDialog(this,
+                                        "Invalid date format. Please use yyyy-mm-dd.");
+                            }
+                        }
+                    } else{
+                        JOptionPane.showMessageDialog(this,
+                                "Please add an exercise to the Class.");
+                    }
+                } else{
+                    JOptionPane.showMessageDialog(this,
+                            "Please add a Class name.");
+                }
+            });
+        }
+
 
         //east panel
         Dimension labelSize = new Dimension(600, 25); // width, height
-        JLabel workoutNameLbl = new JLabel("Workout Name: ");
-        JLabel totalDurationLbl = new JLabel("Total Duration: ");
-        JLabel totalCaloriesLbl = new JLabel("Total Calories Burned: ");
-        JLabel numExercisesLbl = new JLabel("Number of Exercises: ");
+        workoutNameLbl = new JLabel("Workout Name: ");
+        totalDurationLbl = new JLabel("Total Duration: ");
+        totalCaloriesLbl = new JLabel("Total Calories Burned: ");
+        numExercisesLbl = new JLabel("Number of Exercises: ");
         workoutNameLbl.setPreferredSize(labelSize);
         totalDurationLbl.setPreferredSize(labelSize);
         totalCaloriesLbl.setPreferredSize(labelSize);
@@ -101,12 +191,12 @@ public class CreateWorkoutPage extends TemplateFrame {
 
 
 
-        JLabel nameLabel = new JLabel("Selected Exercise: ");
-        JLabel focusLabel = new JLabel("Focus: ");
-        JLabel repsLabel = new JLabel("Reps: ");
-        JLabel durationLabel = new JLabel("Duration (mins): ");
-        JLabel caloriesLabel = new JLabel("Calories Burned: ");
-        JLabel descriptionLabel = new JLabel("Description: ");
+        nameLabel = new JLabel("Selected Exercise: ");
+        focusLabel = new JLabel("Focus: ");
+        repsLabel = new JLabel("Reps: ");
+        durationLabel = new JLabel("Duration (mins): ");
+        caloriesLabel = new JLabel("Calories Burned: ");
+        descriptionLabel = new JLabel("Description: ");
         nameLabel.setPreferredSize(labelSize);
         focusLabel.setPreferredSize(labelSize);
         repsLabel.setPreferredSize(labelSize);
@@ -124,7 +214,7 @@ public class CreateWorkoutPage extends TemplateFrame {
         add(eastPanel, BorderLayout.EAST);
 
 
-        //west panel to center the panels
+        //west panel
         JLabel blankLabel = new JLabel("");
         blankLabel.setPreferredSize(new Dimension(300,25));
         c.insets = new Insets(5, 5, 5, 5);
@@ -135,8 +225,6 @@ public class CreateWorkoutPage extends TemplateFrame {
         blankLabel2.setPreferredSize(new Dimension(300,25));
         c.gridx = 0; c.gridy = 1;
         westPanel.add(blankLabel2);
-
-        //for testing
 
         exerciseDefaultList = toListModel(exercises);
         exerciseJList = new JList<>(exerciseDefaultList);
@@ -151,7 +239,6 @@ public class CreateWorkoutPage extends TemplateFrame {
         c.fill = GridBagConstraints.HORIZONTAL;
         westPanel.add(sP, c);
 
-        //invisible button for spacing
         c.insets = new Insets(10, 10, 10, 10);
         JButton addButton = new JButton("Add Exercise To Workout");
         c.gridx = 1; c.gridy = 2; c.gridwidth = 2; c.gridheight = 1;
@@ -165,7 +252,6 @@ public class CreateWorkoutPage extends TemplateFrame {
         createExercise.setBackground(Theme.BUTTON_BG);
         createExercise.setForeground(Theme.BUTTON_FG);
         westPanel.add(createExercise, c);
-
 
 
         add(westPanel, BorderLayout.WEST);
@@ -198,14 +284,13 @@ public class CreateWorkoutPage extends TemplateFrame {
                                     workout.setDate(date);
                                     workout.setName(name);
                                     JOptionPane.showMessageDialog(this,
-                                            "Created Exercise: " + workout.getName(), "Workout Creation", JOptionPane.INFORMATION_MESSAGE);
+                                            "Created Workout: " + workout.getName(), "Workout Creation", JOptionPane.INFORMATION_MESSAGE);
 
                                     //save workout to the Database here
                                     int id = workoutDB.saveWorkout(workout);
                                     if(id == -1){
                                         System.out.println("Workout Not Saved to Database");
-                                    }
-                                    else{
+                                    } else{
                                         workout.setId(id);
                                     }
 
@@ -222,19 +307,16 @@ public class CreateWorkoutPage extends TemplateFrame {
                                     repsLabel.setText("Reps: ");
                                     durationLabel.setText( "Duration: ");
                                     descriptionLabel.setText("Description: ");
-
                                 } catch (DateTimeParseException ex) {
                                     JOptionPane.showMessageDialog(this,
                                             "Invalid date format. Please use yyyy-mm-dd.");
                                 }
                             }
-                        }
-                        else{
+                        } else{
                             JOptionPane.showMessageDialog(this,
                                     "Please add an exercise to the workout.");
                         }
-                    }
-                    else{
+                    } else{
                         JOptionPane.showMessageDialog(this,
                                 "Please add a workout name.");
                     }
@@ -329,7 +411,13 @@ public class CreateWorkoutPage extends TemplateFrame {
         setVisible(true);
     }
 
-    //creates a DefaultListModel of exercises given a List of exercises
+    /**
+     * Converts a list of Exercise objects to a DefaultListModel,
+     * allowing it to be used in JList components.
+     *
+     * @param list the list of Exercise objects
+     * @return a DefaultListModel containing the same elements
+     */
     private static DefaultListModel<Exercise> toListModel(List<Exercise> list){
         DefaultListModel<Exercise> model = new DefaultListModel<>();
         list.forEach(model::addElement);

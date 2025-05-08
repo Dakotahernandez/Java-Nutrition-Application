@@ -1,29 +1,29 @@
-package tracking; /**
+package tracking;
+
+/**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File: Workout.java
+ * Author: Joshua Carroll
+ * Created: 3/29/2025
  * -----------------------------------------------------------------------------
  * Description:
- *
+ * Represents a workout session that consists of multiple exercises. Each workout
+ * has a name, date, and a list of associated Exercise instances. It provides utility
+ * methods to calculate total duration, calories burned, and number of exercises.
  *
  * Dependencies:
- *
+ * - java.time.LocalDate
+ * - java.util.List
+ * - javax.swing.DefaultListModel
  *
  * Usage:
- *
+ * Workout w = new Workout(LocalDate.now(), "Morning Routine", new ArrayList<>());
  * =============================================================================
  */
-import javax.swing.*;
-import java.sql.Time;
-import java.time.LocalDate;
-import java.util.Date;
-import java.util.*;
 
-/*
- * PURPOSE: Be able to create workout.Workout instances to add it to a user's progress
- * COMPLETED: constructor, getter/setter methods, ...
- */
+import javax.swing.*;
+import java.time.LocalDate;
+import java.util.*;
 
 public class Workout {
     private int id;
@@ -31,16 +31,14 @@ public class Workout {
     private LocalDate date;
     private List<Exercise> exercises;
 
-
-    //Parameterized Constructor
     /**
-     * Description
+     * Constructs a Workout object without an ID.
      *
-     * @param
-     * @return
-     * @throws
+     * @param date      the date of the workout
+     * @param name      the name of the workout
+     * @param exercises a list of exercises included in the workout
      */
-    public Workout(LocalDate date, String name,  List<Exercise> exercises) {
+    public Workout(LocalDate date, String name, List<Exercise> exercises) {
         id = -1;
         this.date = date;
         this.name = name;
@@ -48,11 +46,12 @@ public class Workout {
     }
 
     /**
-     * Description
+     * Constructs a Workout object with a specified ID.
      *
-     * @param
-     * @return
-     * @throws
+     * @param id        the unique identifier for the workout
+     * @param date      the date of the workout
+     * @param name      the name of the workout
+     * @param exercises a list of exercises included in the workout
      */
     public Workout(int id, LocalDate date, String name, List<Exercise> exercises) {
         this.id = id;
@@ -61,82 +60,140 @@ public class Workout {
         this.exercises = exercises;
     }
 
-    public Workout(){
+    /**
+     * Default constructor initializing the date to today and an empty exercise list.
+     */
+    public Workout() {
         date = LocalDate.now();
         exercises = new ArrayList<>();
     }
 
-    public DefaultListModel<Exercise> getDefaultListModel(){
+    /**
+     * Returns a DefaultListModel containing the workout's exercises,
+     * useful for GUI components like JList.
+     *
+     * @return a DefaultListModel of exercises
+     */
+    public DefaultListModel<Exercise> getDefaultListModel() {
         DefaultListModel<Exercise> model = new DefaultListModel<>();
         exercises.forEach(model::addElement);
         return model;
     }
 
-    public int getTotalDuration(){
+    /**
+     * Calculates the total duration of all exercises in the workout.
+     *
+     * @return the total duration in minutes
+     */
+    public int getTotalDuration() {
         return exercises.stream().mapToInt(Exercise::getDuration).sum();
     }
+
+    /**
+     * Calculates the total calories burned in the workout.
+     *
+     * @return the total calories burned
+     */
     public int getTotalCalories() {
-        return exercises.stream()
-                .mapToInt(e -> e.getCaloriesBurned())
-                .sum();
+        return exercises.stream().mapToInt(Exercise::getCaloriesBurned).sum();
     }
+
+    /**
+     * Returns the number of exercises in the workout.
+     *
+     * @return the count of exercises
+     */
     public int getExerciseCount() {
         return exercises.size();
     }
 
+    /**
+     * Adds an exercise to the workout.
+     *
+     * @param exercise the Exercise to add
+     */
     public void addExcercise(Exercise exercise) {
         exercises.add(exercise);
     }
 
-    public void removeExercise(Exercise exercise){
+    /**
+     * Removes an exercise from the workout.
+     *
+     * @param exercise the Exercise to remove
+     */
+    public void removeExercise(Exercise exercise) {
         exercises.remove(exercise);
     }
 
+    /**
+     * Returns the workout ID.
+     *
+     * @return the ID of the workout
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the workout ID.
+     *
+     * @param id the new workout ID
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Returns the workout name.
+     *
+     * @return the name of the workout
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the workout name.
+     *
+     * @param name the new name of the workout
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Sets the list of exercises in the workout.
+     *
+     * @param exercises the new list of exercises
+     */
     public void setExercises(List<Exercise> exercises) {
         this.exercises = exercises;
     }
 
+    /**
+     * Returns the list of exercises in the workout.
+     *
+     * @return the list of Exercise objects
+     */
     public List<Exercise> getExercises() {
         return exercises;
     }
 
-    //Setter Methods:
     /**
-     * Description
+     * Sets the date of the workout.
      *
-     * @param
-     * @return
-     * @throws
+     * @param date the new workout date
      */
-    public void setDate(LocalDate date) { this.date = date; }
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 
-
-    //Getter Methods:
     /**
-     * Description
+     * Returns the date of the workout.
      *
-     * @param
-     * @return
-     * @throws
+     * @return the workout date
      */
-    public LocalDate getDate() { return date; }
-
-
-
+    public LocalDate getDate() {
+        return date;
+    }
 }

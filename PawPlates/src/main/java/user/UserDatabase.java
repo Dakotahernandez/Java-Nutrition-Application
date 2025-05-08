@@ -1,19 +1,40 @@
-package user; /**
+package user;
+/**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           user.UserDatabase.java
+ * Authors:        Mac Johnson Dakota Hernandez
+ * Created:        05/08/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Handles user authentication and account registration, including creation
+ *   of the users table in the SQLite database and initialization of related
+ *   trainer and tracking tables. Provides methods for login, registration,
+ *   and user retrieval by ID.
  *
  * Dependencies:
- *
+ *   - java.sql.Connection
+ *   - java.sql.DriverManager
+ *   - java.sql.SQLException
+ *   - java.sql.Statement
+ *   - java.sql.PreparedStatement
+ *   - java.sql.ResultSet
+ *   - tracking.UserPlanDetails
  *
  * Usage:
+ *   // Instantiate the database
+ *   UserDatabase db = new UserDatabase();
  *
+ *   // Register or log in a user
+ *   db.registerUser(new User(...));
+ *   User user = db.loginUser("username", "password");
+ *
+ * TODO:
+ *   - Add password encryption
+ *   - Improve error handling and logging
  * =============================================================================
  */
+
+
 import tracking.UserPlanDetails;
 
 import java.sql.*;
@@ -199,6 +220,13 @@ public class UserDatabase {
             e.printStackTrace();
         }
         return null;
+    }
+    public void close() {
+        try {
+            if (connection != null) connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

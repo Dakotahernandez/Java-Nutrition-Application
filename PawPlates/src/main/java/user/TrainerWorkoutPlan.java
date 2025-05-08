@@ -1,4 +1,29 @@
 package user;
+/**
+ * =============================================================================
+ * File:           user.TrainerWorkoutPlan.java
+ * Authors:        Mac Johnson
+ * Created:        05/08/25
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Defines a trainer workout plan with metadata such as title, duration,
+ *   difficulty level, and category. Provides a method to initialize the Plans
+ *   table in the SQLite database with appropriate constraints and relationships.
+ *
+ * Dependencies:
+ *   - java.sql.Connection
+ *   - java.sql.DriverManager
+ *   - java.sql.SQLException
+ *   - java.sql.Statement
+ *
+ * Usage:
+ *   // Initialize the database table
+ *   TrainerWorkoutPlan.initializeTable();
+ *
+ * TODO:
+ *   - Implement CRUD methods to manage workout plans
+ * =============================================================================
+ */
 
 import java.sql.Connection;
 import java.sql.DriverManager;

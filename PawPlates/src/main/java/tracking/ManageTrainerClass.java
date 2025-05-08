@@ -1,29 +1,29 @@
 /**
  * =============================================================================
- * File: TrackWorkouts.java
+ * File: ManageTrainerClass.java
  * Author: Joshua Carroll
- * Created: 4/27/2025
+ * Created: 5/8/2025
  * -----------------------------------------------------------------------------
  * Description:
- * GUI frame for users to view and interact with their personal workouts and
- * the exercises within them. Displays workouts in a table and updates the
- * corresponding exercise table upon selection.
+ * GUI frame for trainers to view and manage all classes they lead. The trainer
+ * can see class details including the number of registered users, duration,
+ * and calories burned. Selecting a class displays the associated exercises.
  *
  * Dependencies:
  * - javax.swing.*
- * - tracking.WorkoutDatabase
+ * - java.util.List
  * - tracking.TrainerClassDatabase
- * - tracking.Workout
+ * - tracking.WorkoutDatabase
  * - tracking.Exercise
+ * - tracking.TrainerClass
  * - frame.TemplateFrame
  * - frame.LoginPage
  * - frame.Theme
  *
  * Usage:
- * new TrackWorkouts(); // Launches the GUI
+ * new ManageTrainerClass(); // Launches the trainer class management GUI
  * =============================================================================
  */
-
 package tracking;
 
 import frame.LoginPage;
@@ -32,95 +32,97 @@ import frame.Theme;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableRowSorter;
 import java.awt.*;
 import java.util.List;
 
-public class TrackWorkouts extends TemplateFrame {
-    private static final WorkoutDatabase workoutDB = new WorkoutDatabase();
-    private DefaultTableModel exerciseModel;
+public class ManageTrainerClass extends TemplateFrame {
+    DefaultTableModel exerciseModel;
 
     /**
-     * Constructs the TrackWorkouts frame. Initializes tables for
-     * workouts and their exercises, sets up event listeners, and
-     * populates data from the database.
+     * Constructs the ManageTrainerClass frame.
+     * Filters classes based on the logged-in trainer's ID and displays them in a table.
+     * Selecting a class shows its exercises in a separate table.
      */
-    public TrackWorkouts() {
+    public ManageTrainerClass() {
         int userId = LoginPage.CURRENT_USER.getId();
-        setTitle("Track Workouts");
+        setTitle("Manage Trainer Classes");
         addMenuBarPanel();
 
-        // workout table
         DefaultTableCellRenderer leftHeaderRenderer = new DefaultTableCellRenderer();
         leftHeaderRenderer.setHorizontalAlignment(SwingConstants.LEFT);
 
-        List<Workout> workouts = workoutDB.loadWorkoutsForUser(userId);
-        String[] workoutColNames = {"Date", "Name", "Duration", "Calories Burned", "# Exercises"};
-        DefaultTableModel workoutModel = new DefaultTableModel(workoutColNames, 0) {
+        TrainerClassDatabase trainerDB = new TrainerClassDatabase();
+        List<TrainerClass> trainerClasses = trainerDB.loadTrainerClasses().stream()
+                .filter(tc -> tc.getTrainerId() == userId)
+                .toList();
+
+        String[] classColNames = {"Date", "Name", "# Users", "Duration", "Calories", "# Exercises"};
+        DefaultTableModel classModel = new DefaultTableModel(classColNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
 
-        workouts.forEach(w -> workoutModel.addRow(new Object[]{
-                w.getDate().toString(),
-                w.getName(),
-                w.getTotalDuration(),
-                w.getTotalCalories(),
-                w.getExerciseCount()
+        trainerClasses.forEach(tc -> classModel.addRow(new Object[] {
+                tc.getDate().toString(),
+                tc.getName(),
+                tc.getUserIds().size(),
+                tc.getTotalDuration(),
+                tc.getTotalCalories(),
+                tc.getExerciseCount()
         }));
 
-        JTable workoutTable = new JTable(workoutModel);
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(workoutModel);
-        workoutTable.setRowSorter(sorter);
+        JTable classTable = new JTable(classModel);
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(classModel);
+        classTable.setRowSorter(sorter);
+        classTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        classTable.getColumnModel().getColumn(0).setPreferredWidth(100);
+        classTable.getColumnModel().getColumn(1).setPreferredWidth(200);
+        classTable.getColumnModel().getColumn(2).setPreferredWidth(75);
+        classTable.getColumnModel().getColumn(3).setPreferredWidth(100);
+        classTable.getColumnModel().getColumn(4).setPreferredWidth(125);
+        classTable.getColumnModel().getColumn(5).setPreferredWidth(100);
 
-        workoutTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-        workoutTable.getColumnModel().getColumn(0).setPreferredWidth(100);
-        workoutTable.getColumnModel().getColumn(1).setPreferredWidth(200);
-        workoutTable.getColumnModel().getColumn(2).setPreferredWidth(75);
-        workoutTable.getColumnModel().getColumn(3).setPreferredWidth(125);
-        workoutTable.getColumnModel().getColumn(4).setPreferredWidth(100);
+        JScrollPane classScrollPane = new JScrollPane(classTable);
+        classScrollPane.setPreferredSize(new Dimension(500, 300));
 
-        JScrollPane workoutScrollPane = new JScrollPane(workoutTable);
-        workoutScrollPane.setPreferredSize(new Dimension(500, 300));
-        for (int i = 0; i < workoutTable.getColumnCount(); i++) {
-            workoutTable.getColumnModel().getColumn(i).setHeaderRenderer(leftHeaderRenderer);
+        for (int i = 0; i < classTable.getColumnCount(); i++) {
+            classTable.getColumnModel().getColumn(i).setHeaderRenderer(leftHeaderRenderer);
         }
 
-        workoutScrollPane.setBorder(BorderFactory.createEmptyBorder());
-        workoutTable.setShowGrid(true);
-        workoutTable.setRowHeight(25);
-        workoutTable.setFont(Theme.NORMAL_FONT);
-        workoutTable.setBackground(Theme.BG_DARKER);
-        workoutTable.setForeground(Theme.FG_LIGHT);
-        workoutTable.setSelectionBackground(Theme.BG_LIGHTER);
-        workoutTable.setSelectionForeground(Theme.FG_LIGHT);
-        workoutTable.setGridColor(new Color(80, 80, 80));
-
-        JTableHeader header = workoutTable.getTableHeader();
+        classScrollPane.setBorder(BorderFactory.createEmptyBorder());
+        classTable.setShowGrid(true);
+        classTable.setRowHeight(25);
+        classTable.setFont(Theme.NORMAL_FONT);
+        classTable.setBackground(Theme.BG_DARKER);
+        classTable.setForeground(Theme.FG_LIGHT);
+        classTable.setSelectionBackground(Theme.BG_LIGHTER);
+        classTable.setSelectionForeground(Theme.FG_LIGHT);
+        classTable.setGridColor(new Color(80, 80, 80));
+        JTableHeader header = classTable.getTableHeader();
         header.setBackground(new Color(60, 60, 60));
         header.setForeground(Theme.FG_LIGHT);
         header.setFont(new Font("SansSerif", Font.BOLD, 14));
         header.setReorderingAllowed(false);
 
-        JPanel workoutPanel = new JPanel(new BorderLayout());
-        workoutPanel.add(workoutScrollPane, BorderLayout.CENTER);
-        TitledBorder border = BorderFactory.createTitledBorder("Your Workouts");
+        JPanel classPanel = new JPanel(new BorderLayout());
+        classPanel.add(classScrollPane, BorderLayout.CENTER);
+        TitledBorder border = BorderFactory.createTitledBorder("Your Trainer Classes");
         border.setTitleFont(new Font("SansSerif", Font.BOLD, 14));
         border.setTitleColor(Theme.FG_LIGHT);
-        workoutPanel.setBorder(border);
+        classPanel.setBorder(border);
         c.gridx = 0;
         c.gridy = 0;
         c.insets = new Insets(10, 10, 10, 25);
         c.fill = GridBagConstraints.BOTH;
-        centerPanel.add(workoutPanel, c);
+        centerPanel.add(classPanel, c);
 
-
-        // exercise table
+        // Exercise table
         String[] exerciseColNames = {"Name", "Focus", "Reps", "Duration", "Calories", "Description"};
         exerciseModel = new DefaultTableModel(exerciseColNames, 0) {
             @Override
@@ -138,7 +140,6 @@ public class TrackWorkouts extends TemplateFrame {
         exerciseTable.setSelectionBackground(Theme.BG_LIGHTER);
         exerciseTable.setSelectionForeground(Theme.FG_LIGHT);
         exerciseTable.setGridColor(new Color(80, 80, 80));
-
         JTableHeader exerciseHeader = exerciseTable.getTableHeader();
         exerciseHeader.setBackground(new Color(60, 60, 60));
         exerciseHeader.setForeground(Theme.FG_LIGHT);
@@ -167,7 +168,7 @@ public class TrackWorkouts extends TemplateFrame {
             exerciseTable.getColumnModel().getColumn(i).setHeaderRenderer(leftHeaderRenderer);
         }
 
-        TitledBorder exerciseBorder = BorderFactory.createTitledBorder("Highlight a workout");
+        TitledBorder exerciseBorder = BorderFactory.createTitledBorder("Highlight a class");
         exerciseBorder.setTitleFont(new Font("SansSerif", Font.BOLD, 14));
         exerciseBorder.setTitleColor(Theme.FG_LIGHT);
         exercisePanel.setBorder(exerciseBorder);
@@ -177,15 +178,13 @@ public class TrackWorkouts extends TemplateFrame {
         c.fill = GridBagConstraints.BOTH;
         centerPanel.add(exercisePanel, c);
 
-        workoutTable.getSelectionModel().addListSelectionListener(e -> {
+        classTable.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                int selectedRow = workoutTable.getSelectedRow();
-                if (selectedRow >= 0 && selectedRow < workouts.size()) {
-                    Workout selectedWorkout = workouts.get(selectedRow);
-                    int workoutId = selectedWorkout.getId();
-
-                    updateExerciseTable(workoutId);
-                    exerciseBorder.setTitle("Exercises for " + selectedWorkout.getName());
+                int selectedRow = classTable.getSelectedRow();
+                if (selectedRow >= 0 && selectedRow < trainerClasses.size()) {
+                    TrainerClass selected = trainerClasses.get(selectedRow);
+                    updateExerciseTable(selected.getExercises());
+                    exerciseBorder.setTitle("Exercises for " + selected.getName());
                     exercisePanel.repaint();
                 }
             }
@@ -195,15 +194,14 @@ public class TrackWorkouts extends TemplateFrame {
     }
 
     /**
-     * Loads the exercises associated with the given workout ID and updates the exercise table.
+     * Updates the exercise table based on the selected class's exercises.
      *
-     * @param workoutId the ID of the workout to load exercises for
+     * @param exercises a list of exercises associated with the selected class
      */
-    private void updateExerciseTable(int workoutId) {
-        List<Exercise> exercises = workoutDB.loadExercisesForWorkout(workoutId);
+    private void updateExerciseTable(List<Exercise> exercises) {
         exerciseModel.setRowCount(0);
         exercises.stream()
-                .map(e -> new Object[]{
+                .map(e -> new Object[] {
                         e.getName(),
                         e.getFocus(),
                         e.getReps(),
@@ -213,4 +211,5 @@ public class TrackWorkouts extends TemplateFrame {
                 })
                 .forEach(exerciseModel::addRow);
     }
+
 }
