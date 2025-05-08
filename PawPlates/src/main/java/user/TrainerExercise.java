@@ -1,4 +1,32 @@
 package user;
+/**
+ * =============================================================================
+ * File:           user.TrainerExercise.java
+ * Authors:        Mac Johnson
+ * Created:        05/08/25
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Represents an exercise assigned by a trainer, including name, sets, and reps.
+ *   Also provides static initialization method to create the Exercises table
+ *   in the SQLite database, linked to Workouts via a foreign key.
+ *
+ * Dependencies:
+ *   - java.sql.Connection
+ *   - java.sql.DriverManager
+ *   - java.sql.SQLException
+ *   - java.sql.Statement
+ *
+ * Usage:
+ *   // Create a TrainerExercise instance
+ *   TrainerExercise exercise = new TrainerExercise(workoutId, "Push Ups", 3, 15);
+ *
+ *   // Initialize database table
+ *   TrainerExercise.initializeTable();
+ *
+ * TODO:
+ *   - Add database insert and query methods for TrainerExercise records
+ * =============================================================================
+ */
 
 import java.sql.Connection;
 import java.sql.DriverManager;

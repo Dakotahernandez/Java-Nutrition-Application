@@ -1,19 +1,28 @@
 package user;
-
 /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           user.User.java
+ * Authors:        Mac Johnson Faith Ota Dakota Hernandez
+ * Created:        05/08/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Provides a basic structure for all users in the application, including
+ *   login credentials, email, ID, and trainer status. Includes input validation
+ *   for email and utility methods for accessing and modifying user data.
  *
  * Dependencies:
- *
+ *   - None (standard Java libraries only)
  *
  * Usage:
+ *   // Create a basic user
+ *   User user = new User("username", "password");
  *
+ *   // Set additional attributes
+ *   user.setEmail("user@example.com");
+ *   user.setTrainer(true);
+ *
+ * TODO:
+ *   - Integrate password encryption
  * =============================================================================
  */
 /*

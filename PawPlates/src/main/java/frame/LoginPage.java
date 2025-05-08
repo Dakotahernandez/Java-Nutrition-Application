@@ -1,19 +1,35 @@
 package frame; /**
+ /**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           frame.LoginPage.java
+ * Authors:        Mac Johnson Foith ota
+ * Created:        05/08/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Login screen for the application with background image, username/password
+ *   input fields, login validation, and navigation to either the HomePage or
+ *   Admin portal. Also includes an option to create a new account.
  *
  * Dependencies:
- *
+ *   - javax.swing.*
+ *   - java.awt.*
+ *   - java.awt.image.BufferedImage
+ *   - java.io.File
+ *   - java.io.IOException
+ *   - javax.imageio.ImageIO
+ *   - user.User
+ *   - user.UserDatabase
+ *   - Admin_Interface.TableView
  *
  * Usage:
+ *   // Launch the login screen
+ *   new LoginPage();
  *
+ * TODO:
+ *   - Integrate password hashing
  * =============================================================================
  */
+
 import user.User;
 import user.UserDatabase;
 import Admin_Interface.TableView;

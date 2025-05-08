@@ -1,4 +1,32 @@
 package user;
+/**
+ * =============================================================================
+ * File:           user.TrainerWorkout.java
+ * Authors:        Mac Johnson
+ * Created:        05/08/25
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Represents a trainer-assigned workout with a name and scheduled day,
+ *   linked to a specific plan. Provides functionality to initialize the
+ *   corresponding Workouts table in the SQLite database.
+ *
+ * Dependencies:
+ *   - java.sql.Connection
+ *   - java.sql.DriverManager
+ *   - java.sql.SQLException
+ *   - java.sql.Statement
+ *
+ * Usage:
+ *   // Create a TrainerWorkout instance
+ *   TrainerWorkout workout = new TrainerWorkout(planId, "Chest Day", 1);
+ *
+ *   // Initialize the database table
+ *   TrainerWorkout.initializeTable();
+ *
+ * TODO:
+ *   - Implement methods for inserting and retrieving workout data
+ * =============================================================================
+ */
 
 import java.sql.Connection;
 import java.sql.DriverManager;

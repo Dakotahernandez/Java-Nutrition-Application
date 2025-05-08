@@ -1,7 +1,33 @@
 package frame;
 
-import user.User;
+/**
+ * =============================================================================
+ * File:           frame.CreateAccountPage.java
+ * Authors:        Mac Johnson
+ * Created:        05/08/25
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   A Java Swing frame for new user account creation. Allows input of username,
+ *   email, password, and account type (general user or trainer). Validates password
+ *   confirmation and registers the user via LoginPage.database.
+ *
+ * Dependencies:
+ *   - javax.swing.*
+ *   - java.awt.*
+ *   - java.util.Arrays
+ *   - user.User
+ *
+ * Usage:
+ *   // Launch the account creation UI from LoginPage
+ *   new CreateAccountPage(loginPageInstance);
+ *
+ * TODO:
+ *   - Support secure password hashing
+ * =============================================================================
+ */
 
+
+import user.User;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
