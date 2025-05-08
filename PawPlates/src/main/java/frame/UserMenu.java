@@ -60,6 +60,7 @@ public class UserMenu {
         JMenuItem setGoal         = new JMenuItem("Set a Goal");
         JMenuItem registration    = new JMenuItem("Register for a Class");
         JMenuItem createExercise  = new JMenuItem("Create an Exercise");
+        JMenuItem trackClasses  = new JMenuItem("Track Classes");
 
         // Home
         home.addActionListener(e -> {
@@ -115,6 +116,12 @@ public class UserMenu {
             current.dispose();
         });
 
+        trackClasses.addActionListener(e -> {
+            JFrame current = (JFrame) SwingUtilities.getWindowAncestor(menuBar);
+            new TrackTrainerClass();
+            current.dispose();
+        });
+
         menu.add(home);
         menu.add(trackWorkout);
         menu.add(createWorkout);
@@ -123,6 +130,7 @@ public class UserMenu {
         menu.add(setGoal);
         menu.add(registration);
         menu.add(createExercise);
+        menu.add(trackClasses);
 
         menuBar.add(menu);
         menuBar.add(Box.createHorizontalGlue());

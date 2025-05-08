@@ -197,12 +197,46 @@ public class HomePage extends JFrame {
         c.gridx = 2;
         mainPanel.add(rem, c);
 
-        JButton myClasses = new JButton("Your Lesson Plans");
-        myClasses.setFont(Theme.NORMAL_FONT);
-        myClasses.setBackground(Theme.BUTTON_BG);
-        myClasses.setForeground(Theme.BUTTON_FG);
 
-        myClasses.addActionListener(e -> {
+        if(LoginPage.CURRENT_USER.isTrainer()) {
+            JButton myClasses = new JButton("Create Classes");
+            myClasses.setFont(Theme.NORMAL_FONT);
+            myClasses.setBackground(Theme.BUTTON_BG);
+            myClasses.setForeground(Theme.BUTTON_FG);
+
+            myClasses.addActionListener(e -> {
+                    frame.dispose();
+                    new CreateWorkoutPage();
+            });
+
+            c.gridx = 0;
+            c.gridy = 4;
+            mainPanel.add(myClasses, c);
+        }
+
+        if(LoginPage.CURRENT_USER.isTrainer()) {
+            JButton manageClasses = new JButton("Manage Classes");
+            manageClasses.setFont(Theme.NORMAL_FONT);
+            manageClasses.setBackground(Theme.BUTTON_BG);
+            manageClasses.setForeground(Theme.BUTTON_FG);
+
+            manageClasses.addActionListener(e -> {
+                frame.dispose();
+                new ManageTrainerClass();
+            });
+
+            c.gridx = 2;
+            c.gridy = 4;
+            mainPanel.add(manageClasses, c);
+        }
+
+
+        JButton myLessons = new JButton("Your Lesson Plans");
+        myLessons.setFont(Theme.NORMAL_FONT);
+        myLessons.setBackground(Theme.BUTTON_BG);
+        myLessons.setForeground(Theme.BUTTON_FG);
+
+        myLessons.addActionListener(e -> {
             if (LoginPage.CURRENT_USER.isTrainer()) {
                 TrainerPlanDetails.showTrainerPlanDetails(LoginPage.CURRENT_USER.getId());
                 frame.dispose();
@@ -215,7 +249,7 @@ public class HomePage extends JFrame {
 
         c.gridx = 1;
         c.gridy = 4;
-        mainPanel.add(myClasses, c);
+        mainPanel.add(myLessons, c);
 
 
         contentPane.add(mainPanel, BorderLayout.CENTER);
