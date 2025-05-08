@@ -2,6 +2,7 @@ package tracking;
 
 import user.TrainerExercise;
 import user.TrainerWorkout;
+import user.TrainerWorkoutPlan;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -20,13 +21,16 @@ public class TrainerCreatePlan extends JPanel {
     private DefaultTableModel workoutTableModel;
     private JTable exerciseTable;
     private DefaultTableModel exerciseTableModel;
+
     private List<TrainerWorkout> workouts;
-    private List<List<TrainerExercise>> exercises; // List of exercises for each workout
+    private ArrayList<ArrayList<TrainerExercise>> exercises; // List of exercises for each workout
     private int trainerId;
     private Connection connection;
+    private int planId;
 
     public TrainerCreatePlan(int trainerId) {
         this.trainerId = trainerId;
+        this.planId = 0;
         this.workouts = new ArrayList<>();
         this.exercises = new ArrayList<>();
         try {
@@ -336,29 +340,61 @@ public class TrainerCreatePlan extends JPanel {
         try {
             connection.setAutoCommit(false);
 
-            // Save Plan
-            String planSql = "INSERT INTO Plans (title, description, trainer_id, duration_days, level, category) VALUES (?, ?, ?, ?, ?, ?)";
-            try (PreparedStatement pstmt = connection.prepareStatement(planSql, Statement.RETURN_GENERATED_KEYS)) {
-                pstmt.setString(1, title);
-                pstmt.setString(2, description.isEmpty() ? null : description);
-                pstmt.setInt(3, trainerId);
-                pstmt.setInt(4, durationDays);
-                pstmt.setString(5, level);
-                pstmt.setString(6, category);
-                pstmt.executeUpdate();
-                ResultSet rs = pstmt.getGeneratedKeys();
-                int planId = rs.next() ? rs.getInt(1) : -1;
+            if (planId == 0) {
+                // Create new plan
+                String planSql = "INSERT INTO Plans (title, description, trainer_id, duration_days, level, category) VALUES (?, ?, ?, ?, ?, ?)";
+                try (PreparedStatement pstmt = connection.prepareStatement(planSql, Statement.RETURN_GENERATED_KEYS)) {
+                    pstmt.setString(1, title);
+                    pstmt.setString(2, description.isEmpty() ? null : description);
+                    pstmt.setInt(3, trainerId);
+                    pstmt.setInt(4, durationDays);
+                    pstmt.setString(5, level);
+                    pstmt.setString(6, category);
+                    pstmt.executeUpdate();
+                    try (ResultSet rs = pstmt.getGeneratedKeys()) {
+                        planId = rs.next() ? rs.getInt(1) : -1;
+                    }
+                }
+            } else {
+                // Update existing plan
+                String planSql = "UPDATE Plans SET title = ?, description = ?, duration_days = ?, level = ?, category = ? WHERE plan_id = ? AND trainer_id = ?";
+                try (PreparedStatement pstmt = connection.prepareStatement(planSql)) {
+                    pstmt.setString(1, title);
+                    pstmt.setString(2, description.isEmpty() ? null : description);
+                    pstmt.setInt(3, durationDays);
+                    pstmt.setString(4, level);
+                    pstmt.setString(5, category);
+                    pstmt.setInt(6, planId);
+                    pstmt.setInt(7, trainerId);
+                    int rowsAffected = pstmt.executeUpdate();
+                    if (rowsAffected == 0) {
+                        throw new SQLException("Plan update failed. Plan may not exist or you lack permission.");
+                    }
 
-                // Save Workouts
-                String workoutSql = "INSERT INTO Workouts (plan_id, name, day) VALUES (?, ?, ?)";
-                try (PreparedStatement workoutPstmt = connection.prepareStatement(workoutSql, Statement.RETURN_GENERATED_KEYS)) {
-                    for (int i = 0; i < workouts.size(); i++) {
-                        TrainerWorkout workout = workouts.get(i);
-                        workoutPstmt.setInt(1, planId);
-                        workoutPstmt.setString(2, workout.getName());
-                        workoutPstmt.setInt(3, workout.getDay());
-                        workoutPstmt.executeUpdate();
-                        ResultSet workoutRs = workoutPstmt.getGeneratedKeys();
+                    // Delete existing workouts and exercises
+                    String deleteExercisesSql = "DELETE FROM Exercises WHERE workout_id IN (SELECT workout_id FROM Workouts WHERE plan_id = ?)";
+                    try (PreparedStatement deleteExercisesPstmt = connection.prepareStatement(deleteExercisesSql)) {
+                        deleteExercisesPstmt.setInt(1, planId);
+                        deleteExercisesPstmt.executeUpdate();
+                    }
+                    String deleteWorkoutsSql = "DELETE FROM Workouts WHERE plan_id = ?";
+                    try (PreparedStatement deleteWorkoutsPstmt = connection.prepareStatement(deleteWorkoutsSql)) {
+                        deleteWorkoutsPstmt.setInt(1, planId);
+                        deleteWorkoutsPstmt.executeUpdate();
+                    }
+                }
+            }
+
+            // Save Workouts
+            String workoutSql = "INSERT INTO Workouts (plan_id, name, day) VALUES (?, ?, ?)";
+            try (PreparedStatement workoutPstmt = connection.prepareStatement(workoutSql, Statement.RETURN_GENERATED_KEYS)) {
+                for (int i = 0; i < workouts.size(); i++) {
+                    TrainerWorkout workout = workouts.get(i);
+                    workoutPstmt.setInt(1, planId);
+                    workoutPstmt.setString(2, workout.getName());
+                    workoutPstmt.setInt(3, workout.getDay());
+                    workoutPstmt.executeUpdate();
+                    try (ResultSet workoutRs = workoutPstmt.getGeneratedKeys()) {
                         int workoutId = workoutRs.next() ? workoutRs.getInt(1) : -1;
 
                         // Save Exercises
@@ -375,19 +411,22 @@ public class TrainerCreatePlan extends JPanel {
                     }
                 }
             }
+
             connection.commit();
             JOptionPane.showMessageDialog(this, "Plan saved successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
             clearForm();
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException rollbackEx) {
+                rollbackEx.printStackTrace();
+            }
             JOptionPane.showMessageDialog(this, "Error saving plan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        }
-        finally {
+        } finally {
             try {
                 connection.setAutoCommit(true);
-            }
-            catch (SQLException e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }

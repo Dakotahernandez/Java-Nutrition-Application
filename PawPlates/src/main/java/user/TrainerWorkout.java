@@ -18,6 +18,13 @@ public class TrainerWorkout {
         this.day = day;
     }
 
+    public TrainerWorkout(int id, int planId, String name, int day) {
+        this.id = id;
+        this.planId = planId;
+        this.name = name;
+        this.day = day;
+    }
+
     public String getName() {
         return name;
     }

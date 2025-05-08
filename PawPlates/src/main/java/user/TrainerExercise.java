@@ -19,6 +19,14 @@ public class TrainerExercise {
         this.reps = reps;
     }
 
+    public TrainerExercise(int id, int workoutId, String name, int sets, int reps) {
+        this.id = id;
+        this.workoutId = workoutId;
+        this.name = name;
+        this.sets = sets;
+        this.reps = reps;
+    }
+
     public String getName() {
         return name;
     }

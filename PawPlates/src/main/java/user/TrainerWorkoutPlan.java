@@ -14,6 +14,16 @@ public class TrainerWorkoutPlan {
     public String level;
     public String category;
 
+    public TrainerWorkoutPlan(int planId, String title, String description, int trainerId, int durationDays, String level, String category) {
+        this.id = planId;
+        this.title = title;
+        this.description = description;
+        this.trainerId = trainerId;
+        this.duration = durationDays;
+        this.level = level;
+        this.category = category;
+    }
+
     public static void initializeTable() throws SQLException {
         Connection connection = DriverManager.getConnection("jdbc:sqlite:users.db");
 
@@ -32,7 +42,31 @@ public class TrainerWorkoutPlan {
         }
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public String getTitle() {
+        return title;
+    }
 
+    public String getDescription() {
+        return description;
+    }
 
+    public int getTrainerId() {
+        return trainerId;
+    }
+
+    public int getDuration() {
+        return duration;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public String getCategory() {
+        return category;
+    }
 }
