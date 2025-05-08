@@ -1,3 +1,4 @@
+package Admin_Interface;
 import javax.swing.*;
 import javax.swing.table.TableModel;
 

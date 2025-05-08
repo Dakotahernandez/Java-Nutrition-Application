@@ -16,6 +16,7 @@ package frame; /**
  */
 import user.User;
 import user.UserDatabase;
+import Admin_Interface.TableView;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -167,8 +168,17 @@ public class LoginPage extends JFrame {
         login.addActionListener(e -> {
             try {
                 CURRENT_USER = database.loginUser(usernameField.getText(), passwordField.getText());
+                if (usernameField.getText().equals("admin")) {
+                    JFrame adminFrame = new JFrame("Admin Portal");
+                    TableView adminPortal = new TableView();
+                    adminFrame.setContentPane(adminPortal);
+                    adminFrame.setVisible(true);
+                } else {
+                    //HomePage homePage = new HomePage();
+                    //homePage.setVisible(true);
+                    new HomePage();
+                }
                 frame.dispose();
-                new HomePage();
 
             }
             catch (IllegalArgumentException ex) {
