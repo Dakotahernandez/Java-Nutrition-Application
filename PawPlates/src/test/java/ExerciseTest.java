@@ -64,7 +64,7 @@ public class ExerciseTest {
     }
 
     @Test
-    public void testToStringReturnsName() {
+    public void testToString() {
         Exercise ex = new Exercise("Burpees", "Full Body", 10, 5, 120, "Explosive movement");
         assertEquals("Burpees", ex.toString());
     }
