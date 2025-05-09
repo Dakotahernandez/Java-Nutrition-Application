@@ -10,12 +10,20 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link Workout} class.
+ * These tests verify correct construction, validation, and behavior of workout-related attributes and methods.
+ */
 public class WorkoutTest {
 
     private Exercise exercise1;
     private Exercise exercise2;
     private List<Exercise> exerciseList;
 
+    /**
+     * Sets up the test data for each test method.
+     * Initializes two exercises and a list containing both exercises.
+     */
     @BeforeEach
     public void setUp() {
         exercise1 = new Exercise("Push-ups", "Strength", 20, 10, 50, "Push-up exercise");
@@ -26,6 +34,10 @@ public class WorkoutTest {
         exerciseList.add(exercise2);
     }
 
+    /**
+     * Tests the constructor of the {@link Workout} class without an ID.
+     * Verifies the ID is set to -1 and the workout name, date, and exercises are correctly initialized.
+     */
     @Test
     public void testConstructorWithoutId() {
         LocalDate date = LocalDate.of(2025, 5, 8);
@@ -37,6 +49,10 @@ public class WorkoutTest {
         assertEquals(2, workout.getExercises().size());
     }
 
+    /**
+     * Tests the constructor of the {@link Workout} class with an ID.
+     * Verifies that the workout's ID, name, date, and exercise list are initialized correctly.
+     */
     @Test
     public void testConstructorWithId() {
         LocalDate date = LocalDate.of(2025, 5, 8);
@@ -48,6 +64,10 @@ public class WorkoutTest {
         assertEquals(exerciseList, workout.getExercises());
     }
 
+    /**
+     * Tests the default constructor of the {@link Workout} class.
+     * Verifies that the workout date and exercises list are initialized and empty.
+     */
     @Test
     public void testDefaultConstructor() {
         Workout workout = new Workout();
@@ -57,6 +77,10 @@ public class WorkoutTest {
         assertEquals(0, workout.getExercises().size());
     }
 
+    /**
+     * Tests adding an exercise to the workout.
+     * Verifies that the exercise is added correctly and the exercise count increases.
+     */
     @Test
     public void testAddExercise() {
         Workout workout = new Workout();
@@ -65,6 +89,10 @@ public class WorkoutTest {
         assertEquals(exercise1, workout.getExercises().get(0));
     }
 
+    /**
+     * Tests removing an exercise from the workout.
+     * Verifies that the exercise is removed correctly and the exercise count decreases.
+     */
     @Test
     public void testRemoveExercise() {
         Workout workout = new Workout();
@@ -73,6 +101,10 @@ public class WorkoutTest {
         assertEquals(0, workout.getExercises().size());
     }
 
+    /**
+     * Tests the calculation of the total duration of all exercises in the workout.
+     * Verifies the correct total duration based on the exercises' individual durations.
+     */
     @Test
     public void testGetTotalDuration() {
         Workout workout = new Workout();
@@ -81,6 +113,10 @@ public class WorkoutTest {
         assertEquals(40, workout.getTotalDuration());
     }
 
+    /**
+     * Tests the calculation of the total calories burned during the workout.
+     * Verifies the correct total calories based on the exercises' individual calories.
+     */
     @Test
     public void testGetTotalCalories() {
         Workout workout = new Workout();
@@ -89,6 +125,10 @@ public class WorkoutTest {
         assertEquals(350, workout.getTotalCalories());
     }
 
+    /**
+     * Tests getting the total number of exercises in the workout.
+     * Verifies the correct count of exercises added to the workout.
+     */
     @Test
     public void testGetExerciseCount() {
         Workout workout = new Workout();
@@ -97,6 +137,10 @@ public class WorkoutTest {
         assertEquals(2, workout.getExerciseCount());
     }
 
+    /**
+     * Tests getting a {@link DefaultListModel} of exercises in the workout.
+     * Verifies that the list model contains the correct exercises in the correct order.
+     */
     @Test
     public void testGetDefaultListModel() {
         Workout workout = new Workout();
@@ -109,6 +153,10 @@ public class WorkoutTest {
         assertEquals(exercise2, model.getElementAt(1));
     }
 
+    /**
+     * Tests the setter methods of the {@link Workout} class.
+     * Verifies that the workout ID, name, date, and exercises can be set and retrieved correctly.
+     */
     @Test
     public void testSetters() {
         Workout workout = new Workout();

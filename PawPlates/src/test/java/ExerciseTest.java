@@ -3,8 +3,16 @@ import tracking.Exercise;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for the {@link Exercise} class, validating its constructors, getters, setters,
+ * and other methods such as equals, hashCode, and toString.
+ */
 public class ExerciseTest {
 
+    /**
+     * Tests the default constructor of the {@link Exercise} class.
+     * Verifies that all fields are initialized to their default values.
+     */
     @Test
     public void testDefaultConstructor() {
         Exercise ex = new Exercise();
@@ -15,6 +23,10 @@ public class ExerciseTest {
         assertEquals(0, ex.getCaloriesBurned());
     }
 
+    /**
+     * Tests the constructor of the {@link Exercise} class with no ID.
+     * Verifies that the provided values are correctly assigned and the ID is set to -1.
+     */
     @Test
     public void testConstructorWithNoId() {
         Exercise ex = new Exercise("Push Up", "Chest", 20, 10, 100, "Upper body strength");
@@ -27,6 +39,10 @@ public class ExerciseTest {
         assertEquals(-1, ex.getId()); // from constructor
     }
 
+    /**
+     * Tests the constructor of the {@link Exercise} class with a specified ID.
+     * Verifies that the provided values, including the ID, are correctly assigned.
+     */
     @Test
     public void testConstructorWithId() {
         Exercise ex = new Exercise(5, "Squat", "Legs", 30, 15, 150, "Leg exercise");
@@ -34,6 +50,10 @@ public class ExerciseTest {
         assertEquals("Squat", ex.getName());
     }
 
+    /**
+     * Tests the setters and getters of the {@link Exercise} class.
+     * Verifies that the setter methods correctly modify the fields and getter methods return the expected values.
+     */
     @Test
     public void testSettersAndGetters() {
         Exercise ex = new Exercise();
@@ -54,6 +74,11 @@ public class ExerciseTest {
         assertEquals(99, ex.getId());
     }
 
+    /**
+     * Tests the {@link Exercise#equals(Object)} and {@link Exercise#hashCode()} methods.
+     * Verifies that two {@link Exercise} objects with the same data are considered equal
+     * and have the same hash code.
+     */
     @Test
     public void testEqualsAndHashCode() {
         Exercise ex1 = new Exercise("Sit Ups", "Abs", 25, 10, 90, "Core exercise");
@@ -63,6 +88,10 @@ public class ExerciseTest {
         assertEquals(ex1.hashCode(), ex2.hashCode());
     }
 
+    /**
+     * Tests the {@link Exercise#toString()} method.
+     * Verifies that the string representation of the exercise matches the name of the exercise.
+     */
     @Test
     public void testToString() {
         Exercise ex = new Exercise("Burpees", "Full Body", 10, 5, 120, "Explosive movement");
