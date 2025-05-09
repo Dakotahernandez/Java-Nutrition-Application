@@ -70,118 +70,107 @@ You have been contracted to create an application that empowers a user to monito
 - **JFreeChart** – Visualizes weight tracking progress
 - **JUnit** – Unit testing framework
 - **Maven** – Dependency and project management
-Feature Summary
 
-**Health**
-The application should allow users to track and set goals for a variety of health-related aspects of their life.
 
-**Tracking**
 
-Users can create a profile and have a dashboard with a summary of their current health and fitness progress
-At a minimum, users can track their:
-+ Daily calorie intake
-+ Weight
-+ Sleep
-+ Goals and Reporting
 
-Users can set daily, weekly, or monthly goals for each tracked aspect
-Users can view their historical data for each aspect
-Users can get statistics about their progress toward a goal over a specific timeframe
-Users can set reminders for daily tasks
+# Summary of Contributions
 
-**Fitness**
-The application should allow users to monitor their exercise in a variety of ways.
+---
 
-**Trainer Led Exercise**
+## Sofia Amador
 
-Trainers use the application to create exercise plans. These plans can be either self-paced or a scheduled class
-Self-paced plans include information about required equipment, recommended fitness level, average session length, and suggested frequency
-Scheduled classes include information about the date, time, and days of the week the class occurs, the length of the class (i.e. session length and number of weeks the class lasts), recommended fitness level, recommended or required prerequisites, and required equipment
-Trainers can limit the number of participants in the class
-Trainers can see information about their plans and classes. For example, they can check how many people have signed up for a plan and fully completed it or how many people are registered for one of their classes
+Implemented:
 
-**Personal Exercise**
+- **Create Profile Page**: Includes first name, last name, fitness level, and two dropdowns for selecting security questions used in password reset.
+- **Reset Password Page**: Allows existing users to reset their password using the selected security questions.
+- **Administrator Interface**: Displays a table of all system users. Admins can assist with password verification but cannot access private data such as passwords.
 
-+ Users can track their daily exercise
-+ They can record individual workouts, including information like duration, type of exercise, calories burned, etc.
-+ They can track their daily step count
-+ They can create templates for their favorite workouts
-+ They can set reminders to start a workout
-+ Users can register for Trainer created exercises
-+ They can add a self-paced plan to their account
-+ They can sign up for and attend trainer-led classes
-+ Users can set goals for weekly exercise and view reports on their progress
+---
 
-**Bonus**
-The application provides social functionality, allowing a user to challenge and encourage other users. Examples:
+## Joshua Carroll
 
-Users can friend each other and then send exercise challenges, send encouraging messages, or congratulate them for achieving a goal
-Users can join a group and set group challenges
+Developed:
 
-**General Requirements**
-It is very important to keep in mind that the requirements do not include all corner cases and validations that are needed. These are just a few examples to get you started. Part of your project is to think about each use case and discuss what would be the best solution with your team. If you have doubts, ask me. Example: What happens when a user tries to join a class that is full or doesn’t meet the prerequisites?
+- **TemplateFrame**:
+  - Handles layout (split frames), menu bar creation, logout option, and reusable input field utilities.
+- **Create Exercise Page**: Built using TemplateFrame.
+- **Create Workout Page**: Users select exercises, assign a name/date, and create workouts.
+- **Track Workout Page**: Displays workout details and exercises.
+- **Trainer Classes**:
+  - `TrainerClass` extends `Workout` for reuse.
+  - Trainers can create, view (via a chart), and manage classes.
+  - Users can register for available classes on the **Track Classes** page, which shows class size and trainer username.
 
-These are the requirements for a general user:
+---
 
-+ A general user should be able to log in to the system using a username and password
-+ A general user should be able to log daily calorie intake, weight, and sleep
-+ A general user should be able to record a workout
-+ A general user should be able to search for and sign up for self-paced plans
-+ A general user should be able to search for and sign up for and attend trainer-led classes
-+ A general user should be able to set goals and track their progress
-+ A general user should be able to see their historical trends
+## Eli Hall
 
-These are the requirements for a trainer:
+Implemented tracking features:
 
-+ A trainer should be able to log in to the system using a username and password
-+ A trainer should be able to create self-paced exercise plans
-+ A trainer should be able to create exercise classes
-+ A trainer should be able to modify their plans and classes
-+ A trainer should be able to start and end a session of a particular class
-+ A trainer should be able to view statistics about their self-paced plans and classes
+- **Sleep Page**:
+  - Allows users to input daily sleep.
+  - Displays progress via a progress bar toward a weekly sleep goal.
+  - Input validation ensures only valid numbers are accepted.
 
-These are the requirements for an admin:
+- **RecordWeight Page** (foundations):
+  - Allows weight input.
+  - Displays reports based on progress toward goal weight.
 
-+ An admin should be able to log in to the system using a username and password
-+ An admin should be able to view all the general users and trainers
-+ An admin should be able to reset passwords
+- **Testing**:
+  - **JUnit** for model classes like `User` and `Exercise`.
+  - **Manual testing** for 5 workflows: CreateExercise, RecordWeight, TrackCalories, RecordSleep, LoginPage.
 
-Some examples of topics to discuss with your team while designing the application:
+---
 
-Should an admin have access to a general user’s data?
-What information should a trainer know about their students?
-What are the potential tradeoffs between functionality and usability?
-The minimum scope of the full implementation (with GUI connected) expected for the Iteration 3 final demo:
+## Dakota Hernandez
 
-A general user should be able to:
-+ Create an account with a username and password
-+ Log in to the system using a username and password
-+ See a dashboard of their current progress
-+ Log daily information, like calorie intake and weight
-+ Record a workout
-+ Search for self-paced exercise plans and add them to their account
-+ Search for classes and register for the class
-+ Attend an in-progress class
-+ See a report of their historical data and goal targets
-A trainer should be able to:
-+ Create an account with a username and password
-+ Log in to the system using a username and password
-+ Create a self-paced exercise plan
-+ Create and register a class
-+ Host a session of a class
-+ Modify an existing plan or class
-+ View reports about their plans and classes
-An admin should be able to:
-+ Log in to the system using a username and password
-+ Add a user to the system
-+ Reset a user’s password
+Contributions include:
 
-**Bonus Features**
+- Created the initial **Calorie Tracker** (evolved from variables → CSV → database).
+- Helped develop and integrate **TemplateFrame** across multiple pages.
+- Built a **Themes Class** to centralize UI styling.
+- Conducted a **UI Overhaul** to unify page sizes and components.
+- Added a **Date Picker API** to HomePage for date-based navigation and data updates.
+- Rebuilt **Weight Tracking Page**:
+  - Added a table of past entries.
+  - Integrated **JFreeChart** for weight-over-time graph.
+- Connected **goals, weight, and calorie tracking** to the database.
+- Built an **Email Reminder System** using the **Mailjet API**.
+- Created a **Calorie Calculator Popup** to estimate daily intake on the SetGoals page.
 
-+ A general user should be able to friend another user
-+ A general user should be able to challenge a friend
-+ A general user should be alerted when a friend reaches a goal
-+ A general user should be able to join a group
-+ A group should be able to post challenges
-+ A trainer should be able to message a class’s participants
+---
 
+## Mac Johnson
+
+Led the development of:
+
+- **User Account System**:
+  - Login page with input validation (including proper email format).
+  - Support for general users and trainers.
+  - Tracks the current user across all interfaces via a shared variable.
+
+- **Self-Paced Plans**:
+  - Trainers can create/edit/delete daily workout plans composed of exercises.
+  - Plans stored and managed via a dedicated SQLite schema.
+
+- **Trainer/Client Integration**:
+  - Users can browse and register for trainer-made plans.
+  - Trainer interface is enabled based on user account type.
+
+- **Project Website**: Designed and implemented from scratch using HTML, CSS, and JavaScript.
+
+---
+
+## Faith Ota
+
+Created:
+
+- **HomePage Frame** (subclass of abstract TemplateFrame):
+  - Displays logo, integrated menu bar, and logout.
+  - Menu enables navigation without opening redundant windows.
+
+- **SetGoals Page**:
+  - Allows users to define calorie, sleep, and weight goals.
+  - Includes validation and confirmation dialogs.
+  - Defaults applied if user opts out of the goals feature.
