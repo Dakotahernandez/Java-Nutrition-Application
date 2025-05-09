@@ -125,7 +125,7 @@ public class TableView extends JPanel {
         Object[] original = tableModel.getRow(modelIndex);
         Object[] edited = showAddRowDialog(original.clone());
         if (edited != null) {
-            tableModel.updateRow(modelIndex, edited);  // <-- you’ll need to add this method
+            tableModel.updateRow(modelIndex, edited); 
             statusText.setText("Row edited.");
         }
     }
@@ -136,7 +136,7 @@ private Object[] showAddRowDialog(Object[] data) {
     String[] userTypes = {"User", "Trainer"};
     String[] fitnessLevels = {"Beginner", "Intermediate", "Advanced", "Elite"};
     String[] genderTypes = {"Other", "Female", "Male"};
-    SecurityQuestion[] securityQuestions = SecurityQuestion.values(); // Use the actual enum values
+    SecurityQuestion[] securityQuestions = SecurityQuestion.values();
 
     boolean isFromSelectedRow = data != null;
     JComboBox<String> userTypeField = new JComboBox<>(userTypes);
@@ -146,8 +146,8 @@ private Object[] showAddRowDialog(Object[] data) {
     JTextField IDField = new JTextField();
     JComboBox<String> FitnessLevelField = new JComboBox<>(fitnessLevels);
     JComboBox<String> GenderField = new JComboBox<>(genderTypes);
-    JComboBox<SecurityQuestion> q1Field = new JComboBox<>(securityQuestions); // Updated combo box to use SecurityQuestion enum
-    JComboBox<SecurityQuestion> q2Field = new JComboBox<>(securityQuestions); // Updated combo box to use SecurityQuestion enum
+    JComboBox<SecurityQuestion> q1Field = new JComboBox<>(securityQuestions);
+    JComboBox<SecurityQuestion> q2Field = new JComboBox<>(securityQuestions);
     JTextField a1Field = new JTextField();
     JTextField a2Field = new JTextField();
 
@@ -190,9 +190,9 @@ private Object[] showAddRowDialog(Object[] data) {
     panel.add(new JLabel("Gender:"));
     panel.add(GenderField);
     panel.add(new JLabel("Security Q1:"));
-    panel.add(q1Field); // This will now show the full question text
+    panel.add(q1Field);
     panel.add(new JLabel("Security Q2:"));
-    panel.add(q2Field); // This will now show the full question text
+    panel.add(q2Field); 
     panel.add(new JLabel("Answer 1:"));
     panel.add(a1Field);
     panel.add(new JLabel("Answer 2:"));
@@ -211,8 +211,8 @@ private Object[] showAddRowDialog(Object[] data) {
             newData[4] = Integer.parseInt(IDField.getText().trim());
             newData[5] = FitnessLevelField.getSelectedItem();
             newData[6] = GenderField.getSelectedItem();
-            newData[7] = q1Field.getSelectedItem().toString(); // Store as String
-            newData[8] = q2Field.getSelectedItem().toString(); // Store as String
+            newData[7] = q1Field.getSelectedItem().toString(); 
+            newData[8] = q2Field.getSelectedItem().toString(); 
             newData[9] = a1Field.getText().trim();
             newData[10] = a2Field.getText().trim();
             return newData;
@@ -229,7 +229,7 @@ private Object[] showAddRowDialog(Object[] data) {
         JFrame frame = new JFrame("Administrater Interface: Users and Trainers Table");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         TableView newContentPane = new TableView();
-        newContentPane.setOpaque(true); //content panes must be opaque
+        newContentPane.setOpaque(true);
         frame.setContentPane(newContentPane);
         frame.setLocationRelativeTo(null);
         frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
