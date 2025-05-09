@@ -25,4 +25,12 @@ public enum SecurityQuestion {
             return "Unknown Question (" + code + ")";
         }
     }
+    public static SecurityQuestion fromLabel(String label) {
+        for (SecurityQuestion q : values()) {
+            if (q.getFullText().equals(label)) {
+                return q;
+            }
+        }
+        throw new IllegalArgumentException("No enum constant with label " + label);
+    }
 }
