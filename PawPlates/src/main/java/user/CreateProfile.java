@@ -1,19 +1,29 @@
-package user; /**
+package user;
+/**
  * =============================================================================
- * File:
- * Author:
- * Created:
+ * File:           user.CreateProfile.java
+ * Authors:        Sofia Amador
+ * Created:        05/08/25
  * -----------------------------------------------------------------------------
  * Description:
- *
+ *   Profile creation screen that collects user first/last name, gender,
+ *   fitness level, and two security questions with answers for password reset.
+ *   Integrates standard menu and logout layout used across the application.
  *
  * Dependencies:
- *
+ *   - javax.swing.*
+ *   - java.awt.*
  *
  * Usage:
+ *   // Launch the profile creation interface
+ *   CreateProfile.setUp();
  *
+ * TODO:
+ *   - Store and persist profile data to database
  * =============================================================================
  */
+
+
 //Sofia Amador
 import javax.swing.*;
 import java.awt.*;

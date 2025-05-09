@@ -181,8 +181,8 @@ public class HomePage extends JFrame {
         goals.setForeground(Theme.BUTTON_FG);
         c.gridx = 1;
         goals.addActionListener(e->{
-            frame.dispose();
             new SetGoalPage();
+            frame.dispose();
         });
         mainPanel.add(goals, c);
 
@@ -191,8 +191,8 @@ public class HomePage extends JFrame {
         rem.setBackground(Theme.BUTTON_BG);
         rem.setForeground(Theme.BUTTON_FG);
         rem.addActionListener(e -> {
-            frame.dispose();
             new RemindersPage();
+            frame.dispose();
         });
         c.gridx = 2;
         mainPanel.add(rem, c);
@@ -277,20 +277,20 @@ public class HomePage extends JFrame {
                 dialog.dispose();
                 switch (text) {
                     case "Workout":
-                        frame.dispose();
                         new TrackWorkouts();
+                        frame.dispose();
                         break;
                     case "Sleep":
-                        frame.dispose();
                         new SleepPage(SessionContext.getDate());
+                        frame.dispose();
                         break;
                     case "Calories":
-                        frame.dispose();
                         new CalorieMacroPage(SessionContext.getDate());
+                        frame.dispose();
                         break;
                     case "Weight":
-                        frame.dispose();
                         new RecordWeight(getSelectedDate());
+                        frame.dispose();
                         break;
 
                     case "Cancel":

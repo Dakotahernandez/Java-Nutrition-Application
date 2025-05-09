@@ -1,3 +1,29 @@
+/**
+ * =============================================================================
+ * File: ManageTrainerClass.java
+ * Author: Joshua Carroll
+ * Created: 5/8/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ * GUI frame for trainers to view and manage all classes they lead. The trainer
+ * can see class details including the number of registered users, duration,
+ * and calories burned. Selecting a class displays the associated exercises.
+ *
+ * Dependencies:
+ * - javax.swing.*
+ * - java.util.List
+ * - tracking.TrainerClassDatabase
+ * - tracking.WorkoutDatabase
+ * - tracking.Exercise
+ * - tracking.TrainerClass
+ * - frame.TemplateFrame
+ * - frame.LoginPage
+ * - frame.Theme
+ *
+ * Usage:
+ * new ManageTrainerClass(); // Launches the trainer class management GUI
+ * =============================================================================
+ */
 package tracking;
 
 import frame.LoginPage;
@@ -14,10 +40,13 @@ import java.awt.*;
 import java.util.List;
 
 public class ManageTrainerClass extends TemplateFrame {
-    private static final WorkoutDatabase workoutDB = new WorkoutDatabase();
-    private static final TrainerClassDatabase trainerClassDB = new TrainerClassDatabase();
     DefaultTableModel exerciseModel;
 
+    /**
+     * Constructs the ManageTrainerClass frame.
+     * Filters classes based on the logged-in trainer's ID and displays them in a table.
+     * Selecting a class shows its exercises in a separate table.
+     */
     public ManageTrainerClass() {
         int userId = LoginPage.CURRENT_USER.getId();
         setTitle("Manage Trainer Classes");
@@ -93,7 +122,7 @@ public class ManageTrainerClass extends TemplateFrame {
         c.fill = GridBagConstraints.BOTH;
         centerPanel.add(classPanel, c);
 
-        // Exercise table for selected class
+        // Exercise table
         String[] exerciseColNames = {"Name", "Focus", "Reps", "Duration", "Calories", "Description"};
         exerciseModel = new DefaultTableModel(exerciseColNames, 0) {
             @Override
@@ -164,6 +193,11 @@ public class ManageTrainerClass extends TemplateFrame {
         setVisible(true);
     }
 
+    /**
+     * Updates the exercise table based on the selected class's exercises.
+     *
+     * @param exercises a list of exercises associated with the selected class
+     */
     private void updateExerciseTable(List<Exercise> exercises) {
         exerciseModel.setRowCount(0);
         exercises.stream()
@@ -177,7 +211,5 @@ public class ManageTrainerClass extends TemplateFrame {
                 })
                 .forEach(exerciseModel::addRow);
     }
-
-
 
 }
