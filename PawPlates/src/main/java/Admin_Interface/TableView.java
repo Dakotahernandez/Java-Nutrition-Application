@@ -131,94 +131,99 @@ public class TableView extends JPanel {
     }
 
 
-    private Object[] showAddRowDialog(Object[] data) {
-        String[] userTypes = {"User", "Trainer"};
-        String[] fitnessLevels = {"Beginner", "Intermediate", "Advanced", "Elite"};
-        String[] genderTypes = {"Other", "Female", "Male"};
-        String[] securityQuestions = {"a", "b", "c"};
-        boolean isFromSelectedRow = data != null;
-        JComboBox<String> userTypeField = new JComboBox<>(userTypes);
-        JTextField firstNameField = new JTextField();
-        JTextField lastNameField = new JTextField();
-        JTextField emailField = new JTextField();
-        JTextField IDField = new JTextField();
-        JComboBox<String> FitnessLevelField = new JComboBox<>(fitnessLevels);
-        JComboBox<String> GenderField = new JComboBox<>(genderTypes);
-        JComboBox<String> q1Field = new JComboBox<>(securityQuestions);
-        JComboBox<String> q2Field = new JComboBox<>(securityQuestions);
-        JTextField a1Field = new JTextField();
-        JTextField a2Field = new JTextField();
-        if (isFromSelectedRow) {
-            userTypeField.setSelectedItem(data[0]);
-            firstNameField.setText(data[1].toString());
-            lastNameField.setText(data[2].toString());
-            emailField.setText(data[3].toString());
-            IDField.setText(data[4].toString());
-            FitnessLevelField.setSelectedItem(data[5]);
-            GenderField.setSelectedItem(data[6]);
-            q1Field.setSelectedItem(data[7]);
-            q2Field.setSelectedItem(data[8]);
-            a1Field.setText(data[9].toString());
-            a2Field.setText(data[10].toString());
-        }
+    
+private Object[] showAddRowDialog(Object[] data) {
+    String[] userTypes = {"User", "Trainer"};
+    String[] fitnessLevels = {"Beginner", "Intermediate", "Advanced", "Elite"};
+    String[] genderTypes = {"Other", "Female", "Male"};
+    SecurityQuestion[] securityQuestions = SecurityQuestion.values(); // Use the actual enum values
 
-        JPanel panel = new JPanel(new GridLayout(15, 3));
-        JLabel instruction;
-        if (isFromSelectedRow) {
-            instruction = new JLabel("You selected this row as initial inputs. Please revise them as needed and press [Add Row] button.");
-        } else {
-            instruction = new JLabel("No row selected; provide inputs to all fields and press [Add Row] button.");
-        }
-        panel.add(instruction);
-        panel.add(new JLabel(""));
-        panel.add(new JLabel("Trainer/User:"));
-        panel.add(userTypeField);
-        panel.add(new JLabel("First Name:"));
-        panel.add(firstNameField);
-        panel.add(new JLabel("Last Name:"));
-        panel.add(lastNameField);
-        panel.add(new JLabel("Email:"));
-        panel.add(emailField);
-        panel.add(new JLabel("ID Number:"));
-        panel.add(IDField);
-        panel.add(new JLabel("Fitness Level:"));
-        panel.add(FitnessLevelField);
-        panel.add(new JLabel("Gender:"));
-        panel.add(GenderField);
-        panel.add(new JLabel("Security Q1:"));
-        panel.add(q1Field);
-        panel.add(new JLabel("Security Q2:"));
-        panel.add(q2Field);
-        panel.add(new JLabel("Answer 1:"));
-        panel.add(a1Field);
-        panel.add(new JLabel("Answer 2:"));
-        panel.add(a2Field);
-        int result = JOptionPane.showConfirmDialog(
-                this, panel, "Add New Row", JOptionPane.OK_CANCEL_OPTION);
+    boolean isFromSelectedRow = data != null;
+    JComboBox<String> userTypeField = new JComboBox<>(userTypes);
+    JTextField firstNameField = new JTextField();
+    JTextField lastNameField = new JTextField();
+    JTextField emailField = new JTextField();
+    JTextField IDField = new JTextField();
+    JComboBox<String> FitnessLevelField = new JComboBox<>(fitnessLevels);
+    JComboBox<String> GenderField = new JComboBox<>(genderTypes);
+    JComboBox<SecurityQuestion> q1Field = new JComboBox<>(securityQuestions); // Updated combo box to use SecurityQuestion enum
+    JComboBox<SecurityQuestion> q2Field = new JComboBox<>(securityQuestions); // Updated combo box to use SecurityQuestion enum
+    JTextField a1Field = new JTextField();
+    JTextField a2Field = new JTextField();
 
-        if (result == JOptionPane.OK_OPTION) {
-            try {
-                Object[] newData = new Object[11];
-                newData[0] = userTypeField.getSelectedItem();
-                newData[1] = firstNameField.getText().trim();
-                newData[2] = lastNameField.getText().trim();
-                newData[3] = emailField.getText().trim();
-                newData[4] = Integer.parseInt(IDField.getText().trim());
-                newData[5] = FitnessLevelField.getSelectedItem();
-                newData[6] = GenderField.getSelectedItem();
-                newData[7] = q1Field.getSelectedItem();
-                newData[8] = q2Field.getSelectedItem();
-                newData[9] = a1Field.getText().trim();
-                newData[10] = a2Field.getText().trim();
-                return newData;
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Invalid number in ID field.");
-                return null;
-            }
-        } else {
+    if (isFromSelectedRow) {
+        userTypeField.setSelectedItem(data[0]);
+        firstNameField.setText(data[1].toString());
+        lastNameField.setText(data[2].toString());
+        emailField.setText(data[3].toString());
+        IDField.setText(data[4].toString());
+        FitnessLevelField.setSelectedItem(data[5]);
+        GenderField.setSelectedItem(data[6]);
+        q1Field.setSelectedItem(SecurityQuestion.fromLabel(data[7].toString()));
+        q2Field.setSelectedItem(SecurityQuestion.fromLabel(data[8].toString()));
+
+        a1Field.setText(data[9].toString());
+        a2Field.setText(data[10].toString());
+    }
+
+    JPanel panel = new JPanel(new GridLayout(15, 3));
+    JLabel instruction;
+    if (isFromSelectedRow) {
+        instruction = new JLabel("You selected this row as initial inputs. Please revise them as needed and press [Add Row] button.");
+    } else {
+        instruction = new JLabel("No row selected; provide inputs to all fields and press [Add Row] button.");
+    }
+    panel.add(instruction);
+    panel.add(new JLabel(""));
+    panel.add(new JLabel("Trainer/User:"));
+    panel.add(userTypeField);
+    panel.add(new JLabel("First Name:"));
+    panel.add(firstNameField);
+    panel.add(new JLabel("Last Name:"));
+    panel.add(lastNameField);
+    panel.add(new JLabel("Email:"));
+    panel.add(emailField);
+    panel.add(new JLabel("ID Number:"));
+    panel.add(IDField);
+    panel.add(new JLabel("Fitness Level:"));
+    panel.add(FitnessLevelField);
+    panel.add(new JLabel("Gender:"));
+    panel.add(GenderField);
+    panel.add(new JLabel("Security Q1:"));
+    panel.add(q1Field); // This will now show the full question text
+    panel.add(new JLabel("Security Q2:"));
+    panel.add(q2Field); // This will now show the full question text
+    panel.add(new JLabel("Answer 1:"));
+    panel.add(a1Field);
+    panel.add(new JLabel("Answer 2:"));
+    panel.add(a2Field);
+
+    int result = JOptionPane.showConfirmDialog(
+            this, panel, "Add New Row", JOptionPane.OK_CANCEL_OPTION);
+
+    if (result == JOptionPane.OK_OPTION) {
+        try {
+            Object[] newData = new Object[11];
+            newData[0] = userTypeField.getSelectedItem();
+            newData[1] = firstNameField.getText().trim();
+            newData[2] = lastNameField.getText().trim();
+            newData[3] = emailField.getText().trim();
+            newData[4] = Integer.parseInt(IDField.getText().trim());
+            newData[5] = FitnessLevelField.getSelectedItem();
+            newData[6] = GenderField.getSelectedItem();
+            newData[7] = q1Field.getSelectedItem().toString(); // Store as String
+            newData[8] = q2Field.getSelectedItem().toString(); // Store as String
+            newData[9] = a1Field.getText().trim();
+            newData[10] = a2Field.getText().trim();
+            return newData;
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Invalid number in ID field.");
             return null;
         }
+    } else {
+        return null;
     }
+}
 
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Administrater Interface: Users and Trainers Table");
