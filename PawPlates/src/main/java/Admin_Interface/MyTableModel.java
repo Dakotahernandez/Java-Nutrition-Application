@@ -25,7 +25,7 @@ public class MyTableModel extends AbstractTableModel {
 
     public MyTableModel(){
         try{
-            InputStream is = getClass().getClassLoader().getResourceAsStream("userData.csv");
+            InputStream is = getClass().getClassLoader().getResourceAsStream("userData1.csv");
             if(is == null){
                 throw new RuntimeException("userData.csv file not opened!!!");
             }
@@ -49,9 +49,9 @@ public class MyTableModel extends AbstractTableModel {
                 row[4] = Integer.parseInt(parts[4].trim()); //ID number
                 row[5] = parts[5].trim(); //fitness level
                 row[6] = parts[6].trim(); //gender
-                row[7] = parts[7].trim(); //q 1
-                row[8] = parts[8].trim(); //q answer 1
-                row[9] = parts[9].trim(); //q 2
+                row[7] = SecurityQuestion.resolve(parts[7].trim()); // q1
+                row[8] = SecurityQuestion.resolve(parts[8].trim()); // q2
+                row[9] = parts[9].trim(); //q answer 1
                 row[10] = parts[10].trim(); //q answer 2
                 data.add(row);
             }

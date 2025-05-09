@@ -53,6 +53,10 @@ public class TrainerPlanDetails extends JPanel {
         deletePlanButton.setEnabled(false);
         buttonPanel.add(deletePlanButton);
 
+        JButton getInfoButton = new JButton("Get Info");
+        getInfoButton.setEnabled(false);
+        buttonPanel.add(getInfoButton);
+
         JButton refreshButton = new JButton("Refresh");
         buttonPanel.add(refreshButton);
 
@@ -64,6 +68,7 @@ public class TrainerPlanDetails extends JPanel {
                 if (!e.getValueIsAdjusting()) {
                     deletePlanButton.setEnabled(planTable.getSelectedRow() >= 0);
                     editPlanButton.setEnabled(planTable.getSelectedRow() >= 0);
+                    getInfoButton.setEnabled(planTable.getSelectedRow() >= 0);
                 }
             }
         });
@@ -71,6 +76,7 @@ public class TrainerPlanDetails extends JPanel {
         createPlanButton.addActionListener(e -> showCreatePlanDialog());
         editPlanButton.addActionListener(e -> editPlan());
         deletePlanButton.addActionListener(e -> deletePlan());
+        getInfoButton.addActionListener(e -> getPlanInfo());
         refreshButton.addActionListener(e -> loadPlans());
     }
 
@@ -269,6 +275,86 @@ public class TrainerPlanDetails extends JPanel {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this, "Error deleting plan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void getPlanInfo() {
+        int selectedRow = planTable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Please select a plan to view registered users.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String title = (String) planTableModel.getValueAt(selectedRow, 0);
+        String sql = "SELECT plan_id FROM Plans WHERE trainer_id = ? AND title = ?";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setInt(1, trainerId);
+            ps.setString(2, title);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    int planId = rs.getInt("plan_id");
+                    showRegisteredUsersDialog(planId, title);
+                }
+                else {
+                    JOptionPane.showMessageDialog(this,
+                            "Plan not found.",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        }
+        catch (SQLException e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error retrieving plan info: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    private void showRegisteredUsersDialog(int planId, String planTitle) {
+        JDialog dialog = new JDialog(SwingUtilities.getWindowAncestor(this), "Registered Users for " + planTitle, Dialog.ModalityType.APPLICATION_MODAL);
+        dialog.setLayout(new BorderLayout());
+
+        // Table for registered users
+        DefaultTableModel userTableModel = new DefaultTableModel(new String[]{"User ID", "Username"}, 0);
+        JTable userTable = new JTable(userTableModel);
+        JScrollPane tableScrollPane = new JScrollPane(userTable);
+        dialog.add(tableScrollPane, BorderLayout.CENTER);
+
+        // Load registered users
+        String sql = "SELECT u.id, u.username FROM UserPlans up JOIN Users u ON up.user_id = u.id WHERE up.plan_id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, planId);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    userTableModel.addRow(new Object[]{
+                            rs.getInt("id"),
+                            rs.getString("username")
+                    });
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(dialog, "Error loading registered users: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Message if no users
+        if (userTableModel.getRowCount() == 0) {
+            dialog.add(new JLabel("No users are registered for this plan.", SwingConstants.CENTER), BorderLayout.NORTH);
+        }
+
+        // Close Button
+        JPanel buttonPanel = new JPanel();
+        JButton closeButton = new JButton("Close");
+        closeButton.addActionListener(e -> dialog.dispose());
+        buttonPanel.add(closeButton);
+        dialog.add(buttonPanel, BorderLayout.SOUTH);
+
+        dialog.setSize(400, 300);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     private void showCreatePlanDialog() {

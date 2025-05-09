@@ -1,0 +1,8 @@
+User/Trainer,FirstName,LastName,Email,IDNum,FitnessLevel,Gender,SecurityQ1,SecurityQ2,QAnswer1,QAnswer2
+Trainer,Tim,Miller,timmy@gmail.com,12345,Advanced,Male,A,D,Ford,Deadlift
+User,Jose,Smith,coolguy@yahoo.com,68734,Beginner,Male,B,F,San Francisco,Deftones
+User,Emma,Moore,emmamoore@hotmail.com,49852,Intermediate,Female,B,E,Waco,Crunch
+User,Juan,Garcia,juanito123@gmail.com,49274,Elite,Male,C,D,Honey,Crunches
+Trainer,Maria,Martinez,marmar@gmail.com,90231,Intermediate,Female,A,E,Ford,Gold's Gym
+User,Rosa,Ruiz,ruizspieces@gmail.com,11111,Advanced,Female,C,E,Peyton,Equinox
+User,Kate,Brown,kate222@gmail.com,13424,Beginner,Female,C,E,Max,Planet Fitness

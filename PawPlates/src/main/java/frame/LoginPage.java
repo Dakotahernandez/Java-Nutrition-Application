@@ -182,15 +182,19 @@ public class LoginPage extends JFrame {
         c.anchor = GridBagConstraints.CENTER;
         login.addActionListener(e -> {
             try {
-                CURRENT_USER = database.loginUser(usernameField.getText(), passwordField.getText());
-                if (usernameField.getText().equals("admin")) {
+                String inputUsername = usernameField.getText();
+                String inputPassword = new String(passwordField.getPassword());
+                if (inputUsername.equals("admin") && inputPassword.equals("adminpass")) {
                     JFrame adminFrame = new JFrame("Admin Portal");
                     TableView adminPortal = new TableView();
                     adminFrame.setContentPane(adminPortal);
+                    adminFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+                    adminFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                     adminFrame.setVisible(true);
                 } else {
                     //HomePage homePage = new HomePage();
                     //homePage.setVisible(true);
+                    CURRENT_USER = database.loginUser(usernameField.getText(), passwordField.getText());
                     new HomePage();
                 }
                 frame.dispose();
