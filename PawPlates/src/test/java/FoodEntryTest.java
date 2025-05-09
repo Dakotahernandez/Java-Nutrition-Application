@@ -1,3 +1,27 @@
+/**
+ * =============================================================================
+ * File:        FoodEntryTest.java
+ * Authors:     Eli Hall
+ * Created:     05/08/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Unit tests for the {@link FoodEntry} class. Tests cover all getter and setter
+ *   methods to ensure proper data encapsulation and retrieval, including methods
+ *   for food name, calories, protein, carbs, fats, fiber, notes, and meal type.
+ *
+ * Dependencies:
+ *   - org.junit.jupiter.api.Test
+ *   - tracking.Food.FoodEntry
+ *   - static org.junit.jupiter.api.Assertions.*
+ *
+ * Usage:
+ *   Test the functionality of the FoodEntry class by running the test methods
+ *   defined in this class using a test runner.
+ *
+ * =============================================================================
+ */
+
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;

@@ -1,3 +1,29 @@
+/**
+ * =============================================================================
+ * File:        WorkoutTest.java
+ * Authors:     Eli Hall
+ * Created:     05/08/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Unit tests for the Workout class. These tests verify the correct behavior
+ *   of the Workout constructor, adding/removing exercises, and calculating
+ *   total duration, calories, and exercise count.
+ *
+ * Dependencies:
+ *   - org.junit.jupiter.api.*
+ *   - tracking.Workout
+ *   - tracking.Exercise
+ *   - javax.swing.DefaultListModel
+ *   - java.time.LocalDate
+ *
+ * Usage:
+ *   Test the functionality of the Workout class by running the test methods
+ *   defined in this class using a test runner.
+ *
+ * =============================================================================
+ */
+
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tracking.Workout;

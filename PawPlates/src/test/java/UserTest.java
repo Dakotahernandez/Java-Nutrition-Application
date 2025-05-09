@@ -1,3 +1,25 @@
+/**
+ * =============================================================================
+ * File:        UserTest.java
+ * Authors:     Eli Hall
+ * Created:     05/08/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Unit tests for the User class. These tests verify the correct functionality
+ *   of user account creation, email validation, and trainer flag functionality.
+ *
+ * Dependencies:
+ *   - org.junit.jupiter.api.*
+ *   - user.User
+ *
+ * Usage:
+ *   Test the functionality of the User class by running the test methods
+ *   defined in this class using a test runner.
+ *
+ * =============================================================================
+ */
+
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import user.User;

@@ -1,3 +1,26 @@
+/**
+ * =============================================================================
+ * File:        ExerciseTest.java
+ * Authors:     Eli Hall
+ * Created:     05/06/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Unit tests for the {@link Exercise} class, validating its constructors, getters,
+ *   setters, and other methods such as equals, hashCode, and toString.
+ *
+ * Dependencies:
+ *   - org.junit.jupiter.api.Test
+ *   - tracking.Exercise
+ *   - static org.junit.jupiter.api.Assertions.*
+ *
+ * Usage:
+ *   Test the functionality of the Exercise class by running the test methods
+ *   defined in this class using a test runner.
+ *
+ * =============================================================================
+ */
+
+
 import org.junit.jupiter.api.Test;
 import tracking.Exercise;
 

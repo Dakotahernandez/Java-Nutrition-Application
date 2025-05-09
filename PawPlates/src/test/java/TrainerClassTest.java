@@ -1,3 +1,27 @@
+/**
+ * =============================================================================
+ * File:        TrainerClassTest.java
+ * Authors:     Eli Hall
+ * Created:     05/08/2025
+ * -----------------------------------------------------------------------------
+ * Description:
+ *   Unit tests for the TrainerClass class. These tests verify the correct
+ *   functionality of the TrainerClass constructor, methods for adding/removing
+ *   users, and the functionality of the class with various inputs.
+ *
+ * Dependencies:
+ *   - org.junit.jupiter.api.*
+ *   - tracking.Exercise
+ *   - tracking.TrainerClass
+ *
+ * Usage:
+ *   Test the functionality of TrainerClass by running the test methods
+ *   defined in this class using a test runner.
+ *
+ * =============================================================================
+ */
+
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import tracking.Exercise;
